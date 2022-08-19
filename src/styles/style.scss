@@ -5,22 +5,34 @@ $primary-color: #f2f2f2;
 
 //
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-size: 14px;
 }
-button{
+button {
   border: none;
   background-color: none;
 }
-li{
+li {
   list-style: none;
 }
-body{
-  // background: linear-gradient(#bef3a6, #619ff1);
+
+// 
+.card {
+  padding: 1rem;
+  min-width: 100px;
+  width: fit-content;
+  min-height: 120px;
+  border-radius: 12px;
+  // background-color: rgb(215, 212, 212);
+  box-shadow: 3px 3px 2.5px 2.5px #dadada;
+  .title {
+    color: antiquewhite;
+  }
 }
+
 .loading-indicator:before {
   content: '';
   background: #000000cc;

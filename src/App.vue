@@ -8,12 +8,12 @@ import MainSection from './components/baseComponents/Chart.vue'
 </script>
 
 <template>
-  <div class="container">
+  <main class="container">
     <Sidebar/>
     <div class="main-section">
       <router-view/>
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
