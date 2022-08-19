@@ -21,7 +21,9 @@ import MainSection from './components/baseComponents/Chart.vue'
   display: flex;
   // width: 100vw;
 }
-main-section {
+.main-section {
+  // width: 100%;
+  margin: .5rem;
   width: 100%;
 }
 
