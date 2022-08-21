@@ -3,12 +3,12 @@ import {ref} from "vue"
 
 const option = ref([
   {
-    title: '各地區空氣狀況',
+    title: '全台綜合',
     href: '/'
   },
   {
-    title: '全台綜合',
-    href: ''
+    title: '各地區空氣狀況',
+    href: '/local'
   },
 ])
 

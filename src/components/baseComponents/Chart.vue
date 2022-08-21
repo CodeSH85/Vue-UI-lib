@@ -8,7 +8,7 @@
 import "echarts" ;
 import { onMounted, ref } from "vue"
 import VChart, { THEME_KEY } from 'vue-echarts';
-import API from '../../servies/api'
+import API from '../../services/api'
 
 const barChart = ref({
   title: {

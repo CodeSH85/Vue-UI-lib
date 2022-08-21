@@ -23,7 +23,7 @@ import MainSection from './components/baseComponents/Chart.vue'
 }
 .main-section {
   // width: 100%;
-  margin: .5rem;
+  margin: 0.5rem 1rem;
   width: 100%;
 }
 
