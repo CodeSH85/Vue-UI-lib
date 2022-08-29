@@ -1,54 +1,47 @@
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, computed } from 'vue'
 import API from '../services/api'
 
+// for option
 let selectSite = ref('')
 const sites = reactive([])
 
-const allData = ref([])
+let allData = ref([])
 let filterData = ref([])
-const test = ref([
-  {
-    name: 'Saul'
-  },
-  {
-    name: 'Gus'
-  },
-  {
-    name: 'Walter'
-  },
-  {
-    name: 'Jessie'
-  }
-])
-const getName = ref('')
 
 
 const getData = async ()=>{
   const { data } = await API().get()
   try{
-    allData.value.push(data.records)
-    console.log(allData.value)
-    data.records.forEach((element, index) => {
+    // get record's data from api
+    allData.value = data.records.map(data => data)
+    console.log(allData)
+
+    // option's data
+    data.records.forEach(element => {
       sites.push(element.sitename)
     });
+
   }catch(err){
     // debugger
     console.error(err)
+  }finally{
+
   }
 }
 getData()
 
+// const filteredData = computed(()=>{
+//   return selectSite.value
+// })
+
 
 watch(selectSite, (newValue, oldValue)=>{
   console.log(newValue)
-  // filterData.value = allData.value.filter(data => {
-  //   data.sitename == newValue
-  // })
-  console.log(allData.value.find(data => {
-    data.sitename === newValue
-  }))
-  // console.log(filterData.value)
+  filterData.value = allData.value.find( data => {
+    return data.sitename == newValue
+  })
+  console.log(filterData.value)
 })
 
 </script>
@@ -66,11 +59,16 @@ watch(selectSite, (newValue, oldValue)=>{
     <div class="card">
       測站名
       <div class="card-content">
-        <div class="">
-          AQI:
+        <div class="" v-if="filterData">
+          <div class="">
+            AQI:{{filterData.sitename}}
+          </div>
+          <div class="">
+            PM2.5:{{filterData[`pm2.5`]}}
+          </div>
         </div>
-        <div class="">
-          PM2.5:
+        <div class="" v-else>
+          暫無東西
         </div>
       </div>
     </div>

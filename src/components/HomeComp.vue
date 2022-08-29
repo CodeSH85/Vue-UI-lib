@@ -68,7 +68,7 @@ const getData = async () => {
     sumData.value.data = sumData.value.data / data.records.length
     console.log(sumData.value.data)
   }catch(err){
-    debugger
+    // debugger
     console.error(err)
   }
 }
