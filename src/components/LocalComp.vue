@@ -2,7 +2,7 @@
 import { ref, reactive, watch, computed } from 'vue'
 import API from '../services/api'
 
-// for option
+
 let selectSite = ref('')
 const sites = reactive([])
 
@@ -17,7 +17,7 @@ const getData = async ()=>{
     allData.value = data.records.map(data => data)
     console.log(allData)
 
-    // option's data
+    // dropdown's data
     data.records.forEach(element => {
       sites.push(element.sitename)
     });
@@ -31,11 +31,7 @@ const getData = async ()=>{
 }
 getData()
 
-// const filteredData = computed(()=>{
-//   return selectSite.value
-// })
-
-
+// return selected countries' data
 watch(selectSite, (newValue, oldValue)=>{
   console.log(newValue)
   filterData.value = allData.value.find( data => {
