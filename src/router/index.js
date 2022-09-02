@@ -11,6 +11,11 @@ const routes = [
     name: "Local",
     component: () => import("../views/LocalView.vue"),
   },
+  {
+    path: "/local",
+    name: "Local",
+    component: () => import("../views/LocalView.vue"),
+  },
 ];
 
 const router = createRouter({

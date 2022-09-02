@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive, watch, computed } from 'vue'
 import API from '../services/api'
+import Map from '../components/baseComponents/Map.vue'
 
 
 let selectSite = ref('')
@@ -8,7 +9,6 @@ const sites = reactive([])
 
 let allData = ref([])
 let filterData = ref([])
-
 
 const getData = async ()=>{
   const { data } = await API().get()
@@ -31,6 +31,15 @@ const getData = async ()=>{
 }
 getData()
 
+
+const reloadData = () => {
+  allData.value = []
+  sites.value = []
+  getData()
+  console.log('click')
+}
+
+
 // return selected countries' data
 watch(selectSite, (newValue, oldValue)=>{
   console.log(newValue)
@@ -38,6 +47,7 @@ watch(selectSite, (newValue, oldValue)=>{
     return data.sitename == newValue
   })
   console.log(filterData.value)
+  
 })
 
 </script>
@@ -52,15 +62,27 @@ watch(selectSite, (newValue, oldValue)=>{
       </option>
     </select>
 
+    <button class="primary-btn" @click="reloadData">重新獲取資料</button>
+
+
     <div class="card">
-      測站名
+      詳細空氣指標
       <div class="card-content">
         <div class="" v-if="filterData">
           <div class="">
-            AQI:{{filterData.sitename}}
+            測站名:{{filterData.sitename}}
+          </div>
+          <div class="">
+            AQI:{{filterData.aqi}}
           </div>
           <div class="">
             PM2.5:{{filterData[`pm2.5`]}}
+          </div>
+          <div class="">
+            o3:{{filterData.o3}}
+          </div>
+          <div class="">
+            空氣狀態:{{filterData.status}}
           </div>
         </div>
         <div class="" v-else>
@@ -68,6 +90,14 @@ watch(selectSite, (newValue, oldValue)=>{
         </div>
       </div>
     </div>
+
+    <div class="taiwan-map" ref="map">
+        <div id="map">
+          <svg id="svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+    </div>
+
+
   </div>
 </template>
 
