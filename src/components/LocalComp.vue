@@ -76,6 +76,8 @@ watch(selectSite, (newValue, oldValue)=>{
           </div>
         </div>
       </div>
+
+      <Map/>
     </section>
 
     <div class="" v-else>
