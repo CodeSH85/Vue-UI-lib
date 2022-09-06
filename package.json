@@ -6,7 +6,8 @@
     "serve": "nodemon server.js",
     "build": "vite build",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "nodemon server.js"
   },
   "dependencies": {
     "axios": "^0.27.2",
