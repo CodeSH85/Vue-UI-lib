@@ -1,6 +1,6 @@
 <script setup>
 import AqiBarChart from "./baseComponents/Chart.vue"
-import infoCard from "./baseComponents/infoCard.vue"
+// import infoCard from "./baseComponents/infoCard.vue"
 import "echarts" ;
 import { onMounted, ref } from "vue"
 import VChart, { THEME_KEY } from 'vue-echarts';
@@ -78,7 +78,7 @@ getData()
 
 <template>
   <div>
-    <infoCard :parent-data="sumData"/>
+    <!-- <infoCard :parent-data="sumData"/> -->
     <button class="get-data primary-btn">get Data</button>
     <div v-if="isLoading" class="">
       資料獲取中

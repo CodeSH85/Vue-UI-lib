@@ -1,21 +1,11 @@
 
 const Express = require('Express');
-require('dotenv').config()
+require('dotenv').config();
 
-const app = new Express;
+const app = new Express();
 
 const port = 3006;
 
-// app.get('/api', async (req, res) => {
-//   const data = await fetch(process.env.BASE_URL)
-//   res = data.json() 
-// })
-
-app.get('/', (req, res) => {
-  // const data = fetch(process.env.BASE_URL)
-  // res = data.json() 
-  res.send('hello')
-})
 
 app.get('/api', async (req, res) => {
   const data = await fetch(process.env.BASE_URL)
