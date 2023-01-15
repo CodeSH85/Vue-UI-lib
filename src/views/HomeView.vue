@@ -1,6 +1,7 @@
-<script setup>
-import AqiBarChart from "../components/baseComponents/Chart.vue"
-import HomeComp from "../components/HomeComp.vue"
+<script setup lang="ts">
+
+// import AqiBarChart from "../components/baseComponents/Chart.vue"
+import HomeComp from '../components/HomeComp.vue'
 
 </script>
 <template>

@@ -1,5 +1,6 @@
-<script setup>
-import {ref} from "vue"
+<script setup lang="ts">
+
+import { ref } from 'vue'
 
 const option = ref([
   {
@@ -9,7 +10,7 @@ const option = ref([
   {
     title: '各地區空氣狀況',
     href: '/local'
-  },
+  }
 ])
 
 </script>
@@ -17,10 +18,10 @@ const option = ref([
 <template>
 <nav class="sidebar">
   <ul>
-    <li 
+    <li
     class="btn-wrapper"
     v-for="item of option" :key="item" >
-      <router-link 
+      <router-link
       class="btn"
       :to="item.href"
       >

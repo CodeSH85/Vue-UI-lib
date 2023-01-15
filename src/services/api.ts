@@ -1,24 +1,20 @@
-import axios from "axios";
+import axios from 'axios'
 
+// class HttpRequest {
+//   constructor (baseURL) {
+//     this.baseURL = baseURL
+//   }
+// }
 
-class HttpRequest {
-  constructor (baseURL) {
-    this.baseURL = baseURL
-  }
-
-}
-
-const api = ( url = import.meta.env.VITE_API_URL ) => {
+const api = (url = import.meta.env.VITE_API_URL) => {
   return axios.create({
     baseURL: url,
-    headers:{
+    headers: {
       'Content-Type': 'application/json;charset=utf-8'
-    },
+    }
     // timeout: 10000
   })
 }
-
-
 
 // instance.interceptors.request.use((config)=>{
 //   document.body.classList.add('loading-indicator');

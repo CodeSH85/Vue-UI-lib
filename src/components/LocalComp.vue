@@ -1,18 +1,18 @@
-<script setup>
-import { ref, reactive, watch, computed, onMounted } from 'vue'
+<script setup lang="ts">
+import { ref, reactive, watch } from 'vue'
 import API from '../services/api'
-import Map from '../components/baseComponents/Map.vue'
+// import Map from '../components/baseComponents/Map.vue'
 
-let isLoading = ref(true)
-let selectSite = ref('')
+const isLoading = ref(true)
+const selectSite = ref('')
 const sites = reactive([])
 
-let allData = ref([])
-let filterData = ref([])
+const allData = ref([])
+const filterData = ref([])
 
-const getData = async ()=>{
+const getData = async () => {
   const { data } = await API().get()
-  try{
+  try {
     // get record's data from api
     allData.value = data.records.map(data => data)
     console.log(allData)
@@ -20,22 +20,21 @@ const getData = async ()=>{
     // dropdown's data
     data.records.forEach(element => {
       sites.push(element.sitename)
-    });
-
-  }catch(err){
+    })
+  } catch (err) {
     // debugger
     console.error(err)
-  }finally{
+  } finally {
     isLoading.value = false
   }
 }
 getData()
 
 // return selected countries' data
-watch(selectSite, (newValue, oldValue)=>{
+watch(selectSite, (newValue) => {
   console.log(newValue)
-  filterData.value = allData.value.find( data => {
-    return data.sitename == newValue
+  filterData.value = allData.value.find(data => {
+    return data.sitename === newValue
   })
   console.log(filterData.value)
 })
@@ -83,13 +82,6 @@ watch(selectSite, (newValue, oldValue)=>{
     <div class="" v-else>
       資料獲取中
     </div>
-
-    <div class="taiwan-map" ref="map">
-        <div id="map">
-          <svg id="svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
-        </div>
-    </div>
-
 
   </div>
 </template>

@@ -1,18 +1,19 @@
-<script setup>
-import AqiBarChart from "./baseComponents/Chart.vue"
+<script setup lang="ts">
+// import AqiBarChart from "./baseComponents/Chart.vue"
 // import infoCard from "./baseComponents/infoCard.vue"
-import "echarts" ;
-import { onMounted, ref } from "vue"
-import VChart, { THEME_KEY } from 'vue-echarts';
+import 'echarts'
+import { ref } from 'vue'
+// import VChart, { THEME_KEY } from 'vue-echarts'
 import API from '../services/api'
 
-let isLoading = ref(true)
-let sumData = ref(
+const isLoading = ref(true)
+const sumData = ref(
   {
     title: '平均AQI',
     data: 0
   }
 )
+
 const barChart = ref({
   title: {
     text: '台灣各地空氣指標',
@@ -34,7 +35,7 @@ const barChart = ref({
   xAxis: [
     {
       type: 'category',
-      data:  [],
+      data: [],
       axisTick: {
         alignWithLabel: true
       }
@@ -42,7 +43,7 @@ const barChart = ref({
   ],
   yAxis: [
     {
-      type: 'value',
+      type: 'value'
     }
   ],
   series: [
@@ -52,12 +53,12 @@ const barChart = ref({
       data: []
     }
   ]
-});
+})
 
 const getData = async () => {
-  try{
-    let {data} = await API().get()
-    for(let i = 0 ; i < data.records.length ; i++){
+  try {
+    const { data } = await API().get()
+    for (let i = 0; i < data.records.length; i++) {
       barChart.value.xAxis[0].data.push(data.records[i].sitename)
       barChart.value.series[0].data.push(data.records[i].aqi)
     }
@@ -67,7 +68,7 @@ const getData = async () => {
     })
     sumData.value.data = sumData.value.data / data.records.length
     console.log(sumData.value.data)
-  }catch(err){
+  } catch (err) {
     // debugger
     console.error(err)
   }

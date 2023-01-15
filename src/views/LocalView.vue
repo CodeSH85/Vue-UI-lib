@@ -1,6 +1,6 @@
 <script setup>
-import AqiBarChart from "../components/baseComponents/Chart.vue"
-import LocalComp from "../components/LocalComp.vue"
+// import AqiBarChart from "../components/baseComponents/Chart.vue"
+import LocalComp from '../components/LocalComp.vue'
 
 </script>
 <template>

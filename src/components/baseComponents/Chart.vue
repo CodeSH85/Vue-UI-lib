@@ -4,7 +4,7 @@
   <!-- </div> -->
 </template>
 
-<script setup>
+<script setup lang="ts">
 import "echarts" ;
 import { onMounted, ref } from "vue"
 import VChart, { THEME_KEY } from 'vue-echarts';
