@@ -1,82 +1,15 @@
-<script setup lang="ts">
-import { ref, reactive, watch } from 'vue'
-import API from '../services/api'
-// import Map from '../components/baseComponents/Map.vue'
-
-const isLoading = ref(true)
-const selectSite = ref('')
-const sites = reactive([])
-
-const allData = ref([])
-const filterData = ref([])
-
-const getData = async () => {
-  const { data } = await API().get()
-  try {
-    // get record's data from api
-    allData.value = data.records.map(data => data)
-    console.log(allData)
-
-    // dropdown's data
-    data.records.forEach(element => {
-      sites.push(element.sitename)
-    })
-  } catch (err) {
-    // debugger
-    console.error(err)
-  } finally {
-    isLoading.value = false
-  }
-}
-getData()
-
-// return selected countries' data
-watch(selectSite, (newValue) => {
-  console.log(newValue)
-  filterData.value = allData.value.find(data => {
-    return data.sitename === newValue
-  })
-  console.log(filterData.value)
-})
-
-</script>
-
 <template>
   <div class="">
     <section v-if="!isLoading">
-        <select v-model="selectSite">
+        <select v-model="selectedSite">
         <option value="">請選擇測站</option>
-        <option v-for="siteName of sites" :key="siteName" :value="siteName">
+        <option v-for="siteName in sites" :key="siteName" :value="siteName">
           {{ siteName }}
         </option>
       </select>
+      <CardComp :data="filteredData"></CardComp>
+      <!-- <CardComp :isiteName="siteName" :aqi="aqiData" :pm25="pm25" :o3="o3" :status="status"></CardComp> -->
 
-      <div class="card" >
-        <h5>
-          詳細空氣指標
-        </h5>
-        <div class="card-content">
-          <div class="">
-            <div class="">
-              測站名:{{filterData.sitename}}
-            </div>
-            <div class="">
-              AQI:{{filterData.aqi}}
-            </div>
-            <div class="">
-              PM2.5:{{filterData[`pm2.5`]}}
-            </div>
-            <div class="">
-              o3:{{filterData.o3}}
-            </div>
-            <div class="">
-              空氣狀態:{{filterData.status}}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Map/>
     </section>
 
     <div class="" v-else>
@@ -85,9 +18,53 @@ watch(selectSite, (newValue) => {
 
   </div>
 </template>
+<script setup lang="ts">
+import { ref, reactive, watch } from 'vue'
+import API from '../services/api'
+import CardComp from './CardComp.vue'
+// import Map from '../components/baseComponents/Map.vue'
 
-<style lang="scss" scoped>
-.card-content {
-  display: flex;
+interface AirData {
+  sitename: string,
+  aqi: number,
+  'pm2.5': number,
+  o3: number,
+  status: string
 }
+
+const isLoading = ref<boolean>(true)
+const selectedSite = ref<string>('')
+const sites = reactive<string[]>([])
+
+const allData = ref([])
+const filteredData = ref<AirData[]>([])
+
+const getData = async () => {
+  try {
+    const { data } = await API().get()
+    if (data.error) throw new Error()
+
+    allData.value = data.records.map(data => data)
+
+    data.records.forEach((val) => {
+      sites.push(val.sitename)
+    })
+  } catch (err) {
+    console.error(err)
+  } finally {
+    isLoading.value = false
+  }
+}
+getData()
+
+watch(selectedSite, (newValue) => {
+  filteredData.value = allData.value.find(data => {
+    return data.sitename === newValue
+  })
+  console.log(filteredData.value)
+})
+
+</script>
+<style lang="scss" scoped>
+
 </style>
