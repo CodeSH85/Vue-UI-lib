@@ -1,12 +1,14 @@
 import axios from 'axios'
 
+const BASE_URL:string = import.meta.env.VITE_API_URL
+
 // class HttpRequest {
 //   constructor (baseURL) {
 //     this.baseURL = baseURL
 //   }
 // }
 
-const api = (url = import.meta.env.VITE_API_URL) => {
+const api = (url:string = BASE_URL) => {
   return axios.create({
     baseURL: url,
     headers: {
@@ -16,9 +18,4 @@ const api = (url = import.meta.env.VITE_API_URL) => {
   })
 }
 
-// instance.interceptors.request.use((config)=>{
-//   document.body.classList.add('loading-indicator');
-// })
-
 export default api
-// export default instance

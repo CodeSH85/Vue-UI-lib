@@ -9,22 +9,20 @@ import SideBar from './components/baseComponents/SideBar.vue'
 
 <template>
   <main class="container">
-    <SideBar/>
-    <div class="main-section">
-      <router-view/>
-    </div>
+    <SideBar />
+    <section class="main-section">
+      <router-view />
+    </section>
   </main>
 </template>
 
 <style lang="scss" scoped>
 .container{
   display: flex;
-  // width: 100vw;
 }
 .main-section {
-  // width: 100%;
   margin: 0.5rem 1rem;
-  width: 100%;
+  flex: 1 1 auto;
 }
 
 </style>

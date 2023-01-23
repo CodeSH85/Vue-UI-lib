@@ -1,6 +1,9 @@
 <script setup lang="ts">
 
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const option = ref([
   {
@@ -10,8 +13,16 @@ const option = ref([
   {
     title: '各地區空氣狀況',
     href: '/local'
+  },
+  {
+    title: '各地區空氣狀況',
+    href: '/local'
   }
 ])
+
+function navigateRoute (href:string) {
+  router.push(href)
+}
 
 </script>
 
@@ -19,14 +30,10 @@ const option = ref([
 <nav class="sidebar">
   <ul>
     <li
+    v-for="item in option" :key="item"
     class="btn-wrapper"
-    v-for="item of option" :key="item" >
-      <router-link
-      class="btn"
-      :to="item.href"
-      >
-      {{item.title}}
-      </router-link>
+    >
+    <button class="sidebar-btn" @click="navigateRoute(item.href)">{{ item.title }}</button>
     </li>
   </ul>
 </nav>
@@ -38,30 +45,22 @@ const option = ref([
 .sidebar {
   background: linear-gradient(#72deb5, #619ff1);
   min-height: 100vh;
-  width: auto;
-
+  min-width: 10em;
 }
 .btn-wrapper {
   display: flex;
   flex-direction: column;
-  height: auto;
   width: auto;
 }
-.btn {
-  padding: 1.2rem;
-  min-width: 200px;
-  width: 100%;
-  height: auto;
-  background-color: rgba(54, 54, 54, 0.3);
-  color: rgb(228, 228, 228);
-  cursor: pointer;
-  transition: .3s;
-  text-decoration: none;
-  &:hover{
-    background-color: rgba(168, 168, 168, .3);
-    color: #fff;
+* + * {
+  margin-top: .4em;
+}
+.sidebar-btn {
+  padding: 1em 0.8em;
+  &:hover {
+    color: white;
+    background-color: darken(rgba(255, 255, 255, 0.5), 50%);
   }
 }
-a {
-}
+
 </style>
