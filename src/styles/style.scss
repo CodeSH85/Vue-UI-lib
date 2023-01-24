@@ -23,23 +23,6 @@ $white-400: #fff;
   border-style: solid;
   border-color: aqua;
 }
-// 
-.card {
-  padding: 1em;
-  margin: 1em;
-  min-width: 100px;
-  min-height: 120px;
-  width: fit-content;
-  border-radius: 1em;
-  // background-color: rgb(215, 212, 212);
-  box-shadow: 3px 3px 2.5px 2.5px #dadada;
-  .title {
-    color: antiquewhite;
-  }
-  .image {
-    float: left;
-  }
-}
 .loading-ani {
   width: 200px;
   height: 200px;

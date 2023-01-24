@@ -1,12 +1,3 @@
-<script setup lang="ts">
-
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import SideBar from './components/baseComponents/SideBar.vue'
-// import MainSection from './components/baseComponents/Chart.vue'
-
-</script>
-
 <template>
   <main class="container">
     <SideBar />
@@ -15,6 +6,14 @@ import SideBar from './components/baseComponents/SideBar.vue'
     </section>
   </main>
 </template>
+<script setup lang="ts">
+
+// This starter template is using Vue 3 <script setup> SFCs
+// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import SideBar from './components/baseComponents/SideBar.vue'
+// import MainSection from './components/baseComponents/Chart.vue'
+
+</script>
 
 <style lang="scss" scoped>
 .container{

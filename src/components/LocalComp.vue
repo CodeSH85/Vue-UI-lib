@@ -8,7 +8,6 @@
         </option>
       </select>
       <CardComp :data="filteredData"></CardComp>
-      <!-- <CardComp :isiteName="siteName" :aqi="aqiData" :pm25="pm25" :o3="o3" :status="status"></CardComp> -->
 
     </section>
 
@@ -16,13 +15,15 @@
       資料獲取中
     </div>
 
+    <MapComp></MapComp>
+
   </div>
 </template>
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
 import API from '../services/api'
 import CardComp from './CardComp.vue'
-// import Map from '../components/baseComponents/Map.vue'
+import MapComp from '../components/baseComponents/MapComp.vue'
 
 interface AirData {
   sitename: string,
@@ -46,7 +47,7 @@ const getData = async () => {
 
     allData.value = data.records.map(data => data)
 
-    data.records.forEach((val) => {
+    data.records.forEach((val: AirData) => {
       sites.push(val.sitename)
     })
   } catch (err) {

@@ -1,3 +1,15 @@
+<template>
+  <div>
+    <!-- <infoCard :parent-data="sumData"/> -->
+    <button class="get-data primary-btn">get Data</button>
+    <div v-if="isLoading" class="">
+      資料獲取中
+      <div class="loading-ani">
+      </div>
+    </div>
+    <v-chart v-else class="chart" :option="barChart"/>
+  </div>
+</template>
 <script setup lang="ts">
 // import AqiBarChart from "./baseComponents/Chart.vue"
 // import infoCard from "./baseComponents/infoCard.vue"
@@ -76,20 +88,6 @@ const getData = async () => {
 getData()
 
 </script>
-
-<template>
-  <div>
-    <!-- <infoCard :parent-data="sumData"/> -->
-    <button class="get-data primary-btn">get Data</button>
-    <div v-if="isLoading" class="">
-      資料獲取中
-      <div class="loading-ani">
-      </div>
-    </div>
-    <v-chart v-else class="chart" :option="barChart"/>
-  </div>
-</template>
-
 <style lang="scss" scoped>
 .chart {
   height: 100vh;

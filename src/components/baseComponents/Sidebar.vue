@@ -13,10 +13,6 @@ const option = ref([
   {
     title: '各地區空氣狀況',
     href: '/local'
-  },
-  {
-    title: '各地區空氣狀況',
-    href: '/local'
   }
 ])
 
@@ -33,7 +29,12 @@ function navigateRoute (href:string) {
     v-for="item in option" :key="item"
     class="btn-wrapper"
     >
-    <button class="sidebar-btn" @click="navigateRoute(item.href)">{{ item.title }}</button>
+      <button
+      class="sidebar-btn"
+      @click="navigateRoute(item.href)"
+      >
+      {{ item.title }}
+      </button>
     </li>
   </ul>
 </nav>
