@@ -1,0 +1,45 @@
+[
+  {
+    "main_module": [
+      {
+        "icon": "",
+        "title": "Home",
+        "key": "home"
+      },
+      {
+        "icon": "",
+        "title": "Report",
+        "key": "report"
+      },
+      {
+        "icon": "",
+        "title": "Form",
+        "key": "form"
+      },
+      {
+        "icon": "",
+        "title": "Task",
+        "key": "task"
+      },
+      {
+        "icon": "",
+        "title": "Chat Room",
+        "key": "chat"
+      },
+      {
+        "icon": "",
+        "title": "Diagnosis",
+        "key": "diagnose"
+      }
+    ]
+  },
+  {
+    "side_module": [
+      {
+        "icon": "",
+        "title": "Setting",
+        "key": "setting"
+      }
+    ]
+  }
+]

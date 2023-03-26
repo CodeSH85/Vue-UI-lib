@@ -7,13 +7,13 @@
       <div class="loading-ani">
       </div>
     </div>
-    <v-chart v-else class="chart" :option="barChart"/>
+    <!-- <v-chart v-else class="chart" :option="barChart"/> -->
   </div>
 </template>
 <script setup lang="ts">
 // import AqiBarChart from "./baseComponents/Chart.vue"
 // import infoCard from "./baseComponents/infoCard.vue"
-import 'echarts'
+// import 'echarts'
 import { ref } from 'vue'
 // import VChart, { THEME_KEY } from 'vue-echarts'
 import API from '../services/api'

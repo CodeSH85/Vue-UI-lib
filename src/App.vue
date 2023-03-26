@@ -10,14 +10,14 @@
 
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import SideBar from './components/baseComponents/SideBar.vue'
-// import MainSection from './components/baseComponents/Chart.vue'
+import SideBar from './components/Sidebar/SidebarMenu.vue'
 
 </script>
 
 <style lang="scss" scoped>
 .container{
   display: flex;
+  background-color: #f5f5f5;
 }
 .main-section {
   margin: 0.5rem 1rem;

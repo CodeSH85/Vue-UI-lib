@@ -1,11 +1,11 @@
 <template>
   <div class="">
     <section v-if="!isLoading">
-        <select v-model="selectedSite">
-        <option value="">請選擇測站</option>
-        <option v-for="siteName in sites" :key="siteName" :value="siteName">
-          {{ siteName }}
-        </option>
+      <select v-model="selectedSite">
+      <option value="">請選擇測站</option>
+      <option v-for="siteName in sites" :key="siteName" :value="siteName">
+        {{ siteName }}
+      </option>
       </select>
       <CardComp :data="filteredData"></CardComp>
 
@@ -15,7 +15,7 @@
       資料獲取中
     </div>
 
-    <MapComp></MapComp>
+    <!-- <MapComp></MapComp> -->
 
   </div>
 </template>
@@ -23,7 +23,7 @@
 import { ref, reactive, watch } from 'vue'
 import API from '../services/api'
 import CardComp from './CardComp.vue'
-import MapComp from '../components/baseComponents/MapComp.vue'
+// import MapComp from '../components/baseComponents/MapComp.vue'
 
 interface AirData {
   sitename: string,
