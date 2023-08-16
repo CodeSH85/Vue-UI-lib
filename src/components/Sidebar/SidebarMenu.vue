@@ -23,16 +23,13 @@
 import SIDE_BAR from '../../../public/SIDE_BAR.json'
 import SidebarButton from './SidebarButton.vue'
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
 import { SidebarOption } from './type'
-
-const router = useRouter()
 
 const option = reactive<SidebarOption>(SIDE_BAR[0])
 console.log(option.main_module)
 
 function navigateRoute (href:string) {
-  router.push(href)
+  console.log(href)
 }
 
 </script>

@@ -2,7 +2,7 @@
   {
     "main_module": [
       {
-        "icon": "",
+        "icon": "home",
         "title": "Home",
         "key": "home"
       },

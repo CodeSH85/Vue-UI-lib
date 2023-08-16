@@ -3,8 +3,12 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
     "importHelpers": true,
     "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "noEmit": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true

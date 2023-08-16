@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
   env: {
+    browser: true,
     node: true,
     es2021: true
   },
@@ -8,12 +9,19 @@ module.exports = {
     "eslint:recommended",
     "@vue/typescript/recommended",
     "plugin:vue/vue3-essential",
-    '@vue/standard'
+    '@vue/standard',
+    // 'standard-with-typescript'
   ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
-    ecmaVersion: 2020
+    sourceType: 'module',
+    ecmaVersion: 'latest'
   },
-  rules: {    
+  plugins: [
+    'vue'
+  ],
+  rules: {
+    '@typescript-eslint/triple-slash-reference': 'off'
   }
 }
