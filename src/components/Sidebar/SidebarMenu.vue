@@ -5,11 +5,6 @@
         v-for="item in option['main_module']" :key="item.key"
         class="btn-wrapper"
       >
-        <!-- <button
-          class="sidebar-btn"
-        >
-        {{ item.title }}
-        </button> -->
         <SidebarButton
           :title="item.title"
           @click="navigateRoute(item.key)"
@@ -20,16 +15,17 @@
   </nav>
 </template>
 <script setup lang="ts">
-import SIDE_BAR from '../../../public/SIDE_BAR.json'
+import SIDE_BAR from './SIDE_BAR.json'
 import SidebarButton from './SidebarButton.vue'
 import { reactive } from 'vue'
 import { SidebarOption } from './type'
+import router from '../../router'
 
 const option = reactive<SidebarOption>(SIDE_BAR[0])
-console.log(option.main_module)
 
 function navigateRoute (href:string) {
   console.log(href)
+  router.push(href)
 }
 
 </script>

@@ -6,11 +6,10 @@ module.exports = {
     es2021: true
   },
   extends: [
-    "eslint:recommended",
-    "@vue/typescript/recommended",
-    "plugin:vue/vue3-essential",
+    'plugin:vue/vue3-essential',
     '@vue/standard',
-    // 'standard-with-typescript'
+    '@vue/typescript/recommended',
+    'eslint:recommended'
   ],
   parser: 'vue-eslint-parser',
   parserOptions: {
@@ -23,5 +22,19 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/triple-slash-reference': 'off'
+  },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@', './src']
+        ],
+        extensions: ['.js', '.vue', '.ts']
+      }
+    },
+    'import/core-modules': [
+      'vite',
+      '@vitejs/plugin-vue'
+    ]
   }
 }

@@ -21,7 +21,6 @@
     </div>
 </template>
 <script setup lang="ts">
-// import { toRefs } from 'vue'
 
 interface AirData {
   sitename: string,

@@ -1,11 +1,10 @@
 
-const Express = require('Express');
-require('dotenv').config();
+const Express = require('Express')
+require('dotenv').config()
 
-const app = new Express();
+const app = new Express()
 
-const port = 3006;
-
+const port = 3006
 
 app.get('/api', async (req, res) => {
   const data = await fetch(process.env.BASE_URL)
@@ -14,6 +13,6 @@ app.get('/api', async (req, res) => {
   await res.status(200).send(json)
 })
 
-app.listen(port,()=>{
-  console.log(`server is running on ${port}`);
-});
+app.listen(port, () => {
+  console.log(`server is running on ${port}`)
+})
