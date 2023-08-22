@@ -1,7 +1,10 @@
 // @import url(./mixin.scss);
-@import url(./grid.scss);
-@import url(./reset.scss);
-@import url(./utils.scss);
+// @import url(./grid.scss);
+// @import url(./reset.scss);
+// @import url(./utils.scss);
+
+// @forward "reset";
+// @forward "variables";
 
 // Global-Variable
 $primary-color: #5bbadd !default;
