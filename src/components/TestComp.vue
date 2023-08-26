@@ -1,18 +1,25 @@
 <template>
-  <h2>{{ name }}</h2>
+  <div>
+    <input type="text" :value="value" @input="updateValue($event)">
+    <ButtonComp>Click</ButtonComp>
+  </div>
 </template>
 
 <script setup lang="ts">
-
-import { toRefs } from 'vue'
+import ButtonComp from './UI/ButtonComp.vue'
+// import { ToRef } from 'vue'
 
 interface Props {
-  name: string
+  value: string
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
+const emit = defineEmits(['updateValue'])
 
-const { name } = toRefs(props)
+const updateValue = (e) => {
+  emit('updateValue', e.target.value)
+  return e.target.value
+}
 
 </script>
 

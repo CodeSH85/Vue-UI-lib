@@ -1,9 +1,9 @@
 <template>
-  <HomeComp/>
+  <EditorComp />
 </template>
 <script setup lang="ts">
 
-import HomeComp from '../components/HomeComp.vue'
+import EditorComp from '../components/EditorComp.vue'
 
 </script>
 <style lang="scss" scoped>

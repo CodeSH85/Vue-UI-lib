@@ -1,31 +1,13 @@
 // @import url(./mixin.scss);
-// @import url(./grid.scss);
-// @import url(./reset.scss);
-// @import url(./utils.scss);
+@import url(./grid.scss);
+@import url(./reset.scss);
+@import url(./utils.scss);
+// @import url(./_variables.scss);
 
-// @forward "reset";
-// @forward "variables";
-
-// Global-Variable
-$primary-color: #5bbadd !default;
-$second-color: #5bdd9e !default;
-$white-100: #fff;
-$white-200: #fff;
-$white-300: #fff;
-$white-400: #fff;
-
-// buttons
-.primary-btn {
-  color: #fff;
-  background-color: rgb(13, 197, 191);
-  &:hover{
-    background-color: rgb(8, 162, 162);
-  }
+* {
+  font-family: Helvetica, Arial, sans-serif;
 }
-.secondary-btn {
-  border-style: solid;
-  border-color: aqua;
-}
+
 .loading-ani {
   width: 200px;
   height: 200px;

@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
-import './styles/style.scss'
+import './assets/style.scss'
 import App from './App.vue'
 import router from './router/index.js'
-import feather from 'feather-icons'
+// import feather from 'feather-icons'
 
 createApp(App)
   .use(router)
-  .use(feather)
+  // .use(feather)
   .mount('#app')

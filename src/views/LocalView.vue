@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // import AqiBarChart from "../components/baseComponents/Chart.vue"
 import LocalComp from '../components/LocalComp.vue'
 
