@@ -7,11 +7,6 @@ const routes = [
     component: () => import('../views/HomeView.vue')
   },
   {
-    path: '/local',
-    name: 'Local',
-    component: () => import('../views/LocalView.vue')
-  },
-  {
     path: '/diagram',
     name: 'Diagram',
     component: () => import('../views/DiagramView.vue')
@@ -20,11 +15,6 @@ const routes = [
     path: '/form',
     name: 'Form',
     component: () => import('../views/FormView.vue')
-  },
-  {
-    path: '/local',
-    name: 'Local',
-    component: () => import('../views/LocalView.vue')
   },
   {
     path: '/test',

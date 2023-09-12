@@ -1,13 +1,18 @@
 <template>
-  <input
-    :type="type"
-    v-bind="$attrs"
-    v-model="inputValue"
-    :class="variant"
-  >
+  <label>
+    {{ label }}
+    <input
+      :id="label"
+      :name="label"
+      :type="type"
+      v-bind="$attrs"
+      v-model="inputValue"
+      :class="classResult"
+    >
+  </label>
 </template>
 <script setup lang="ts">
-import { ref, PropType, watch, useAttrs } from 'vue'
+import { ref, PropType, watch, useAttrs, computed } from 'vue'
 
 const attrs = useAttrs()
 const props = defineProps({
@@ -17,23 +22,46 @@ const props = defineProps({
   type: {
     type: [String] as PropType<string | undefined>,
     default: 'text'
+  },
+  color: {
+    type: [String] as PropType<string | undefined>,
+    default: 'white'
+  },
+  label: {
+    type: String as PropType<string | undefined>,
+    default: null
   }
 })
 
 const emit = defineEmits(['update:modelValue'])
 const inputValue = ref(props.modelValue)
 const type = ref(props.type)
-const variantList: string[] = ['outline', 'disable', 'fill']
 
-const variant = variantList.find(item => {
-  if (attrs[item]) {
-    return item
-  } else {
-    return 'mo'
-  }
+const label = ref(props.label)
+
+const variantList: string[] = ['outlined', 'filled', 'plain', 'text', 'default']
+// let isColor = ref()
+
+const classList = ref<string[]>([])
+
+const classResult = computed(() => {
+  return classList.value.join(',')
 })
 
-console.log(variant)
+const attrKeys = Object.keys(attrs)
+
+attrKeys.find(item => {
+  let res = ''
+  variantList.forEach(variant => {
+    if (variant === item) {
+      classList.value.push(item)
+      res = item
+    } else {
+      res = 'default'
+    }
+  })
+  return res
+})
 
 watch(inputValue,
   (newVal) => emit('update:modelValue', newVal),
@@ -50,12 +78,23 @@ watch(() => props.modelValue,
 <style scoped lang="scss">
 
 input {
-  border: 1px solid blue;
+  margin: $md;
+  border-radius: $border-radius-sm;
+  border: 2px solid $primary-color;
+  padding: $sm;
 }
-.outline {
-  border: 2px solid var($primary-color);
+.default {
+  padding: $md;
 }
-.disable {
-  border: 2px solid var($primary-color);
+.outlined {
+  border: 1px solid $primary-color;
+}
+.disabled {
+  border: 1px solid $primary-color;
+}
+.filled {
+  border: none;
+  background-color: $bg-gray-primary;
+  box-shadow: $shadow-main;
 }
 </style>
