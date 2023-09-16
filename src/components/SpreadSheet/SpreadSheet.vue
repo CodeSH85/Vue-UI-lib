@@ -10,8 +10,8 @@
             b
           </span>
         </th>
-        <th v-for="col in columns" :key="col.key">
-          {{ col.title }}
+        <th v-for="col in columns" :key="col">
+          {{ col }}
         </th>
       </tr>
     </thead>
@@ -19,23 +19,23 @@
       <tr class="" v-for="(row, r) in rows" :key="r">
         <td>
           <span style="width: 30px;">
-            {{ r }}
+            {{ row }}
           </span>
         </td>
         <td
           v-for="(col, c) in columns" :key="c"
-          :class="'=' === sheet[col.key+r][0] ? 'formula' : '' "
+          :class="'=' === sheet[col+row] ? 'formula' : '' "
         >
+        <!-- :ref="col.key + r" -->
           <input
-            :ref="col.key + r"
-            @focus="focus($event, col.key, r)"
-            @keydown="keydown($event, col.key, r)"
-            :value="sheet[col.key+r]"
-            @input="updateCell($event, col.key + r)"
-            @blur="onBlur($event, col.key + r)"
+            :ref="el => functionRef(el, col, row)"
+            @keydown="keydown($event, col, row)"
+            :value="sheet[col+row]"
+            @input="updateCell($event, col + row)"
+            @blur="onBlur($event, col + row)"
           />
           <span>
-            {{ sheet[col.key+r] }}
+            {{ sheet[col+row] }}
           </span>
         </td>
       </tr>
@@ -45,45 +45,39 @@
 </template>
 <script setup lang="ts">
 // import Worker from './worker.ts'
-import { ref, PropType, reactive, watch, computed } from 'vue'
-import Header from './SpreadSheet'
-
-// console.log(Worker)
-
-interface DumData {
-  a: string | undefined
-  b: string | undefined
-  c: string | undefined
-  d: string | undefined
-  e: string | undefined
-  f: string | undefined
-}
+import { ref, reactive, watch, computed } from 'vue'
 
 const props = defineProps({
-  headers: {
-    type: Array as PropType<Header[]>,
-    default: () => []
+  colRange: {
+    type: String,
+    default: 'H'
   },
-  data: {
-    type: Array as PropType<DumData[]>,
-    default: () => []
+  rowRange: {
+    type: Number,
+    default: 10
   }
 })
 
-const columns = ref(props.headers)
-const rows = ref(props.data)
+const columns = ref<string[]>([])
+const rows = ref<number[]>([])
+
+for (let col = 'A'; col <= props.colRange; col = String.fromCharCode(col.charCodeAt() + 1)) {
+  columns.value.push(col)
+}
+for (let row = 1; row <= props.rowRange; row++) {
+  rows.value.push(row)
+}
 
 function buildSheet (): object {
   const obj = {}
   for (let r = 0; r < rows.value.length; r++) {
     for (let c = 0; c < columns.value.length; c++) {
-      const key = columns.value[c].key + r
-      obj[key] = rows.value[r][columns.value[c].key] ?? ''
+      const key = columns.value[c] + r
+      obj[key] = rows.value[r][columns.value[c]] ?? ''
     }
   }
   return obj
 }
-
 const sheet = reactive(buildSheet())
 
 function updateCell (event, key: string): void {
@@ -110,25 +104,50 @@ const inputRef = computed(() => {
   return curCol.value + curRow.value
 })
 
-function focus (event, col, row) {
+const elements = ref({})
+const functionRef = (el, col, row) => {
+  // elements.value.push(el) // infinite loop
+  elements.value[col + row] = el
+}
+console.log(elements.value)
+const minCol = 'A'
+const maxCol = props.colRange // Adjust as needed
+const minRow = 1 // Adjust as needed
+const maxRow = props.rowRange // Assuming props.rowRange is the maximum row value
+function keydown (event, col, row): void {
   curCol.value = col
   curRow.value = row
-}
-
-function keydown (event, col, row): void {
-  const pressedKey = event.key
-  switch (pressedKey) {
-    case 'ArrowUp':
-      curRow.value--
-      console.log(inputRef.value)
-      break
-    case 'ArrowDown':
-      curRow.value++
-      console.log(inputRef.value)
-      break
-    default:
-      break
+  if (col >= minCol &&
+    col <= maxCol &&
+    row >= minRow &&
+    row <= maxRow) {
+    const pressedKey = event.key
+    switch (pressedKey) {
+      case 'ArrowUp':
+        if (row > minRow) {
+          curRow.value--
+        }
+        break
+      case 'ArrowDown':
+        if (row < maxRow) {
+          curRow.value++
+        }
+        break
+      case 'ArrowLeft':
+        if (col > minCol) {
+          curCol.value = String.fromCharCode(curCol.value.charCodeAt(0) - 1)
+        }
+        break
+      case 'ArrowRight':
+        if (col < maxCol) {
+          curCol.value = String.fromCharCode(curCol.value.charCodeAt(0) + 1)
+        }
+        break
+      default:
+        break
+    }
   }
+  elements.value[inputRef.value].focus()
 }
 
 watch(() => sheet,
