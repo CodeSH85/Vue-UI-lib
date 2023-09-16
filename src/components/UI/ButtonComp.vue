@@ -1,48 +1,77 @@
 <template>
-  <button
-    :class="buttonClass"
-    :type="btnType"
-    v-bind="$attrs"
-  >
-    <slot default>
-      {{ btnType }}
+  <ButtonWrapper>
+    <slot name="before">
     </slot>
-  </button>
+    <button
+      :type="type"
+      v-bind="$attrs"
+      :class="classResult"
+      :variant="variantResult"
+    >
+      <slot default>
+        {{ type }}
+      </slot>
+    </button>
+    <slot name="after">
+    </slot>
+  </ButtonWrapper>
 </template>
 <script setup lang="ts">
-import { PropType, ref, useAttrs } from 'vue'
-const attrs = useAttrs()
+import ButtonWrapper from './ButtonWrapper.vue'
+import { PropType, ref, computed } from 'vue'
+
 const props = defineProps({
   type: {
-    type: String as PropType<string | null>,
+    type: String as PropType<string | undefined>,
     default: 'button'
+  },
+  variant: {
+    type: String as PropType<string | undefined>,
+    default: 'default'
   }
 })
-const btnType = props.type
-console.log(attrs)
-const buttonClass = ref<string>('main')
+const { variant, type } = props
+
+const classList = ref<string[]>([])
+const classResult = computed(() => {
+  return classList.value.join(',')
+})
+const variantList: string[] = ['outlined', 'filled', 'plain', 'text', 'default']
+const variantResult: string | undefined = variantList.find(style => style === variant)
+classList.value.push(variantResult ?? 'default')
 
 </script>
 <style scoped lang="scss">
 button {
   color: white;
   padding: $md $xl;
+  margin: $md;
   letter-spacing: .08em;
   text-transform: uppercase;
-  background-color: $primary-color;
   border-radius: $border-radius-md;
+}
+.default {
+  background-color: $primary-color;
   &:hover {
-    background-color: #21a57f;
+    background-color: #1a9cbf;
   }
   &:active {
-    background-color: #037859;
+    background-color: #034078;
   }
 }
 .outlined {
-  border: 1px solid $primary-color;
+  color: $primary-color;
+  border: 1.5px solid $primary-color;
+  &:hover {
+    background-color: #dde5e8;
+  }
+  &:active {
+    color: $white-100;
+    background-color: hsl(221, 58%, 80%);
+  }
 }
 .disabled {
-  border: 1px solid $primary-color;
+  border: 1.5px solid $primary-color;
 }
 .filled {
   border: none;
