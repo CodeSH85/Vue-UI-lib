@@ -1,5 +1,8 @@
 <template>
-  <SpreadSheet :headers="columns" :data="data">
+  <SpreadSheet
+    :headers="columns"
+    :data="data"
+  >
   </SpreadSheet>
   {{ data[0] }}
 </template>

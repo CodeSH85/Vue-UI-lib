@@ -1,8 +1,15 @@
 <template>
-  <table>
+  <table
+    class="spread-sheet"
+    v-bind="$attrs"
+  >
     <thead>
       <tr>
-        <th>button</th>
+        <th>
+          <span style="width: 30px;">
+            b
+          </span>
+        </th>
         <th v-for="col in columns" :key="col.key">
           {{ col.title }}
         </th>
@@ -10,13 +17,26 @@
     </thead>
     <tbody>
       <tr class="" v-for="(row, r) in rows" :key="r">
-        <td>{{ r }}</td>
-        <td v-for="(col, c) in columns" :key="c">
+        <td>
+          <span style="width: 30px;">
+            {{ r }}
+          </span>
+        </td>
+        <td
+          v-for="(col, c) in columns" :key="c"
+          :class="'=' === sheet[col.key+r][0] ? 'formula' : '' "
+        >
           <input
-            v-model="row[col.key]"
+            :ref="col.key + r"
+            @focus="focus($event, col.key, r)"
+            @keydown="keydown($event, col.key, r)"
+            :value="sheet[col.key+r]"
+            @input="updateCell($event, col.key + r)"
+            @blur="onBlur($event, col.key + r)"
           />
-          <!-- @input="updateVal($event, r, col.key)" -->
-          <!-- :value="row[col.key]" -->
+          <span>
+            {{ sheet[col.key+r] }}
+          </span>
         </td>
       </tr>
     </tbody>
@@ -24,8 +44,11 @@
   {{ sheet }}
 </template>
 <script setup lang="ts">
-import { ref, PropType, computed, watch } from 'vue'
-import Headers from './SpreadSheet'
+// import Worker from './worker.ts'
+import { ref, PropType, reactive, watch, computed } from 'vue'
+import Header from './SpreadSheet'
+
+// console.log(Worker)
 
 interface DumData {
   a: string | undefined
@@ -38,7 +61,7 @@ interface DumData {
 
 const props = defineProps({
   headers: {
-    type: Array as PropType<Headers[]>,
+    type: Array as PropType<Header[]>,
     default: () => []
   },
   data: {
@@ -47,15 +70,10 @@ const props = defineProps({
   }
 })
 
-// const emit = defineEmits(['updateVal'])
-// function updateVal (e, index, key) {
-//   emit('updateVal', e.target.value, index, key)
-// }
-
 const columns = ref(props.headers)
 const rows = ref(props.data)
 
-const sheet = computed(() => {
+function buildSheet (): object {
   const obj = {}
   for (let r = 0; r < rows.value.length; r++) {
     for (let c = 0; c < columns.value.length; c++) {
@@ -64,9 +82,54 @@ const sheet = computed(() => {
     }
   }
   return obj
+}
+
+const sheet = reactive(buildSheet())
+
+function updateCell (event, key: string): void {
+  const value = event.target.value
+  sheet[key] = value
+  if (value.startsWith('=')) {
+    try {
+      // eslint-disable-next-line no-eval
+      const result = eval(value.substring(1))
+      console.log(result)
+    } catch (err) {
+      return 0
+    }
+  }
+}
+
+function onBlur (event, key): void {
+  return 0
+}
+
+const curCol = ref('')
+const curRow = ref('')
+const inputRef = computed(() => {
+  return curCol.value + curRow.value
 })
 
-console.log(sheet.value)
+function focus (event, col, row) {
+  curCol.value = col
+  curRow.value = row
+}
+
+function keydown (event, col, row): void {
+  const pressedKey = event.key
+  switch (pressedKey) {
+    case 'ArrowUp':
+      curRow.value--
+      console.log(inputRef.value)
+      break
+    case 'ArrowDown':
+      curRow.value++
+      console.log(inputRef.value)
+      break
+    default:
+      break
+  }
+}
 
 watch(() => sheet,
   () => {
@@ -76,12 +139,20 @@ watch(() => sheet,
 )
 
 </script>
-
 <style lang="scss" scoped>
+.spread-sheet {
+  table-layout: fixed;
+  border-collapse: collapse;
+  // width: 500px !important;
+  // width: 100%;
+}
 .header {
   display: flex;
 }
 .formula {
-  background-color: '#f0f0f0';
+  background-color: rgb(161, 206, 212);
+}
+input {
+  width: 70px;
 }
 </style>

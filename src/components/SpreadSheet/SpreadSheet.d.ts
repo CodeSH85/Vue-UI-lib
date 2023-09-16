@@ -1,5 +1,5 @@
 export interface Headers {
-  key: string;
+  key: string | number;
   title: string;
   type?: string;
 }
