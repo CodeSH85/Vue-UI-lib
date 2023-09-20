@@ -26,17 +26,19 @@
           v-for="(col, c) in columns" :key="c"
           :class="'=' === sheet[col+row] ? 'formula' : '' "
         >
-        <!-- :ref="col.key + r" -->
+        <div class=""
+          style="width: 70px; height: 1.3em; border: 1px solid rgb(120, 120, 120)"
+        >
           <input
             :ref="el => functionRef(el, col, row)"
             @keydown="keydown($event, col, row)"
-            :value="sheet[col+row]"
             @input="updateCell($event, col + row)"
             @blur="onBlur($event, col + row)"
           />
           <span>
             {{ sheet[col+row] }}
           </span>
+        </div>
         </td>
       </tr>
     </tbody>
@@ -61,93 +63,79 @@ const props = defineProps({
 const columns = ref<string[]>([])
 const rows = ref<number[]>([])
 
-for (let col = 'A'; col <= props.colRange; col = String.fromCharCode(col.charCodeAt() + 1)) {
+for (let col = 'A'; col <= props.colRange; col = String.fromCharCode(col.charCodeAt(0) + 1)) {
   columns.value.push(col)
 }
 for (let row = 1; row <= props.rowRange; row++) {
   rows.value.push(row)
 }
 
-function buildSheet (): object {
-  const obj = {}
-  for (let r = 0; r < rows.value.length; r++) {
-    for (let c = 0; c < columns.value.length; c++) {
-      const key = columns.value[c] + r
-      obj[key] = rows.value[r][columns.value[c]] ?? ''
-    }
-  }
-  return obj
+type Sheet = {
+  [coord: string]: string | null
 }
-const sheet = reactive(buildSheet())
+const sheet = reactive<Sheet>({})
 
-function updateCell (event, key: string): void {
+function updateCell (event: Event, key: string) {
+  // const value = event.target.value
+  return null
+}
+
+function onBlur (event: FocusEvent, key: string) {
   const value = event.target.value
-  sheet[key] = value
   if (value.startsWith('=')) {
     try {
+      // TODO: use worker
+      for (const coord in sheet) {
+        if (sheet[coord]) {
+          sheet[coord] = value
+        }
+        const match = /\$?[A-Za-z]+[1-9][0-9]*\b/.exec(value)
+        if (match && match[0]) {
+          return
+        }
+      }
       // eslint-disable-next-line no-eval
       const result = eval(value.substring(1))
-      console.log(result)
+      sheet[key] = result
     } catch (err) {
-      return 0
+      return null
     }
   }
 }
 
-function onBlur (event, key): void {
-  return 0
-}
-
-const curCol = ref('')
-const curRow = ref('')
-const inputRef = computed(() => {
+const curCol = ref<string>('')
+const curRow = ref<number>(0)
+const inputRef = computed<string>(() => {
   return curCol.value + curRow.value
 })
 
-const elements = ref({})
-const functionRef = (el, col, row) => {
+type ele = {
+  [cor: string]: HTMLInputElement,
+}
+
+const elements = ref<ele>({})
+const functionRef = (el: HTMLAllCollection, col: string, row: string) => {
   // elements.value.push(el) // infinite loop
   elements.value[col + row] = el
 }
-console.log(elements.value)
-const minCol = 'A'
-const maxCol = props.colRange // Adjust as needed
-const minRow = 1 // Adjust as needed
-const maxRow = props.rowRange // Assuming props.rowRange is the maximum row value
-function keydown (event, col, row): void {
+
+function keydown (event: KeyboardEvent, col: string, row: number): void {
   curCol.value = col
   curRow.value = row
-  if (col >= minCol &&
-    col <= maxCol &&
-    row >= minRow &&
-    row <= maxRow) {
-    const pressedKey = event.key
-    switch (pressedKey) {
-      case 'ArrowUp':
-        if (row > minRow) {
-          curRow.value--
-        }
-        break
-      case 'ArrowDown':
-        if (row < maxRow) {
-          curRow.value++
-        }
-        break
-      case 'ArrowLeft':
-        if (col > minCol) {
-          curCol.value = String.fromCharCode(curCol.value.charCodeAt(0) - 1)
-        }
-        break
-      case 'ArrowRight':
-        if (col < maxCol) {
-          curCol.value = String.fromCharCode(curCol.value.charCodeAt(0) + 1)
-        }
-        break
-      default:
-        break
-    }
+  const pressedKey = event.key
+  switch (pressedKey) {
+    case 'ArrowUp':
+      curRow.value--
+      break
+    case 'ArrowDown':
+      curRow.value++
+      break
+    default:
+      break
   }
-  elements.value[inputRef.value].focus()
+  if (elements.value[inputRef.value]) {
+    elements.value[inputRef.value].focus()
+  }
 }
 
 watch(() => sheet,
@@ -172,6 +160,15 @@ watch(() => sheet,
   background-color: rgb(161, 206, 212);
 }
 input {
+  position: absolute;
+  border: 0;
+  padding: 0;
   width: 70px;
+  color: transparent;
+  background: transparent;
+  &:focus {
+    color: #111;
+    background: #efe;
+  }
 }
 </style>
