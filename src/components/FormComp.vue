@@ -3,7 +3,7 @@
 
     <template v-for="col in columns" :key="col.key">
       <Text-input
-        outlined
+        variant="filled"
         :label="col.title"
         v-model="row[col.key]"
         draggable="true"

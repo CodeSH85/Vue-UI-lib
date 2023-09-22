@@ -5,10 +5,16 @@
       :header="columns"
       :data="data[0]"
     ></FormComp>
+    <TableComp
+      :header="columns"
+      :data="data"
+    >
+    </TableComp>
   </div>
 </template>
 <script setup lang="ts">
 import { reactive } from 'vue'
+import TableComp from '../components/UI/Table/TableComp.vue'
 import FormComp from '../components/FormComp.vue'
 const columns = reactive([
   {
