@@ -1,10 +1,10 @@
 <template>
   <main class="container">
-    <side-bar />
+    <SideBar />
     <section class="main-section">
       <router-view />
     </section>
-    <side-panel />
+    <SidePanel />
   </main>
 </template>
 <script setup lang="ts">
@@ -18,11 +18,15 @@ import SidePanel from './components/SidePanel/SidePanel.vue'
 <style lang="scss" scoped>
 .container{
   display: flex;
+  width: 100vw;
   background-color: #f5f5f5;
 }
 .main-section {
-  margin: 0.5rem 1rem;
+  overflow: auto;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 </style>
