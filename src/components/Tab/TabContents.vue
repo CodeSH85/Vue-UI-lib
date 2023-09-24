@@ -1,14 +1,17 @@
 <template>
-  <div class="tab-item-wrapper">
-    <template
-      v-for="item, i in tabItems" :key="i"
-    >
-      <slot v-bind="item">
-        <div v-if="tabValue === item.key" class="tab-item">
-          {{ item }}
-        </div>
-      </slot>
-    </template>
+  <div
+  class="tab-item-wrapper"
+  v-bind="$attrs"
+  >
+      <template
+        v-for="item, i in tabItems" :key="i"
+      >
+        <slot
+          v-if="item.key === tabValue"
+          name="test"
+          v-bind="item">
+        </slot>
+      </template>
   </div>
 </template>
 

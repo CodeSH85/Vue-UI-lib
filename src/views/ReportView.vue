@@ -1,15 +1,19 @@
 <template>
-  <!-- <div> -->
-    <TabGroups v-model="tab"></TabGroups>
-    <TabContents v-model="tab" :tab-Items="tabItems">
-    </TabContents>
-  <!-- </div> -->
+  <TabGroups v-model="tab" :items="tabItems">
+  </TabGroups>
+  <TabContents v-model="tab" :tab-Items="tabItems">
+    <template #test="item">
+      <div class="">{{ item }}</div>
+    </template>
+  </TabContents>
 </template>
 
 <script setup lang="ts">
 import TabGroups from '../components/Tab/TabGroups.vue'
 import TabContents from '../components/Tab/TabContents.vue'
-import { ref, watch } from 'vue'
+// import TabLabel from '../components/Tab/TabLabel.vue'
+import { ref } from 'vue'
+
 const tab = ref('')
 const tabItems = ref([
   { title: 'Tab A', key: 'a' },
@@ -18,10 +22,7 @@ const tabItems = ref([
   { title: 'Tab D', key: 'd' },
   { title: 'Tab E', key: 'e' }
 ])
-watch(tab, (val) => {
-  console.log(val)
-})
-</script>
 
+</script>
 <style scoped lang="scss">
 </style>
