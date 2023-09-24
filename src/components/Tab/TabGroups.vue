@@ -1,32 +1,21 @@
 <template>
   <div class="root" ref="root">
     <ul class="tab-wrapper" ref="tabWrapper">
-      <slot/>
       <li
       v-for="tab, t in tabs" :key="t"
       :class="(currentTab === tab.key ? 'active-tab' : '') + ' tab'"
       >
-        <span @click="setTab(tab.key)">
-          {{ tab.title }}
-        </span>
+        <slot>
+          <span @click="setTab(tab.key)">
+            {{ tab.title }}
+          </span>
+        </slot>
       </li>
     </ul>
-    <div class="tab-item-wrapper" :style="{'height': `${itemWrapperHeight}px`}">
-      <slot>
-        <template
-        v-for="items, i in tabItems" :key="i"
-        >
-          <div v-if="currentTab === items.key" class="tab-item">
-            {{ items.title }}
-          </div>
-        </template>
-      </slot>
-    </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, onMounted, PropType } from 'vue'
-import useComputedStyle from '../../composable/useComputedStyle'
+import { ref, watch, PropType } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -67,26 +56,12 @@ watch(tabValue,
   { immediate: true, deep: true }
 )
 
-const tabWrapper = ref(null)
-const root = ref(null)
-const itemWrapperHeight = ref<number>(0)
-
-function filterOut (string: string): number {
-  const final: number = parseInt(string.replace('px', ''))
-  return final
-}
-
-onMounted(() => {
-  const tabHeight = useComputedStyle(tabWrapper.value, 'height')
-  const rootHeight = useComputedStyle(root.value, 'height')
-  itemWrapperHeight.value = filterOut(rootHeight) - filterOut(tabHeight)
-})
 </script>
 
 <style lang="scss" scoped>
 .root {
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
 }
 .tab-wrapper {
   display: flex;
@@ -95,10 +70,6 @@ onMounted(() => {
   width: 3em;
   padding: .4em;
   background-color: #cccccc;
-}
-.tab-item-wrapper {
-  // height: inherit;
-  background-color: #cecece;
 }
 .active-tab {
   background-color: #fff;
