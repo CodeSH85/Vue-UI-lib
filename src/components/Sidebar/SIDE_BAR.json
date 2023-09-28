@@ -1,45 +1,55 @@
-[
-  {
-    "main_module": [
-      {
-        "icon": "home",
-        "title": "Home",
-        "key": "home"
-      },
-      {
-        "icon": "",
-        "title": "Report",
-        "key": "report"
-      },
-      {
-        "icon": "",
-        "title": "Form",
-        "key": "form"
-      },
-      {
-        "icon": "",
-        "title": "Diagram",
-        "key": "diagram"
-      },
-      {
-        "icon": "",
-        "title": "Chat Room",
-        "key": "chat"
-      },
-      {
-        "icon": "",
-        "title": "Diagnosis",
-        "key": "diagnose"
-      }
-    ]
-  },
-  {
-    "side_module": [
-      {
-        "icon": "",
-        "title": "Setting",
-        "key": "setting"
-      }
-    ]
-  }
-]
+{
+  "main_module": [
+    {
+      "id": "1",
+      "icon": "home",
+      "title": "Home",
+      "key": "home",
+      "componentId": "default"
+    },
+    {
+      "id": "2",
+      "icon": "",
+      "title": "Accounting",
+      "key": "accounting",
+      "componentId": "default"
+    },
+    {
+      "id": "3",
+      "icon": "",
+      "title": "Sales",
+      "key": "sale",
+      "componentId": "default"
+    },
+    {
+      "id": "4",
+      "icon": "",
+      "title": "Diagram",
+      "key": "diagram",
+      "componentId": "default"
+    },
+    {
+      "id": "5",
+      "icon": "",
+      "title": "Spread Sheet",
+      "key": "spreadsheet",
+      "componentId": "default"
+    },
+    {
+      "id": "6",
+      "icon": "",
+      "title": "Diagnosis",
+      "key": "diagnose",
+      "componentId": "default"
+    }
+  ],
+  "side_module": [
+    {
+      "id": "7",
+      "icon": "",
+      "title": "Setting",
+      "key": "setting",
+      "componentId": "default"
+    }
+  ]
+}

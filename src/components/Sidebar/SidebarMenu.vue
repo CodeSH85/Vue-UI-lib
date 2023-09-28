@@ -2,12 +2,12 @@
   <nav class="sidebar">
     <ul class="main-module-wrapper">
       <li
-        v-for="item in option['main_module']" :key="item.key"
+        v-for="item in option" :key="item.key"
         class="btn-wrapper"
       >
         <SidebarButton
           :title="item.title"
-          @click="navigateRoute(item.key)"
+          @click="navigateRoute(item)"
         >
         </SidebarButton>
       </li>
@@ -17,15 +17,25 @@
 <script setup lang="ts">
 import SIDE_BAR from './SIDE_BAR.json'
 import SidebarButton from './SidebarButton.vue'
-import { reactive } from 'vue'
+import { ref } from 'vue'
 import { SidebarOption } from './type'
-import router from '../../router'
+// import router from '../../router'
+import { useTabStore } from '../../store/useTabStore'
 
-const option = reactive<SidebarOption>(SIDE_BAR[0])
+const option = ref<SidebarOption[]>(SIDE_BAR.main_module)
 
-function navigateRoute (href:string) {
-  console.log(href)
-  router.push(href)
+const tabStore = useTabStore()
+
+function navigateRoute (item: SidebarOption) {
+  console.log(item)
+  const obj = {
+    id: tabStore.tabs.length + 1,
+    key: item,
+    componentId: item,
+    title: item.title
+  }
+  tabStore.addTab(obj)
+  // router.push(href)
 }
 
 </script>

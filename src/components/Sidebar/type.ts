@@ -1,14 +1,9 @@
 interface SidebarOption {
-  main_module: {
-    icon: string
-    title: string
-    key: string
-  }[],
-  side_module: {
-    icon: string
-    title: string
-    key: string
-  }[]
+  id: number | string
+  title: string,
+  componentId: string | number
+  key: string,
+  icon?: string
 }
 
 export type { SidebarOption }
