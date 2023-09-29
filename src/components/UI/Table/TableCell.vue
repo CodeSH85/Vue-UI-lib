@@ -1,20 +1,23 @@
 <template>
   <td
     v-bind="$attrs"
-    :role="props.role"
   >
     <slot>
+      <span>
+        {{ data }}
+      </span>
     </slot>
   </td>
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   cellStyle: {
     type: String
   },
-  role: {
-    type: String
+  data: {
+    type: String || Number || Boolean || undefined,
+    default: 'head'
   }
 })
 </script>

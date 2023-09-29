@@ -6,30 +6,36 @@
     <table>
       <thead>
         <tr>
-          <slot></slot>
-          <th v-for="col, c in header" :key="c">
-            <TableCell>
-              <span>
-                {{ col.title }}
-              </span>
-            </TableCell>
-          </th>
+          <slot name="header">
+
+            <slot name="header-prepend">
+            </slot>
+            <th v-for="col, c in header" :key="c">
+              <TableCell :data="col.title" />
+            </th>
+            <slot name="header-append">
+            </slot>
+          </slot>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="row, r in data" :key="r">
-          <slot></slot>
-          <TableCell v-for="col, c in header" :key="c">
-            <input type="text" @blur="onBlur($event)" :value="row[col.key]">
-          </TableCell>
-        </tr>
+        <slot name="body">
+          <tr v-for="row, r in data" :key="r">
+            <TableCell v-for="col, c in header" :key="c">
+              <input type="text" @blur="onBlur($event, r, col.key)" :value="row[col.key]">
+            </TableCell>
+          </tr>
+        </slot>
       </tbody>
       <tfoot>
+        <slot name="footer">
+        </slot>
       </tfoot>
     </table>
   </div>
 </template>
 <script setup lang="ts">
+
 import TableCell from './TableCell.vue'
 import { PropType } from 'vue'
 
@@ -56,7 +62,9 @@ defineProps({
     default: () => ({})
   }
 })
-const onBlur = (event: FocusEvent) => {
+const emit = defineEmits(['change', ''])
+const onBlur = (event: FocusEvent, seq: number | string, key: string) => {
+  emit('change', event.target?.value, seq, key)
   console.log(event.target?.value)
   return null
 }
