@@ -20,11 +20,11 @@
       </thead>
       <tbody>
         <slot name="body">
-          <tr v-for="row, r in data" :key="r">
+          <TableRow v-for="row, r in data" :key="r" :rowData="row">
             <TableCell v-for="col, c in header" :key="c">
               <input type="text" @blur="onBlur($event, r, col.key)" :value="row[col.key]">
             </TableCell>
-          </tr>
+          </TableRow>
         </slot>
       </tbody>
       <tfoot>
@@ -37,6 +37,7 @@
 <script setup lang="ts">
 
 import TableCell from './TableCell.vue'
+import TableRow from './TableRow.vue'
 import { PropType } from 'vue'
 
 type ColumnGroupSetting = {
