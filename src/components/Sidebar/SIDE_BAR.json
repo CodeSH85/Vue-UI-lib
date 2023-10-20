@@ -5,7 +5,7 @@
       "icon": "home",
       "title": "Home",
       "key": "home",
-      "componentId": "default"
+      "componentId": "home"
     },
     {
       "id": "2",
@@ -19,28 +19,28 @@
       "icon": "",
       "title": "Sales",
       "key": "sale",
-      "componentId": "default"
+      "componentId": "FormView"
     },
     {
       "id": "4",
       "icon": "",
       "title": "Diagram",
       "key": "diagram",
-      "componentId": "default"
+      "componentId": "DiagramView"
     },
     {
       "id": "5",
       "icon": "",
       "title": "Spread Sheet",
       "key": "spreadsheet",
-      "componentId": "default"
+      "componentId": "SpreadSheetView"
     },
     {
       "id": "6",
       "icon": "",
       "title": "Diagnosis",
       "key": "diagnose",
-      "componentId": "default"
+      "componentId": "DiagramView"
     }
   ],
   "side_module": [

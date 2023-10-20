@@ -3,15 +3,16 @@
   class="tab-item-wrapper"
   v-bind="$attrs"
   >
-      <template
-        v-for="item, i in tabItems" :key="i"
+    <template
+      v-for="item, index in tabItems" :key="index"
+    >
+      <slot
+        v-if="item.key === tabValue"
+        name="default"
+        v-bind="{index, item}"
       >
-        <slot
-          v-if="item.key === tabValue"
-          name="test"
-          v-bind="item">
-        </slot>
-      </template>
+      </slot>
+    </template>
   </div>
 </template>
 
