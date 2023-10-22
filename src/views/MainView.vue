@@ -1,21 +1,23 @@
 <template>
-  <TopBar class="top-bar"></TopBar>
-  <main class="container">
-    <SidebarMenu />
-    <section class="main-section">
-      <!-- <TabGroups v-model="tab" :items="tabItems"> -->
-      <TabGroups
-      @close-tab="closeTab"
-      v-model="tab" :items="storeTabs">
-      </TabGroups>
-      <TabContents v-model="tab" :tab-Items="storeTabs">
-        <template #default="{ item }">
-          {{ item }}
-          <MiddleWare :component-id="item.componentId"></MiddleWare>
-        </template>
-      </TabContents>
-    </section>
-  </main>
+  <div class="wrapper">
+    <TopBar class="top-bar"></TopBar>
+    <main class="container">
+      <SidebarMenu />
+      <section class="main-section">
+        <!-- <TabGroups v-model="tab" :items="tabItems"> -->
+          <TabGroups
+          @close-tab="closeTab"
+          v-model="tab" :items="storeTabs">
+        </TabGroups>
+        <TabContents v-model="tab" :tab-Items="storeTabs">
+          <template #default="{ item }">
+            {{ item }}
+            <MiddleWare :component-id="item.componentId"></MiddleWare>
+          </template>
+        </TabContents>
+      </section>
+    </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -42,9 +44,15 @@ function closeTab (tabId: Tab['id']) {
 
 </script>
 <style lang="scss" scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 .container{
   display: flex;
   width: 100vw;
+  height: 100%;
   background-color: #f5f5f5;
 }
 .main-section {
