@@ -6,9 +6,13 @@
       :data="data[0]"
     ></FormComp>
     <TableComp
-      :header="columns"
+      :headers="columns"
       :data="data"
+      @change="updateTableData"
+      @update-col="updateCol"
     >
+      <template v-slot:body>
+      </template>
     </TableComp>
   </div>
 </template>
@@ -67,6 +71,16 @@ const data = reactive([
     remark: 'memo'
   }
 ])
+
+function updateTableData (value, seq, key, ...args) {
+  console.log(seq, key)
+  data[seq][key] = value
+}
+
+const updateCol = (cols: object[]) => {
+  console.log(cols)
+}
+
 </script>
 
 <style lang="scss" scoped>

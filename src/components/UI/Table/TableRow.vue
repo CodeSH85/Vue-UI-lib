@@ -1,6 +1,8 @@
 <template>
   <tr>
-    <td>{{ props.rowData }}</td>
+    <slot>
+      <td>{{ props.rowData }}</td>
+    </slot>
   </tr>
 </template>
 
