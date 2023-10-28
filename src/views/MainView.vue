@@ -4,17 +4,24 @@
     <main class="container">
       <SidebarMenu />
       <section class="main-section">
-        <!-- <TabGroups v-model="tab" :items="tabItems"> -->
+        <template v-if="tabs.length">
           <TabGroups
-          @close-tab="closeTab"
-          v-model="tab" :items="storeTabs">
-        </TabGroups>
-        <TabContents v-model="tab" :tab-Items="storeTabs">
-          <template #default="{ item }">
-            {{ item }}
-            <MiddleWare :component-id="item.componentId"></MiddleWare>
-          </template>
-        </TabContents>
+            @close-tab="closeTab"
+            v-model="tab"
+            :items="storeTabs"
+          >
+          </TabGroups>
+          <TabContents v-model="tab" :tab-Items="storeTabs">
+            <template #default="{ item }">
+              <!-- {{ item }} -->
+              {{ storeTabs }}
+              <MiddleWare :component-id="item.componentId"></MiddleWare>
+            </template>
+          </TabContents>
+        </template>
+        <template v-else>
+          default view
+        </template>
       </section>
     </main>
   </div>
@@ -27,7 +34,8 @@ import TabGroups from '../components/Tab/TabGroups.vue'
 import TabContents from '../components/Tab/TabContents.vue'
 import MiddleWare from '../components/MiddleWare.vue'
 import { useTabStore } from '../store/useTabStore'
-import { ref, computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { ref, watch, computed } from 'vue'
 import { Tab } from '../components/Tab/Tab'
 
 const tab = ref('')
@@ -38,9 +46,15 @@ const storeTabs = computed(() => {
   return tabStore.tabs
 })
 
+const { tabs } = storeToRefs(tabStore)
+
 function closeTab (tabId: Tab['id']) {
   tabStore.closeTab(tabId)
 }
+
+watch(tabs, (val) => {
+  console.log(val)
+})
 
 </script>
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <div
-  class="tab-item-wrapper"
-  v-bind="$attrs"
+    class="tab-item-wrapper"
+    v-bind="$attrs"
   >
     <template
       v-for="item, index in tabItems" :key="index"
@@ -48,7 +48,8 @@ const tabValue = computed({
 
 <style lang="scss" scoped>
 .tab-item-wrapper {
-  // height: inherit;
-  background-color: #cecece;
+  // height: 100%;
+  padding: $lg;
+  background-color: #ffffff;
 }
 </style>

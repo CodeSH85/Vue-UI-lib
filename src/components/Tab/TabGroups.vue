@@ -1,17 +1,22 @@
 <template>
   <div class="root" ref="root">
-    <slot>
-      <ul class="tab-item-wrapper">
-        <li
-          v-for="item, i in items" :key="i"
-          :class="(currentTab === item.key ? 'active-tab' : '') + ' tab'"
-        >
-          <button @click="setCurrentTab(item.key)">
-            {{ item.title }}
-          </button>
-        </li>
-      </ul>
-    </slot>
+    <ul class="tab-item-wrapper">
+      <li
+        v-for="item, index in items" :key="index"
+        :class="(currentTab === item.key ? 'active-tab' : '') + ' tab'"
+      >
+        <slot v-bind="{ index, item }">
+          <span class="tab-item">
+            <button @click="setCurrentTab(item.key)">
+              {{ item.title }}
+            </button>
+            <button @click="closeTab(item.id)">
+              x
+            </button>
+          </span>
+        </slot>
+      </li>
+    </ul>
   </div>
 </template>
 <script setup lang="ts">
@@ -22,7 +27,7 @@ type TabItem = {
   [items: string]: unknown
 }
 
-const props = defineProps({
+defineProps({
   modelValue: {
     type: [String, Number] as PropType<string | number>
   },
@@ -30,18 +35,21 @@ const props = defineProps({
     type: Array as PropType<TabItem[]>
   }
 })
-const tabItems = ref(props.items)
-const currentTab = ref<string | number>(tabItems.value[0].key)
+
+const currentTab = ref<string | number>()
 
 onMounted(() => {
   // currentTab.value = tabItems.value[0].key
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'closeTab'])
 
 const setCurrentTab = (key: string) => {
   currentTab.value = key
   emit('update:modelValue', key)
+}
+const closeTab = (key: string | number) => {
+  emit('closeTab', key)
 }
 
 watch(currentTab,
@@ -53,24 +61,24 @@ watch(currentTab,
 )
 
 </script>
-
 <style lang="scss" scoped>
-.root {
-  // width: 100%;
-  // height: 100%;
-}
 .tab-wrapper {
   display: flex;
 }
 .tab {
-  width: 3em;
   padding: .4em;
   background-color: #cccccc;
+}
+.tab-item {
+  display: flex;
+}
+.tab-item > * {
+  padding: $sm;
 }
 .tab-item-wrapper {
   display: flex;
 }
 .active-tab {
-  background-color: #f6f6f6;
+  background-color: #dcf1ff;
 }
 </style>
