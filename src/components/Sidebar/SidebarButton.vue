@@ -1,14 +1,32 @@
 <template>
-  <button>
-    {{ props.title }}
-    <i data-feather="home"></i>
+  <button
+    :class="mini ? 'mini' : ''"
+  >
+    <slot>
+      <span v-if="!mini">
+        {{ props.title }}
+      </span>
+      <span v-else>
+        {{ props.title.charAt(0) }}
+      </span>
+    </slot>
   </button>
 </template>
 <script setup lang="ts">
-import feather from 'feather-icons'
 
-feather.replace()
-const props = defineProps(['title', 'isSub'])
+const props = defineProps(['title', 'isSub', 'mini'])
+
 </script>
-<style scoped>
+<style lang="scss" scoped>
+button {
+  transition: 500ms;
+}
+.mini {
+  width: auto;
+  text-wrap: wrap;
+  padding: $md;
+}
+.default {
+
+}
 </style>

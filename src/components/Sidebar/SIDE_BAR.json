@@ -40,7 +40,7 @@
       "icon": "",
       "title": "Diagnosis",
       "key": "diagnose",
-      "componentId": "DiagramView"
+      "componentId": "EditorView"
     }
   ],
   "side_module": [

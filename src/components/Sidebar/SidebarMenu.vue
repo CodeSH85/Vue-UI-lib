@@ -1,13 +1,20 @@
 <template>
-  <nav class="sidebar">
+  <nav
+    class="sidebar"
+    :class="mini ? 'mini' : ''"
+  >
     <ul class="main-module-wrapper">
+      <li :class="(mini ? 'mini' : 'default')">
+        <button @click="toggleMini">X</button>
+      </li>
       <li
         v-for="item in option" :key="item.key"
         class="btn-wrapper"
       >
         <SidebarButton
           :title="item.title"
-          @click="navigateRoute(item)"
+          @click="addTab(item)"
+          :mini="mini"
         >
         </SidebarButton>
       </li>
@@ -19,33 +26,36 @@ import SIDE_BAR from './SIDE_BAR.json'
 import SidebarButton from './SidebarButton.vue'
 import { ref } from 'vue'
 import { SidebarOption } from './type'
-// import router from '../../router'
 import { useTabStore } from '../../store/useTabStore'
 
-const option = ref<SidebarOption[]>(SIDE_BAR.main_module)
+const mini = ref(false)
 
+const option = ref<SidebarOption[]>(SIDE_BAR.main_module)
 const tabStore = useTabStore()
 
-function navigateRoute (item: SidebarOption) {
-  console.log(item)
+function addTab (item: SidebarOption) {
   const obj = {
     id: tabStore.tabs.length + 1,
-    key: item,
-    componentId: item,
-    title: item.title
+    title: item.title,
+    key: item.key,
+    componentId: item.componentId
   }
   tabStore.addTab(obj)
-  // router.push(href)
+}
+
+function toggleMini () {
+  mini.value = !mini.value
 }
 
 </script>
 <style lang="scss" scoped>
 .sidebar {
-  background: #005AA7;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(#b8e4d8, #aed0ed);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(#b8e4d8, #aed0ed); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  min-height: 100vh;
-  min-width: 4em;
+  background: #005AA7;
+  background: -webkit-linear-gradient(#b8e4d8, #aed0ed);
+  background: linear-gradient(#b8e4d8, #aed0ed);
+  width: fit-content;
+  padding: $sm;
+  transition: 500ms;
 }
 .btn-wrapper {
   display: flex;
@@ -61,5 +71,7 @@ function navigateRoute (item: SidebarOption) {
     color: white;
     background-color: darken(rgba(14, 47, 178, 0.5), 50%);
   }
+}
+.mini {
 }
 </style>
