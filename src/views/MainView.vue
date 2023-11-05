@@ -5,22 +5,27 @@
       <SidebarMenu />
       <section class="main-section">
         <template v-if="tabs.length">
-          <TabGroups
+          <TabGroup
             @close-tab="closeTab"
             v-model="tab"
             :items="storeTabs"
           >
-          </TabGroups>
-          <TabContents v-model="tab" :tab-Items="storeTabs">
+          </TabGroup>
+          <TabContent
+            v-model="tab"
+            :tab-Items="storeTabs"
+          >
             <template #default="{ item }">
-              <!-- {{ item }} -->
-              {{ storeTabs }}
+              <!-- {{ storeTabs }} -->
               <MiddleWare :component-id="item.componentId"></MiddleWare>
             </template>
-          </TabContents>
+          </TabContent>
         </template>
         <template v-else>
           default view
+          <ul>
+            <li>link</li>
+          </ul>
         </template>
       </section>
     </main>
@@ -30,16 +35,15 @@
 <script setup lang="ts">
 import TopBar from '../components/TopBar.vue'
 import SidebarMenu from '../components/Sidebar/SidebarMenu.vue'
-import TabGroups from '../components/Tab/TabGroups.vue'
-import TabContents from '../components/Tab/TabContents.vue'
+import TabGroup from '../components/Tab/TabGroup.vue'
+import TabContent from '../components/Tab/TabContent.vue'
 import MiddleWare from '../components/MiddleWare.vue'
 import { useTabStore } from '../store/useTabStore'
 import { storeToRefs } from 'pinia'
-import { ref, watch, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { Tab } from '../components/Tab/Tab'
 
 const tab = ref('')
-
 const tabStore = useTabStore()
 
 const storeTabs = computed(() => {
@@ -52,7 +56,7 @@ function closeTab (tabId: Tab['id']) {
   tabStore.closeTab(tabId)
 }
 
-watch(tabs, (val) => {
+watch(tab, (val) => {
   console.log(val)
 })
 

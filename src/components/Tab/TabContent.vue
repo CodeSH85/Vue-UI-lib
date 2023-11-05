@@ -1,14 +1,12 @@
 <template>
   <div
     class="tab-item-wrapper"
-    v-bind="$attrs"
   >
     <template
       v-for="item, index in tabItems" :key="index"
     >
       <slot
         v-if="item.key === tabValue"
-        name="default"
         v-bind="{index, item}"
       >
       </slot>
@@ -17,10 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { PropType, computed, watch } from 'vue'
 
 type TabItem = {
   key: string,
+  componentId: string,
   [items: string]: unknown
 }
 
@@ -42,6 +41,10 @@ const tabValue = computed({
   set (value) {
     emit('update:modelValue', value)
   }
+})
+
+watch(tabValue, (val) => {
+  console.log(val)
 })
 
 </script>

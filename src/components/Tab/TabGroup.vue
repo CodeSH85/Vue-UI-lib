@@ -6,11 +6,17 @@
         :class="(currentTab === item.key ? 'active-tab' : '') + ' tab'"
       >
         <slot v-bind="{ index, item }">
-          <span class="tab-item">
-            <button @click="setCurrentTab(item.key)">
+          <span
+            class="tab-item"
+          >
+            <button
+              @click="setCurrentTab(item.key)"
+            >
               {{ item.title }}
             </button>
-            <button @click="closeTab(item.id)">
+            <button
+              @click="closeTab(item.id)"
+            >
               x
             </button>
           </span>
@@ -20,14 +26,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { PropType, ref, watch, onMounted } from 'vue'
+import { PropType, ref, watch, onBeforeMount } from 'vue'
 
 type TabItem = {
   key: string,
   [items: string]: unknown
 }
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: [String, Number] as PropType<string | number>
   },
@@ -38,10 +44,6 @@ defineProps({
 
 const currentTab = ref<string | number>()
 
-onMounted(() => {
-  // currentTab.value = tabItems.value[0].key
-})
-
 const emit = defineEmits(['update:modelValue', 'closeTab'])
 
 const setCurrentTab = (key: string) => {
@@ -50,7 +52,35 @@ const setCurrentTab = (key: string) => {
 }
 const closeTab = (key: string | number) => {
   emit('closeTab', key)
+  console.log(currentTab.value)
+  const curIndex = props.items.findIndex(item => {
+    return currentTab.value === item.key
+  })
+  if (props.items[curIndex + 1]) {
+    console.log(props.items[curIndex + 1].key)
+    currentTab.value = props.items[curIndex + 1].key
+    emit('update:modelValue', props.items[curIndex + 1].key)
+  } else {
+    console.log(props.items[curIndex - 1].key)
+    currentTab.value = props.items[curIndex - 1].key
+    emit('update:modelValue', props.items[curIndex - 1].key)
+  }
 }
+
+onBeforeMount(() => {
+  currentTab.value = props.items[props.items.length - 1].key
+  emit('update:modelValue', props.items[props.items.length - 1].key)
+})
+
+watch(props.items,
+  (val) => {
+    if (val) {
+      currentTab.value = val[val.length - 1].key
+      emit('update:modelValue', val[val.length - 1].key)
+    }
+  },
+  { immediate: true }
+)
 
 watch(currentTab,
   (newVal) => {
