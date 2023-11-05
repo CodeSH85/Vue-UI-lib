@@ -1,13 +1,10 @@
 <template>
   <slot>
-    <div
-      v-if="loading"
-      class=""
-    >
+    <div v-if="loading" class="">
       loading
     </div>
   </slot>
-  <div>
+  <div class="table-container">
     <table>
       <thead>
         <TableHeader
@@ -19,24 +16,28 @@
       </thead>
       <tbody>
         <slot name="body">
-          <TableRow v-for="row, r in data" :key="r" :rowData="row">
-            <TableCell v-for="col, c in headers" :key="c">
-              <input type="text" @blur="onBlur($event, r, col.key)" :value="row[col.key]">
-            </TableCell>
-          </TableRow>
+          <template v-for="row, r in data" :key="r">
+            <TableRow :rowData="row" :colData="headers">
+            </TableRow>
+          </template>
         </slot>
       </tbody>
       <tfoot>
         <slot name="footer">
+          <TableFooter></TableFooter>
         </slot>
       </tfoot>
     </table>
+    <slot name="table-append">
+      <TablePagePanel></TablePagePanel>
+    </slot>
   </div>
 </template>
 <script setup lang="ts">
 
-import TableCell from './TableCell.vue'
 import TableHeader from './TableHeader.vue'
+import TableFooter from './TableFooter.vue'
+import TablePagePanel from './TablePagePanel.vue'
 import TableRow from './TableRow.vue'
 import { PropType, ref } from 'vue'
 
@@ -68,11 +69,7 @@ const emit = defineEmits([
   'setActiveHeader',
   'updateCol'
 ])
-const onBlur = (event: FocusEvent, seq: number | string, key: string) => {
-  emit('change', event.target?.value, seq, key)
-  console.log(event.target?.value)
-  return null
-}
+
 const loading = ref<boolean>(false)
 
 const setActiveHeader = (key: string) => {
@@ -103,7 +100,11 @@ const dndHeader = (cols: object) => {
 
 </script>
 <style lang="scss" scoped>
+.table-container {
+  width: 100%;
+}
 table {
+  table-layout: fixed;
   border-spacing: 0;
 }
 </style>

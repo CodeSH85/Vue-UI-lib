@@ -50,7 +50,7 @@ function setActiveHeader (key: string) {
 </script>
 <style lang="scss" scoped>
 tr {
-  background-color: #115fbf;
+  background-color: $primary-color;
   color: $white
 }
 th {

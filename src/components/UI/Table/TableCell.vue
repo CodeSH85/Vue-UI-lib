@@ -4,7 +4,7 @@
   >
     <slot>
       <span>
-        {{ data }}
+        {{ data[col.key] }}
       </span>
     </slot>
   </td>
@@ -16,8 +16,10 @@ defineProps({
     type: String
   },
   data: {
-    type: String || Number || Boolean || undefined,
-    default: 'head'
+    type: Object
+  },
+  col: {
+    type: Object
   }
 })
 </script>
