@@ -2,7 +2,7 @@
   <div class="root">
     <button @click="prev">{{ '<' }}</button>
     <span>{{ currentPage }}</span>
-    <SelectComp :items="max"/>
+    <SelectComp v-model="currentPage" :items="max"/>
     <button @click="next">{{ '>' }}</button>
   </div>
 </template>
