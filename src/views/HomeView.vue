@@ -1,18 +1,23 @@
 <template>
-  <EditorComp />
-  <Text-input filled outlined label="hello"></Text-input>
-  <Text-input primary v-model="test" type="number"></Text-input>
-  <Text-input second disabled></Text-input>
-  <ButtonComp>test</ButtonComp>
+  <div class="">
+    <button-comp variant="outlined">outlined</button-comp>
+    <menu-comp
+      :items="items" v-model="v"
+    />
+    <trigger></trigger>
+  </div>
 </template>
 <script setup lang="ts">
-import TextInput from '../components/UI/TextInput.vue'
-import ButtonComp from '../components/UI/ButtonComp.vue'
-import EditorComp from '../components/EditorComp.vue'
-
+import ButtonComp from '../components/UI/Button/ButtonComp.vue'
+import MenuComp from '../components/UI/Menu/MenuComp.vue'
+import trigger from '../components/UI/Popper/trigger.vue'
 import { ref } from 'vue'
-
-const test = ref<string>('')
+const v = ref('')
+const items = [
+  { title: 'SKT', key: 'SKT', value: 'skt' },
+  { title: 'JDG', key: 'JDG', value: 'jdg' },
+  { title: 'BLG', key: 'BLG', value: 'blg' }
+]
 
 </script>
 <style lang="scss" scoped>
