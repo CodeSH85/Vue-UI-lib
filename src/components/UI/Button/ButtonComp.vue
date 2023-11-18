@@ -2,27 +2,20 @@
   <button
     ref="buttonRef"
     :class="[variant]"
+    :disabled="disabled"
+    :style="{
+      color: color
+    }"
   >
-    <slot default>
-    </slot>
+    <slot />
   </button>
 </template>
 <script setup lang="ts">
-import { PropType, ref } from 'vue'
+import { ButtonProps } from './props'
+import { ref } from 'vue'
 
 const props = defineProps({
-  variant: {
-    type: String as PropType<string | undefined>,
-    default: 'default'
-  },
-  size: {
-    type: String,
-    default: 'md'
-  },
-  loading: {
-    type: Boolean,
-    default: false
-  }
+  ...ButtonProps
 })
 
 const classList = ref<string[]>([])
