@@ -1,7 +1,12 @@
 <template>
   <button
     ref="buttonRef"
-    :class="[variant]"
+    :class="[
+      variant,
+      size,
+      rounded,
+      'rounded'
+    ]"
     :disabled="disabled"
     :style="{
       color: color
@@ -14,15 +19,9 @@
 import { ButtonProps } from './props'
 import { ref } from 'vue'
 
-const props = defineProps({
+defineProps({
   ...ButtonProps
 })
-
-const classList = ref<string[]>([])
-const variantList: string[] = ['outlined', 'filled', 'plain', 'text', 'default', 'elevated']
-const variantResult: string | undefined = variantList.find(style => style === props.variant)
-classList.value.push(variantResult ?? 'default')
-
 type DOMElement = HTMLElement | null
 const buttonRef = ref<DOMElement>(null)
 
@@ -32,24 +31,34 @@ defineExpose({
 
 </script>
 <style lang="scss" scoped>
-button {
-  color: $white;
+.default {
+  color: $on-primary-color;
   padding: $md;
   margin: $md;
-  letter-spacing: .08em;
+  letter-spacing: .065em;
   text-transform: uppercase;
   border-radius: $border-radius-md;
-}
-.default {
   background-color: $primary-color;
+  box-shadow: $shadow-main;
   &:hover {
-    background-color: #1a9cbf;
+    background-color: $primary-container-color;
   }
   &:active {
-    background-color: #034078;
+    background-color: $primary-container-color;
   }
 }
+.flat {
+  @extend .default;
+  box-shadow: none;
+}
 .outlined {
+  color: $on-primary-color;
+  padding: $md;
+  margin: $md;
+  letter-spacing: .065em;
+  text-transform: uppercase;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-main;
   color: $primary-color;
   border: 1.5px solid $primary-color;
   background-color: none;
@@ -58,19 +67,33 @@ button {
   }
   &:active {
     color: $white;
-    background-color: hsl(221, 58%, 80%);
+    background-color: $primary-container-color;
+  }
+}
+.text {
+  padding: $md;
+  margin: $md;
+  letter-spacing: .065em;
+  text-transform: uppercase;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-main;
+  background-color: none;
+  color: $primary-color;
+  &:hover {
+    background-color: $gray-200;
   }
 }
 .disabled {
   border: 1.5px solid $primary-color;
 }
-.filled {
-  border: none;
-  background-color: $bg-gray-primary;
-  box-shadow: $shadow-main;
-}
-.elevated {
-  background-color: $primary-color;
-  box-shadow: $shadow-main;
+
+.plain {
+  padding: $md;
+  margin: $md;
+  letter-spacing: .065em;
+  text-transform: uppercase;
+  border-radius: $border-radius-md;
+  color: $primary-color;
+  background-color: none;
 }
 </style>

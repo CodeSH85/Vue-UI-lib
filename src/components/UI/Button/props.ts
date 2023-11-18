@@ -1,11 +1,11 @@
 import { type PropType } from 'vue'
 
-export type ButtonType = 'default' | 'primary' | 'success' | 'warning' | 'danger'
+export type ButtonType = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'
 
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export type ButtonVariant =
-  'default' | 'outlined' | 'filled' | 'flat' | 'elevated' | 'plain'
+  'default' | 'outlined' | 'flat' | 'text' | 'plain'
 
 export const ButtonProps = {
   type: {
@@ -19,7 +19,10 @@ export const ButtonProps = {
   size: String,
   block: Boolean,
   disabled: Boolean,
-  round: Boolean,
+  rounded: {
+    type: String as PropType<ButtonSize>
+  },
   textColor: String,
-  color: String
+  color: String,
+  icon: Boolean
 }
