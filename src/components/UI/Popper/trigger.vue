@@ -1,6 +1,7 @@
 <template>
   <div class="popper">
-    <Button-Comp class="" :ref="el => functionRef(el)"
+      <Button-Comp
+      :ref="el => functionRef(el)"
       @click="showPopper"
     >
       click me
@@ -22,13 +23,14 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import ButtonComp from '../Button/ButtonComp.vue'
+import useComputedStyle from '../../../composable/useComputedStyle.ts'
 
 defineOptions({
   name: 'PopperTrigger'
 })
 
 const display = ref(false)
-const trigger = ref()
+const triggerRef = ref()
 
 const contentPos = ref({
   x: 0,
@@ -36,16 +38,28 @@ const contentPos = ref({
 })
 
 function functionRef (ele: HTMLElement) {
-  trigger.value = ele
+  triggerRef.value = ele
 }
+
 onMounted(() => {
-  if (trigger.value.buttonRef) {
-    contentPos.value.y = trigger.value.buttonRef.getBoundingClientRect().height
+  if (triggerRef.value.buttonRef) {
+    contentPos.value.y = triggerRef.value.buttonRef.getBoundingClientRect().height
+    const margin = parseStyle(useComputedStyle(triggerRef.value.buttonRef, 'margin'))
+    contentPos.value.y += (margin)
   }
 })
+
+function parseStyle (string: string, unit: string) {
+  if (string) {
+    return parseInt(string.replaceAll(unit, ''))
+  }
+}
+
 const showPopper = () => {
+  console.log(useComputedStyle(triggerRef.value.buttonRef, 'margin'))
   display.value = !display.value
 }
+
 </script>
 <style lang="scss" scoped>
 .popper {
