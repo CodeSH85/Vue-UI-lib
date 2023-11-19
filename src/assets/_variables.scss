@@ -1,29 +1,54 @@
 
-$primary-color: rgb(57, 127, 232) !default;
+$primary-color: #397FE8 !default;
 $on-primary-color: #fff !default;
-$primary-container-color: rgb(102, 155, 234) !default;
+$primary-container-color: #5d93e4 !default;
 $on-primary-container-color: #072148 !default;
 
 $secondary-color: #4da7e3 !default;
-$secondary-variant-color: #4da7e3 !default;
+$on-secondary-color: #4da7e3 !default;
+$secondary-container-color: #4da7e3 !default;
+$on-secondary-container-color: #4da7e3 !default;
+
+$tertiary-color: #4da7e3 !default;
 
 $error-color: #b60a0a !default;
+$on-error-color: #fff !default;
+$error-container-color: #b60a0a;
+$on-error-container-color: #b60a0a;
 
 $success-color: #0fa66c !default;
-$dense-color: #acafad !default;
+$on-success-color: #fff !default;
 
-$bg-gray-primary: #f4f4f4 !default;
+$dense-color: #acafad !default;
+$on-dense-color: #e0e0e0 !default;
+
+$surface-primary: rgb(240, 246, 246) !default;
+$surface-bright: #f4f4f4 !default;
+$surface-dim: #f4f4f4 !default;
+$on-surface: #000000;
+
+$surface-container: #000000;
+$surface-container-high: #000000;
+$surface-container-highest: #000000;
+$surface-container-low: #000000;
+$surface-container-lowest: #000000;
+
+$shadow: #000000;
 
 $red-primary: #b51b1b;
-
 $green-primary: #05c957;
-
+$blue-primary: #1A94F7;
 
 $white: #fff;
-$gray-100: #e2e2e2;
-$gray-200: #e0e0e0;
-$gray-300: #dddddd;
+$black: #000000;
 
+$gray-100: #f5f5f5;
+$gray-200: #e2e2e2;
+$gray-300: #c0c0c0;
+$gray-400: #d0d0d0;
+$gray-500: #a0a0a0;
+
+// size
 $xm: .1em;
 $sm: .3em;
 $md: .5em;
