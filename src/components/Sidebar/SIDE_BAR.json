@@ -1,18 +1,43 @@
 {
   "main_module": [
     {
-      "id": "1",
+      "id": "h1",
       "icon": "home",
       "title": "Home",
       "key": "home",
-      "componentId": "home"
+      "componentId": "HomeView"
     },
     {
-      "id": "2",
+      "id": "ac",
       "icon": "",
       "title": "Accounting",
       "key": "accounting",
-      "componentId": "default"
+      "subModule": [
+        {
+          "id": "ac1",
+          "title": "A/R",
+          "key": "ar",
+          "componentId": "AccountingView"
+        },
+        {
+          "id": "ac2",
+          "title": "A/P",
+          "key": "ap",
+          "componentId": "AccountingView"
+        },
+        {
+          "id": "23",
+          "title": "Journal Voucher",
+          "key": "accounting",
+          "componentId": "AccountingView"
+        },
+        {
+          "id": "23",
+          "title": "Report",
+          "key": "report",
+          "componentId": "AccountingView"
+        }
+      ]
     },
     {
       "id": "3",

@@ -17,7 +17,9 @@
           >
             <template #default="{ item }">
               <!-- {{ storeTabs }} -->
-              <MiddleWare :component-id="item.componentId"></MiddleWare>
+              <MiddleWare
+              :data="data"
+              :component-id="item.componentId" />
             </template>
           </TabContent>
         </template>
@@ -40,12 +42,13 @@ import TabContent from '../components/Tab/TabContent.vue'
 import MiddleWare from '../components/MiddleWare.vue'
 import { useTabStore } from '../store/useTabStore'
 import { storeToRefs } from 'pinia'
-import { ref, computed, watch } from 'vue'
+import { ref, shallowRef, computed } from 'vue'
 import { Tab } from '../components/Tab/Tab'
-
+import BookingData from '../../public/BookingData.json'
+console.log(BookingData)
 const tab = ref('')
 const tabStore = useTabStore()
-
+const data = shallowRef(BookingData)
 const storeTabs = computed(() => {
   return tabStore.tabs
 })
@@ -55,10 +58,6 @@ const { tabs } = storeToRefs(tabStore)
 function closeTab (tabId: Tab['id']) {
   tabStore.closeTab(tabId)
 }
-
-watch(tab, (val) => {
-  console.log(val)
-})
 
 </script>
 <style lang="scss" scoped>
@@ -71,7 +70,7 @@ watch(tab, (val) => {
   display: flex;
   width: 100vw;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: $surface-primary;
 }
 .main-section {
   overflow: auto;

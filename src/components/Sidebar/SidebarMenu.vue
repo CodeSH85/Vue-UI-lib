@@ -5,18 +5,39 @@
   >
     <ul class="main-module-wrapper">
       <li :class="(mini ? 'mini' : 'default')">
-        <button @click="toggleMini">X</button>
+        <button @click="toggleMini">
+          {{ mini ? '>' : '<' }}
+        </button>
       </li>
       <li
-        v-for="item in option" :key="item.key"
+        v-for="item, i in option" :key="item.key"
         class="btn-wrapper"
+        :ref="el => functionRef(el, i)"
       >
         <SidebarButton
+          class="sidebar-btn"
           :title="item.title"
-          @click="addTab(item)"
+          @click="handleClickBtn(item, i)"
           :mini="mini"
         >
         </SidebarButton>
+        <div
+          v-if="showOption.key === item.key && showOption.show && item?.subModule.length"
+          class="menu-item"
+          :style="{
+            left: showOption.x + 'px',
+            right: showOption.y + 'px',
+          }"
+        >
+          <template v-for="x, v in item.subModule" :key="v">
+            <SidebarButton
+              class="sidebar-child-btn"
+              @click="handleClickBtn(x, v)"
+            >
+              {{ x.title }}
+            </SidebarButton>
+          </template>
+        </div>
       </li>
     </ul>
   </nav>
@@ -27,20 +48,44 @@ import SidebarButton from './SidebarButton.vue'
 import { ref } from 'vue'
 import { SidebarOption } from './type'
 import { useTabStore } from '../../store/useTabStore'
-
 const mini = ref(false)
 
 const option = ref<SidebarOption[]>(SIDE_BAR.main_module)
 const tabStore = useTabStore()
-
-function addTab (item: SidebarOption) {
-  const obj = {
-    id: tabStore.tabs.length + 1,
-    title: item.title,
-    key: item.key,
-    componentId: item.componentId
+const showOption = ref(
+  {
+    x: 0,
+    y: 0,
+    key: '',
+    show: false
   }
-  tabStore.addTab(obj)
+)
+type ele = {
+  [ele: string]: HTMLAllCollection,
+}
+const sidebarButtons = ref<ele>([])
+
+function handleClickBtn (item: SidebarOption, i:number) {
+  if (item.componentId) {
+    const obj = {
+      id: tabStore.tabs.length + 1,
+      title: item.title,
+      key: item.key,
+      componentId: item.componentId
+    }
+    tabStore.addTab(obj)
+  } else if (item.subModule) {
+    console.log(sidebarButtons.value[i].getBoundingClientRect())
+
+    showOption.value.show = !showOption.value.show
+    showOption.value.key = item.key
+    showOption.value.x = sidebarButtons.value[i].getBoundingClientRect().right
+    showOption.value.y = sidebarButtons.value[i].getBoundingClientRect().top
+  }
+}
+
+const functionRef = (el, i) => {
+  sidebarButtons.value[i] = el
 }
 
 function toggleMini () {
@@ -50,28 +95,39 @@ function toggleMini () {
 </script>
 <style lang="scss" scoped>
 .sidebar {
-  background: #005AA7;
-  background: -webkit-linear-gradient(#b8e4d8, #aed0ed);
-  background: linear-gradient(#b8e4d8, #aed0ed);
+  color: $on-primary-color;
+  background: $primary-container-color;
   width: fit-content;
-  padding: $sm;
-  transition: 500ms;
+  transition: 300ms;
 }
 .btn-wrapper {
   display: flex;
   flex-direction: column;
   width: auto;
 }
-* + * {
-  margin-top: .4em;
-}
 .sidebar-btn {
-  padding: 1em 0.8em;
+  color: $on-primary-color;
+  padding: $md;
+  position: relative;
   &:hover {
-    color: white;
-    background-color: darken(rgba(14, 47, 178, 0.5), 50%);
+    color: $on-primary-color;
+    background: $primary-container-color;
   }
 }
-.mini {
+.sidebar-child-btn {
+  width: fit-content;
+  padding: .5em .5em;
+  position: relative;
+  color: $on-primary-color;
+  background: $primary-color;
+  &:hover {
+    color: white;
+    background-color: $primary-container-color;
+  }
+}
+.menu-item {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
 }
 </style>

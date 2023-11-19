@@ -7,24 +7,25 @@
         {{ props.title }}
       </span>
       <span v-else>
-        {{ props.title.charAt(0) }}
+        {{ props.icon ?? props.title.charAt(0) }}
       </span>
     </slot>
   </button>
 </template>
 <script setup lang="ts">
 
-const props = defineProps(['title', 'isSub', 'mini'])
+const props = defineProps(['title', 'isSub', 'mini', 'icon'])
 
 </script>
 <style lang="scss" scoped>
 button {
+  text-align: left;
   transition: 500ms;
 }
 .mini {
   width: auto;
   text-wrap: wrap;
-  padding: $md;
+  // padding: $md;
 }
 .default {
 
