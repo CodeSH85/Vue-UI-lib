@@ -1,29 +1,28 @@
 <template>
-  <div class="">
+  <div class="root">
     <button-comp variant="default">default</button-comp>
     <button-comp variant="flat">flat</button-comp>
     <button-comp variant="outlined">outlined</button-comp>
     <button-comp variant="text">text</button-comp>
     <button-comp variant="plain">plain</button-comp>
-    <!-- <menu-comp
-      :items="items" v-model="v"
-    /> -->
-    <trigger></trigger>
+    <popper-comp offset="right">
+    </popper-comp>
+    <popper-comp offset="left">
+    </popper-comp>
+    <popper-comp offset="top">
+    </popper-comp>
+    <popper-comp offset="bottom">
+    </popper-comp>
+    ttttt
   </div>
 </template>
 <script setup lang="ts">
 import ButtonComp from '../components/UI/Button/ButtonComp.vue'
-// import MenuComp from '../components/UI/Menu/MenuComp.vue'
-import trigger from '../components/UI/Popper/trigger.vue'
-// import { ref } from 'vue'
-// const v = ref('')
-// const items = [
-//   { title: 'SKT', key: 'SKT', value: 'skt' },
-//   { title: 'JDG', key: 'JDG', value: 'jdg' },
-//   { title: 'BLG', key: 'BLG', value: 'blg' }
-// ]
+import PopperComp from '../components/UI/Popper/PopperComp.vue'
+// import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
 
 </script>
 <style lang="scss" scoped>
-
+.root {
+}
 </style>
