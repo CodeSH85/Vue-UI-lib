@@ -16,10 +16,10 @@
             :tab-Items="storeTabs"
           >
             <template #default="{ item }">
-              <!-- {{ storeTabs }} -->
-              <MiddleWare
-              :data="data"
-              :component-id="item.componentId" />
+              <!-- :data="data" -->
+              <Middleware
+                :component-name="item.componentName"
+              />
             </template>
           </TabContent>
         </template>
@@ -39,16 +39,17 @@ import TopBar from '../components/TopBar.vue'
 import SidebarMenu from '../components/Sidebar/SidebarMenu.vue'
 import TabGroup from '../components/Tab/TabGroup.vue'
 import TabContent from '../components/Tab/TabContent.vue'
-import MiddleWare from '../components/MiddleWare.vue'
+import { Middleware } from '../components/Middleware'
 import { useTabStore } from '../store/useTabStore'
 import { storeToRefs } from 'pinia'
-import { ref, shallowRef, computed } from 'vue'
+// import { ref, shallowRef, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { Tab } from '../components/Tab/Tab'
-import BookingData from '../../public/BookingData.json'
-console.log(BookingData)
+// import BookingData from '../../public/BookingData.json'
+// console.log(BookingData)
 const tab = ref('')
 const tabStore = useTabStore()
-const data = shallowRef(BookingData)
+// const data = shallowRef(BookingData)
 const storeTabs = computed(() => {
   return tabStore.tabs
 })
@@ -70,7 +71,7 @@ function closeTab (tabId: Tab['id']) {
   display: flex;
   width: 100vw;
   height: 100%;
-  background-color: $surface-primary;
+  background-color: $surface-bright;
 }
 .main-section {
   overflow: auto;
