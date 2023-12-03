@@ -1,32 +1,32 @@
 <template>
-  <div>
-    <select
-      v-model="selectedValue"
-      v-bind="$attrs"
-      name="" id=""
-    >
-      <template v-for="item, i in items" :key="i">
-        <option :value="item.value ?? item">{{ item.title ?? item.value ?? item }}</option>
-      </template>
-    </select>
-  </div>
-  </template>
+  <select
+    v-model="selectedValue"
+  >
+    <template v-for="item, i in items" :key="i">
+      <option :value="item.value ?? item">
+        {{ item.title ?? item.value ?? item }}
+      </option>
+    </template>
+  </select>
+</template>
 <script setup lang="ts">
-import { ref, watch, PropType } from 'vue'
+import { ref, watch } from 'vue'
+import { selectProps } from './select.ts'
 defineOptions({
-  name: 'SelectComp',
-  inheritAttrs: false
+  name: 'SelectComp'
 })
 const props = defineProps({
-  items: {
-    type: [Array, Number]
-  },
+  ...selectProps,
   modelValue: {
-    type: [String, Number] as PropType<string | number>
+    type: [String, Number]
   }
 })
 const emit = defineEmits(['update:modelValue'])
-const selectedValue = ref(props.modalValue)
+const selectedValue = ref(props.modelValue)
+
+watch(() => props.modelValue, (val) => {
+  selectedValue.value = val
+})
 
 watch(selectedValue, (val) => {
   emit('update:modelValue', val)
