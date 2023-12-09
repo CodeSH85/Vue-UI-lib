@@ -1,25 +1,27 @@
 <template>
-  <div class="trigger" ref="triggerRef">
-    <slot >
+  <div class="activator" ref="activatorRef">
+    <slot
+      :attrs="$attrs"
+    >
     </slot>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const triggerRef = ref<HTMLElement>()
+const activatorRef = ref<HTMLElement>()
 
 defineOptions({
-  name: 'PopperTrigger'
+  name: 'activatorComp'
 })
 
 defineExpose({
-  triggerRef
+  activatorRef
 })
 
 </script>
 <style lang="scss" scoped>
-.trigger {
+.activator {
   width: fit-content;
   position: relative;
 }

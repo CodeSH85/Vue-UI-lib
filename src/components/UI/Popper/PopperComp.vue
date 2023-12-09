@@ -1,11 +1,15 @@
 <template>
-  <trigger @showContent="showContent" :ref="(el) => setTriggerRef(el)">
-    <slot>
-      <button-comp variant="outlined" @click="showContent">
+  <activator-comp @showContent="showContent" :ref="(el) => setActivatorRef(el)">
+    <slot name="activator" :on="events">
+      <button-comp
+        v-bind="props"
+        variant="outlined"
+        v-on="events"
+      >
         Popper
       </button-comp>
     </slot>
-  </trigger>
+  </activator-comp>
   <div
     v-show="display"
     class="content-container"
@@ -16,7 +20,7 @@
       top: contentState.y + 'px',
     }"
   >
-    <slot name="content">
+    <slot>
       <div class="">
         content
       </div>
@@ -26,7 +30,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import trigger from './trigger.vue'
+import activatorComp from './activator.vue'
 import ButtonComp from '../Button/ButtonComp.vue'
 import { PopperProps } from './popper'
 import { onClickOutside } from '@vueuse/core'
@@ -34,41 +38,44 @@ import { onClickOutside } from '@vueuse/core'
 const props = defineProps(PopperProps)
 
 const display = ref(false)
-const triggerRef = ref<HTMLElement | null>()
+const activatorRef = ref<HTMLElement | null>()
 const contentRef = ref()
 const contentState = ref({
   x: 0,
   y: 0
 })
 
-function setTriggerRef (ele: HTMLElement) {
-  triggerRef.value = ele
+function setActivatorRef (ele: HTMLElement) {
+  activatorRef.value = ele
+}
+const events = {
+  click: () => {
+    display.value = !display.value
+  }
 }
 onMounted(() => {
-  if (triggerRef.value && triggerRef.value.triggerRef) {
-    const target = triggerRef.value.triggerRef
+  if (activatorRef.value && activatorRef.value.activatorRef) {
+    const target = activatorRef.value.activatorRef
     const y = target.getBoundingClientRect().bottom
     const x = target.getBoundingClientRect().right
-    const triggerHeight = target.getBoundingClientRect().height
-    const triggerWidth = target.getBoundingClientRect().width
-    console.log(contentRef.value)
-    const content = getComputedStyle(contentRef.value).height
-    console.log(content)
+    const activatorHeight = target.getBoundingClientRect().height
+    const activatorWidth = target.getBoundingClientRect().width
+    // const content = getComputedStyle(contentRef.value).height
     switch (props.offset) {
       case 'left':
-        contentState.value.x = x - triggerWidth - 120
-        contentState.value.y = y - triggerHeight
+        contentState.value.x = x - activatorWidth - 120
+        contentState.value.y = y - activatorHeight
         break
       case 'right':
         contentState.value.x = x
-        contentState.value.y = y - triggerHeight
+        contentState.value.y = y - activatorHeight
         break
       case 'top':
-        contentState.value.x = x - triggerWidth
-        contentState.value.y = y - triggerHeight - 120
+        contentState.value.x = x - activatorWidth
+        contentState.value.y = y - activatorHeight - 120
         break
       case 'bottom':
-        contentState.value.x = x - triggerWidth
+        contentState.value.x = x - activatorWidth
         contentState.value.y = y
         break
       default:
@@ -81,7 +88,7 @@ const showContent = () => {
   display.value = !display.value
 }
 
-onClickOutside(triggerRef, () => {
+onClickOutside(activatorRef, () => {
   display.value = false
 })
 </script>

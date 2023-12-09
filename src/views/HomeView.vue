@@ -8,12 +8,16 @@
     <popper-comp offset="right">
     </popper-comp>
     <popper-comp offset="left">
+      <template v-slot:activator="{ on }">
+        <div class="" v-on="on">
+          V-on
+        </div>
+      </template>
     </popper-comp>
     <popper-comp offset="top">
     </popper-comp>
     <popper-comp offset="bottom">
     </popper-comp>
-    ttttt
   </div>
 </template>
 <script setup lang="ts">
