@@ -1,4 +1,10 @@
+import { PropType } from 'vue'
+
 export const DialogProps = {
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
   show: {
     type: Boolean,
     default: false,
@@ -11,5 +17,11 @@ export const DialogProps = {
   overlay: {
     type: Boolean,
     default: true
+  },
+  onOpen: {
+    type: Function as PropType<() => void>
+  },
+  onClose: {
+    type: Function as PropType<() => void>
   }
 }

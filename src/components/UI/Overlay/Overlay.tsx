@@ -1,17 +1,25 @@
-import { defineComponent } from 'vue'
-import './overlay.scss'
+import { PropType, Teleport, defineComponent } from 'vue'
+import classes from './overlay.module.scss'
 
 const Overlay = defineComponent({
   name: 'OverlayComp',
-  props: {},
-  emits: [],
-  setup (props, { slots }) {
+  props: {
+    onClose: {
+      type: Function as PropType<() => void>
+    }
+  },
+  setup (props, { slots, emit }) {
+    function close () {
+      emit('close')
+    }
     return () => (
-      <>
-        <div class="wrapper">
+      <Teleport to={document.body}>
+        <div
+          onClick={close}
+          class={classes.wrapper}>
           { slots.default?.() }
         </div>
-      </>
+      </Teleport>
     )
   }
 })
