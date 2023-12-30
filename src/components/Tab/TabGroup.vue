@@ -27,18 +27,15 @@
 </template>
 <script setup lang="ts">
 import { PropType, ref, watch, onBeforeMount } from 'vue'
-
-type TabItem = {
-  key: string,
-  [items: string]: unknown
-}
+import { TabItem } from './Tab'
 
 const props = defineProps({
   modelValue: {
     type: [String, Number] as PropType<string | number>
   },
   items: {
-    type: Array as PropType<TabItem[]>
+    type: Array as PropType<TabItem[]>,
+    required: true
   }
 })
 
@@ -52,16 +49,13 @@ const setCurrentTab = (key: string) => {
 }
 const closeTab = (key: string | number) => {
   emit('closeTab', key)
-  console.log(currentTab.value)
   const curIndex = props.items.findIndex(item => {
     return currentTab.value === item.key
   })
   if (props.items[curIndex + 1]) {
-    console.log(props.items[curIndex + 1].key)
     currentTab.value = props.items[curIndex + 1].key
     emit('update:modelValue', props.items[curIndex + 1].key)
   } else {
-    console.log(props.items[curIndex - 1].key)
     currentTab.value = props.items[curIndex - 1].key
     emit('update:modelValue', props.items[curIndex - 1].key)
   }
@@ -97,7 +91,7 @@ watch(currentTab,
 }
 .tab {
   padding: .4em;
-  background-color: #cccccc;
+  background-color: $secondary-color;
 }
 .tab-item {
   display: flex;

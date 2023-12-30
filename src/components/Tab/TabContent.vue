@@ -17,18 +17,23 @@
 <script setup lang="ts">
 import { PropType, computed, watch } from 'vue'
 
+defineOptions({
+  name: 'TabContent'
+})
+
 type TabItem = {
   key: string,
-  componentId: string,
+  componentName: string,
   [items: string]: unknown
 }
 
 const props = defineProps({
   tabItems: {
     type: Array as PropType<TabItem[]>
+    // required: true
   },
   modelValue: {
-    type: [String, Number] as PropType<string | number>
+    type: [String, Number]
   }
 })
 
@@ -51,7 +56,6 @@ watch(tabValue, (val) => {
 
 <style lang="scss" scoped>
 .tab-item-wrapper {
-  // height: 100%;
   padding: $lg;
   background-color: #ffffff;
 }
