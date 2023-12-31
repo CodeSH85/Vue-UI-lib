@@ -1,6 +1,6 @@
 import { type PropType } from 'vue'
 
-export type ButtonType = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'
+export type ButtonType = 'default' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger'
 
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
@@ -24,5 +24,8 @@ export const ButtonProps = {
   },
   textColor: String,
   color: String,
-  icon: Boolean
+
+  icon: Boolean,
+  prependIcon: String,
+  appendIcon: String
 }

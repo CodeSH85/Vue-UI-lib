@@ -1,6 +1,6 @@
 <template>
   <div class="root">
-    <div class="" style="display: flex;">
+    <div class="" style="display: flex; gap: 1em">
       <popper-comp offset="right">
       </popper-comp>
       <popper-comp offset="left">

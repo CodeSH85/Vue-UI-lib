@@ -5,10 +5,10 @@ import classes from './button.module.scss'
 
 export default defineComponent({
   name: 'ButtonTest',
-  props: ButtonProps,
   directives: {},
-  // emits: ['click', 'focus'],
-  setup (props, { slots, emit }) {
+  props: ButtonProps,
+  emits: ['click', 'focus'],
+  setup (props, { slots, attrs, emit }) {
     const classList = ref([props.variant, props.size])
     const btnAttrs = ref({
       disable: true,
@@ -18,19 +18,34 @@ export default defineComponent({
     })
     function onClick (e: MouseEvent) {
       if (props.disabled) return
-      emit('click')
-      // console.log(e)
+      emit('click', e)
     }
-    return () => (
-      <>
-        <button
-          onClick={ onClick }
-          class={classList.value.map(item => classes[item])}
-          {...btnAttrs.value}
-        >
-          { slots.default() ?? 'Button' }
-        </button>
-      </>
+    return {
+      classList,
+      btnAttrs,
+      onClick
+    }
+  },
+  render (ctx) {
+    return (
+      <button
+        disabled={this.$props.disabled}
+        onClick={ ctx.onClick }
+        class={ctx.classList.map(item => classes[item])}
+        {...ctx.btnAttrs}
+        {...this.$attrs}
+      >
+        {
+          (this.$slots.prepend && this.$props.icon)
+            ? (
+                this.$slots.prepend?.()
+              )
+            : (
+              <span></span>
+              )
+        }
+        { this.$slots.default?.() }
+      </button>
     )
   }
 })
