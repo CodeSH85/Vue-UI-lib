@@ -4,16 +4,18 @@ export type SelectVariant =
   'default' | 'outlined' | 'flat' | 'text' | 'plain'
 
 export type SelectItem = {
-  title?: string | number
-  text?: string | number
+  title?: string | number,
+  value: unknown
 }
 
-export type ItemType = string | number | SelectItem | undefined | null | SelectItem[]
+export type ItemType =  undefined | null | SelectItem[]
 
 export const selectProps = {
   items: {
-    type: [Array, Object, Number, String] as PropType<ItemType>,
+    type: Array as PropType<ItemType>,
     default: () => []
+  },
+  modelValue: {
   },
   variant: {
     type: String as PropType<SelectVariant>,
@@ -27,6 +29,10 @@ export const selectProps = {
     default: false
   },
   multiple: {
+    type: Boolean,
+    default: true
+  },
+  closeOnClickOutside: {
     type: Boolean,
     default: true
   }
