@@ -1,26 +1,29 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { selectProps } from './props'
+import classes from './select.module.scss'
 
 export default defineComponent({
   name: 'SelectComp',
   props: selectProps,
-  emits: [],
+  emits: ['update:modelValue'],
   setup (props, { slots, attrs, emit }) {
     const emptyMsg = computed(() => {
       return 'No Options'
     })
-    const optionsTemplate = props.items.map(item => {
-      return ( 
-        <option value={item.value}>
-          { slots.default?.({item}) || item.title }
-        </option>
-      )
-    })
+    const handleChange = (event: Event) => {
+      const el = event.target as HTMLInputElement
+      emit('update:modelValue', el.value)
+    }
     return () => (
       <>
-        <select class={attrs.class}>
+        <select onChange={handleChange}
+          class={[attrs.class, classes.select]}>
           { props.items
-            ? optionsTemplate
+            ? props.items.map(item =>
+                <option value={item.value}>
+                  { slots.default?.({item}) || item.title }
+                </option>
+              )
             : <option value={""} disabled selected>
                 { emptyMsg }
               </option>

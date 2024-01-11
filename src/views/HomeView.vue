@@ -21,10 +21,11 @@
       Dialog
     </Button>
     <Dialog v-model:show="showDialog">test</Dialog>
-    <Select :items="[{title: 'Apple', value: 'apple'}]"></Select>
-    <select>
-      <option value="test">Test</option>
-    </select>
+    <Select
+      v-model="selectedValue"
+      :items="mockItems"
+      class="select-test"
+    ></Select>
     <Tabs v-model="currentTab">
       <Tab v-for="tab in tabs" :key="tab.key" :value="tab.key">
        {{ tab.title }}
@@ -61,6 +62,30 @@ watch(currentTab, (val) => {
   console.log(val)
 })
 
+const selectedValue = ref('')
+watch(selectedValue, (val) => {
+  console.log(val)
+})
+
+const mockItems = [
+  {
+    title: 'Apple',
+    value: 'apple'
+  },
+  {
+    title: 'Banana',
+    value: 'banana'
+  },
+  {
+    title: 'Orange',
+    value: 'orange'
+  },
+  {
+    title: 'Cherry',
+    value: 'cherry'
+  }
+]
+
 const tabs = [
   {
     key: 'a',
@@ -74,4 +99,7 @@ const tabs = [
 
 </script>
 <style lang="scss" scoped>
+.select-test {
+  border: 2px solid red;
+}
 </style>
