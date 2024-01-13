@@ -1,4 +1,4 @@
-import { defineComponent, defineAsyncComponent } from 'vue'
+import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import type { Component } from 'vue'
 import AccountingView from '../views/AccountingView.vue'
 import FormView from '../views/FormView.vue'
@@ -6,10 +6,14 @@ import EditorView from '../views/EditorView.vue'
 import SpreadSheetView from '../views/SpreadSheetView.vue'
 import DiagramView from '../views/DiagramView.vue'
 import HomeView from '../views/HomeView.vue'
+import ComponentView from '../views/ComponentView.vue'
 
-export const Middleware = defineComponent({
+export default defineComponent({
   name: 'MiddlewareComp',
   props: {
+    data: {
+      type: Object
+    },
     componentName: {
       type: String,
       required: true
@@ -22,14 +26,16 @@ export const Middleware = defineComponent({
       EditorView,
       SpreadSheetView,
       DiagramView,
-      HomeView
+      HomeView,
+      ComponentView
     }
+    const dataCache = ref([])
     const DynamicComponent = defineAsyncComponent(() => {
       return Promise.resolve(compDef[props.componentName])
     })
 
     return () => (
-      <DynamicComponent></DynamicComponent>
+      <DynamicComponent data={dataCache}></DynamicComponent>
     )
   }
 })

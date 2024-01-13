@@ -1,71 +1,67 @@
 {
   "main_module": [
     {
-      "id": "h1",
-      "icon": "home",
-      "title": "Home",
       "key": "home",
-      "componentId": "HomeView"
+      "title": "Home",
+      "icon": "home",
+      "componentName": "HomeView"
     },
     {
-      "id": "ac",
+      "title": "Component",
+      "key": "component",
+      "icon": "home",
+      "componentName": "ComponentView"
+    },
+    {
       "icon": "",
       "title": "Accounting",
       "key": "accounting",
       "subModule": [
         {
-          "id": "ac1",
           "title": "A/R",
           "key": "ar",
-          "componentId": "AccountingView"
+          "componentName": "AccountingView"
         },
         {
-          "id": "ac2",
           "title": "A/P",
           "key": "ap",
-          "componentId": "AccountingView"
+          "componentName": "AccountingView"
         },
         {
-          "id": "23",
           "title": "Journal Voucher",
           "key": "accounting",
-          "componentId": "AccountingView"
+          "componentName": "AccountingView"
         },
         {
-          "id": "23",
           "title": "Report",
           "key": "report",
-          "componentId": "AccountingView"
+          "componentName": "AccountingView"
         }
       ]
     },
     {
-      "id": "3",
       "icon": "",
       "title": "Sales",
       "key": "sale",
-      "componentId": "FormView"
+      "componentName": "FormView"
     },
     {
-      "id": "4",
       "icon": "",
       "title": "Diagram",
       "key": "diagram",
-      "componentId": "DiagramView"
+      "componentName": "DiagramView"
     },
     {
-      "id": "5",
       "icon": "",
       "title": "Spread Sheet",
       "key": "spreadsheet",
-      "componentId": "SpreadSheetView"
+      "componentName": "SpreadSheetView"
     },
     {
-      "id": "6",
       "icon": "",
       "title": "Diagnosis",
       "key": "diagnose",
-      "componentId": "EditorView"
+      "componentName": "EditorView"
     }
   ],
   "side_module": [
@@ -74,7 +70,7 @@
       "icon": "",
       "title": "Setting",
       "key": "setting",
-      "componentId": "default"
+      "componentName": "default"
     }
   ]
 }
