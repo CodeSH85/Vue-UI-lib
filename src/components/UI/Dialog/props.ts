@@ -23,5 +23,15 @@ export const DialogProps = {
   },
   onClose: {
     type: Function as PropType<() => void>
+  },
+  onSubmit: {
+    type: Function as PropType<() => void>
+  },
+  onCancel: {
+    type: Function as PropType<() => void>
+  },
+  closeOnClickOutside: {
+    type: Boolean,
+    default: true
   }
-}
+} as const
