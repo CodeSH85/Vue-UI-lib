@@ -105,7 +105,7 @@ input {
 }
 .variant-filled {
   border: none;
-  background-color: $bg-gray-primary;
+  background-color: $gray-100;
   box-shadow: $shadow-main;
 }
 .wrapper {

@@ -29,13 +29,12 @@ export default defineComponent({
       HomeView,
       ComponentView
     }
-    const dataCache = ref([])
     const DynamicComponent = defineAsyncComponent(() => {
       return Promise.resolve(compDef[props.componentName])
     })
 
     return () => (
-      <DynamicComponent data={dataCache}></DynamicComponent>
+      <DynamicComponent></DynamicComponent>
     )
   }
 })

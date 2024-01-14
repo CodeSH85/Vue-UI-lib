@@ -25,17 +25,25 @@
       v-model="selectedValue"
       :items="mockItems"
     ></Select>
+    <TextInput
+      v-model="inputValue"
+      label="name" class="text-input" placeholder="input text"
+    >
+    </TextInput>
+    {{ inputValue }}
     <Tabs v-model="currentTab">
       <Tab v-for="tab in tabs" :key="tab.key" :value="tab.key">
        {{ tab.title }}
       </Tab>
     </Tabs>
+    <DatePicker class="text-input"></DatePicker>
     <!-- <Window v-model="currentTab">
     </Window> -->
   </div>
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import TextInput from '../components/UI/TextInput/TextInput'
 import PopperComp from '../components/UI/Popper/PopperComp.vue'
 import Button from '../components/UI/Button/Button'
 import Dialog from '../components/UI/Dialog/Dialog'
@@ -44,6 +52,9 @@ import Tab from '../components/Tab/Tab'
 // import Window from '../components/UI/Window/Window'
 import MenuComp from '../components/UI/Menu/Menu'
 import Select from '../components/UI/Select/Select'
+import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
+
+const inputValue = ref('')
 
 const btnRef = ref(null)
 const test = () => {
@@ -98,4 +109,7 @@ const tabs = [
 
 </script>
 <style lang="scss" scoped>
+.text-input {
+  border: 2px solid red;
+}
 </style>

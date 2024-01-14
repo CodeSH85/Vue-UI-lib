@@ -1,0 +1,52 @@
+.default {
+
+}
+.outlined {
+
+}
+.filled {
+  
+}
+.plain {
+
+}
+.text {
+
+}
+input {
+  margin: $md;
+  border-radius: $border-radius-sm;
+  border: 1.5px solid $primary-color;
+  padding: $sm;
+  position: relative;
+}
+.variant-default {
+  padding: $md;
+}
+.variant-outlined {
+  border: 1.5px solid $primary-color;
+}
+.disabled {
+  border: 1.5px solid $primary-color;
+}
+.variant-filled {
+  border: none;
+  background-color: $gray-100;
+  box-shadow: $shadow-main;
+}
+.wrapper {
+  position: relative;
+}
+.text {
+  margin: inherit;
+  position: absolute;
+  z-index: 2;
+  transform: translateY(50%);
+}
+.density-default {
+  padding: $md;
+}
+.density-compact {
+  padding: $sm;
+  margin: $sm;
+}
