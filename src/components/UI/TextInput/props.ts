@@ -29,5 +29,15 @@ export const TextInputProps = {
   },
   rounded: {
     type: String
+  },
+  prependIcon: {
+    type: String
+  },
+  appendIcon: {
+    type: String
+  },
+  clearable: {
+    type: Boolean,
+    default: false
   }
 }

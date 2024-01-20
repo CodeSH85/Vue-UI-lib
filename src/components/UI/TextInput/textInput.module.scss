@@ -1,52 +1,35 @@
-.default {
 
-}
-.outlined {
-
-}
-.filled {
-  
-}
-.plain {
-
-}
-.text {
-
-}
-input {
-  margin: $md;
+.--text-input-wrapper {
+  margin: $sm;
+  display: flex;
+  flex-direction: column;
   border-radius: $border-radius-sm;
-  border: 1.5px solid $primary-color;
-  padding: $sm;
   position: relative;
 }
-.variant-default {
-  padding: $md;
+.--text-input-default {
+  border: none;
 }
-.variant-outlined {
+.--text-input-outlined {
   border: 1.5px solid $primary-color;
 }
-.disabled {
-  border: 1.5px solid $primary-color;
-}
-.variant-filled {
+.--text-input-filled {
   border: none;
   background-color: $gray-100;
   box-shadow: $shadow-main;
 }
-.wrapper {
-  position: relative;
+.--text-input-disabled {
+  border: 1.5px solid $primary-color;
 }
-.text {
+.--text-input-text {
   margin: inherit;
   position: absolute;
   z-index: 2;
   transform: translateY(50%);
 }
-.density-default {
+.--text-input-density-default {
   padding: $md;
 }
-.density-compact {
+.--text-input-density-compact {
   padding: $sm;
   margin: $sm;
 }
