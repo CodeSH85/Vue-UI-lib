@@ -14,10 +14,10 @@ const DialogComp = defineComponent({
     }
     function handleKeydown (e: KeyboardEvent) {
       switch (e.key) {
-        case 'esc':
+        case 'Escape':
           close()
           break
-        case 'enter':
+        case 'Enter':
           submit()
           break
         default:
@@ -29,40 +29,46 @@ const DialogComp = defineComponent({
     }
     const defaultContent = () => {
       return (
-        <div>
-          This is Dialog Content
-        </div>
+        <>
+          <div class={classes['header']}>
+            <span>
+              Dialog
+            </span>
+            <span>
+              <Button onClick={ close }>x</Button>
+            </span>
+          </div>
+          <div class={classes['content']}>
+            Dialog content here
+          </div>
+          <div class={classes['footer']}>
+            <Button>Cancel</Button>
+            <Button>Submit</Button>
+          </div>
+        </>
       )
     }
     return () => (
       <>
-        {
-          props.show && (
-            <Overlay onClose={close}>
-              {{
-                default: () => (
-                  <div
-                    onKeydown={handleKeydown}
-                    class={classes.container}
-                    role="dialog"
-                  >
-                    <span>
-                      <Button onClick={close}>
-                      x
-                      </Button>
-                    </span>
-                    <div>
-                      { slots.default 
-                        ? slots.default()
-                        : defaultContent()
-                      }
-                    </div>
-                  </div>
-                )
-              }}
-            </Overlay>
-          )
-        }
+        { props.show && (
+          <Overlay onClose={ close }>
+            {{
+              default: () => (
+                <div
+                  class={classes['root']}
+                  onKeydown={ handleKeydown }
+                  tabindex={ 0 }
+                  role="dialog"
+                >
+                  { slots.default 
+                    ? slots.default()
+                    : defaultContent()
+                  }
+                </div>
+              )
+            }}
+          </Overlay>
+        )}
       </>
     )
   }

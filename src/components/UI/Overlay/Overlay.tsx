@@ -7,15 +7,17 @@ const Overlay = defineComponent({
   props: OverlayProps,
   emits: ['close'],
   setup (props, { slots, emit }) {
-    function close () {
+    function close (e: Event) {
       if (!props.closeOnClick) return
-      emit('close')
+      if (e.target === e.currentTarget) {
+        emit('close')
+      }
     }
     return () => (
-      <Teleport to={document.body}>
+      <Teleport disabled={ true } to={ document.body }>
         <div
-          onClick={close}
-          class={classes.wrapper}>
+          onClick={ close }
+          class={ classes.wrapper }>
           { slots.default?.() }
         </div>
       </Teleport>
