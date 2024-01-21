@@ -10,7 +10,10 @@
       <popper-comp offset="bottom">
       </popper-comp>
     </div>
-    <Button ref="btnRef" @click="test">
+    <Button 
+      ref="btnRef"
+      @click="test"
+    >
       Button
     </Button>
     <menu-comp></menu-comp>
@@ -27,16 +30,18 @@
     ></Select>
     <TextInput
       v-model="inputValue"
-      label="name" class="text-input" placeholder="input text"
+      label="name" placeholder="input text"
     >
     </TextInput>
-    {{ inputValue }}
-    <Tabs v-model="currentTab">
+    <!-- <Tabs v-model="currentTab">
       <Tab v-for="tab in tabs" :key="tab.key" :value="tab.key">
        {{ tab.title }}
       </Tab>
-    </Tabs>
-    <DatePicker class="text-input"></DatePicker>
+    </Tabs> -->
+    <!-- <DatePicker></DatePicker> -->
+    <Navbar
+      :items="[{key: 'a', title: 'A'}, {key: 'b', title: 'B'}]"
+    ></Navbar>
     <!-- <Window v-model="currentTab">
     </Window> -->
   </div>
@@ -53,6 +58,7 @@ import Tab from '../components/Tab/Tab'
 import MenuComp from '../components/UI/Menu/Menu'
 import Select from '../components/UI/Select/Select'
 import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
+import Navbar from '../components/UI/Nav/Navbar'
 
 const inputValue = ref('')
 
@@ -113,3 +119,4 @@ const tabs = [
   border: 2px solid red;
 }
 </style>
+../components/UI/Nav/Sidebar

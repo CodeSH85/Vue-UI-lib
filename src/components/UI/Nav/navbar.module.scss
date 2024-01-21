@@ -1,0 +1,17 @@
+.--navbar-root-wrapper {
+  width: auto;
+}
+.--navbar-root-container {
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  gap: 1;
+}
+.--navbar-item-wrapper {
+  padding: $md;
+  background-color: $white;
+  &hover {
+    background-color: $primary-color;
+    color: $white;
+  }
+}
