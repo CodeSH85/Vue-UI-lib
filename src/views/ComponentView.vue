@@ -23,27 +23,26 @@
     >
       Dialog
     </Button>
-    <Dialog v-model:show="showDialog"></Dialog>
+    <Dialog v-model:show="showDialog">
+    </Dialog>
     <Select
       v-model="selectedValue"
       :items="mockItems"
-    ></Select>
-    <TextInput
+    >
+    </Select>
+    <NavBarComp></NavBarComp>
+    <text-input
       v-model="inputValue"
       label="name" placeholder="input text"
     >
-    </TextInput>
-    <!-- <Tabs v-model="currentTab">
+    </text-input>
+    <Checkbox></Checkbox>
+    <Tabs v-model="currentTab">
       <Tab v-for="tab in tabs" :key="tab.key" :value="tab.key">
        {{ tab.title }}
       </Tab>
-    </Tabs> -->
-    <!-- <DatePicker></DatePicker> -->
-    <Navbar
-      :items="[{key: 'a', title: 'A'}, {key: 'b', title: 'B'}]"
-    ></Navbar>
-    <!-- <Window v-model="currentTab">
-    </Window> -->
+    </Tabs>
+    <DatePicker></DatePicker>
   </div>
 </template>
 <script setup lang="ts">
@@ -54,11 +53,11 @@ import Button from '../components/UI/Button/Button'
 import Dialog from '../components/UI/Dialog/Dialog'
 import Tabs from '../components/Tab/Tabs';
 import Tab from '../components/Tab/Tab'
-// import Window from '../components/UI/Window/Window'
 import MenuComp from '../components/UI/Menu/Menu'
 import Select from '../components/UI/Select/Select'
 import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
-import Navbar from '../components/UI/Nav/Navbar'
+import NavBarComp from '../components/UI/Navbar/Navbar'
+import Checkbox from '../components/UI/Checkbox/Checkbox'
 
 const inputValue = ref('')
 
@@ -119,4 +118,4 @@ const tabs = [
   border: 2px solid red;
 }
 </style>
-../components/UI/Nav/Sidebar
+../components/UI/Navbar/Navbar
