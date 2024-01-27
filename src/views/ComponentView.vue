@@ -23,20 +23,30 @@
     >
       Dialog
     </Button>
-    <Dialog v-model:show="showDialog">
+    <Dialog 
+      v-model:show="showDialog"
+    >
     </Dialog>
     <Select
       v-model="selectedValue"
       :items="mockItems"
     >
     </Select>
-    <NavBarComp></NavBarComp>
+    <Navbar
+      :items="tabs"
+    >
+    </Navbar>
     <text-input
       v-model="inputValue"
       label="name" placeholder="input text"
     >
     </text-input>
-    <Checkbox></Checkbox>
+    <Checkbox
+      v-model="checkboxVal"
+      label="check box"
+    >
+    </Checkbox>
+    {{ checkboxVal }}
     <Tabs v-model="currentTab">
       <Tab v-for="tab in tabs" :key="tab.key" :value="tab.key">
        {{ tab.title }}
@@ -56,7 +66,7 @@ import Tab from '../components/Tab/Tab'
 import MenuComp from '../components/UI/Menu/Menu'
 import Select from '../components/UI/Select/Select'
 import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
-import NavBarComp from '../components/UI/Navbar/Navbar'
+import Navbar from '../components/UI/Navbar/Navbar'
 import Checkbox from '../components/UI/Checkbox/Checkbox'
 
 const inputValue = ref('')
@@ -65,6 +75,8 @@ const btnRef = ref(null)
 const test = () => {
   console.log(btnRef.value)
 }
+
+const checkboxVal = ref(false)
 
 const showDialog = ref(false)
 function toggleDialog () {
@@ -118,4 +130,3 @@ const tabs = [
   border: 2px solid red;
 }
 </style>
-../components/UI/Navbar/Navbar
