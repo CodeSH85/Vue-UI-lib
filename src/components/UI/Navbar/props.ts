@@ -14,9 +14,11 @@ export const NavBarProps = {
   modelValue: {
     type: String
   },
-  expandable: {
-    type: Boolean,
-    default: false
+  group: {
+    type: String
+  },
+  expand: {
+    type: String
   },
   direction: {
     type: String,

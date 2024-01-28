@@ -9,8 +9,9 @@
 }
 .--navbar-item-wrapper {
   padding: $md;
+  color: 'black';
   background-color: $white;
-  &hover {
+  &:hover {
     background-color: $primary-color;
     color: $white;
   }
