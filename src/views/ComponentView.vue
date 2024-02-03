@@ -48,7 +48,7 @@ import TextInput from '../components/UI/TextInput/TextInput'
 import PopperComp from '../components/UI/Popper/PopperComp.vue'
 import Button from '../components/UI/Button/Button'
 import Dialog from '../components/UI/Dialog/Dialog'
-import Tabs from '../components/Tab/Tabs';
+import Tabs from '../components/UI/Tab/Tabs'
 import MenuComp from '../components/UI/Menu/Menu'
 import Select from '../components/UI/Select/Select'
 import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
