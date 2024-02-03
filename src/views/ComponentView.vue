@@ -12,46 +12,33 @@
     </div>
     <Button 
       ref="btnRef"
-      @click="test"
-    >
+      @click="test">
       Button
     </Button>
     <menu-comp></menu-comp>
     <Button 
       variant="outlined"
-      @click="toggleDialog"
-    >
+      @click="toggleDialog">
       Dialog
     </Button>
     <Dialog 
-      v-model:show="showDialog"
-    >
+      v-model:show="showDialog">
     </Dialog>
     <Select
       v-model="selectedValue"
-      :items="mockItems"
-    >
+      :items="mockItems">
     </Select>
-    <Navbar
-      :items="tabs"
-    >
-    </Navbar>
+    <Navbar :items="side"></Navbar>
     <text-input
       v-model="inputValue"
-      label="name" placeholder="input text"
-    >
+      label="name" placeholder="input text">
     </text-input>
     <Checkbox
       v-model="checkboxVal"
-      label="check box"
-    >
+      label="check box">
     </Checkbox>
     {{ checkboxVal }}
-    <Tabs v-model="currentTab">
-      <Tab v-for="tab in tabs" :key="tab.key" :value="tab.key">
-       {{ tab.title }}
-      </Tab>
-    </Tabs>
+    <Tabs v-model="currentTab" :tabs="tabs"></Tabs>
     <DatePicker></DatePicker>
   </div>
 </template>
@@ -62,7 +49,6 @@ import PopperComp from '../components/UI/Popper/PopperComp.vue'
 import Button from '../components/UI/Button/Button'
 import Dialog from '../components/UI/Dialog/Dialog'
 import Tabs from '../components/Tab/Tabs';
-import Tab from '../components/Tab/Tab'
 import MenuComp from '../components/UI/Menu/Menu'
 import Select from '../components/UI/Select/Select'
 import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
@@ -84,10 +70,7 @@ function toggleDialog () {
   console.log(showDialog.value)
 }
 
-const currentTab = ref('')
-watch(currentTab, (val) => {
-  console.log(val)
-})
+
 
 const selectedValue = ref('')
 watch(selectedValue, (val) => {
@@ -113,14 +96,67 @@ const mockItems = [
   }
 ]
 
+const currentTab = ref('b')
+watch(currentTab, (val) => {
+  console.log(val)
+})
 const tabs = [
   {
+    title: 'Tab A',
+    value: 'a'
+  },
+  {
+    title: 'Tab B',
+    value: 'b'
+  },
+  {
+    title: 'Tab C',
+    value: 'c'
+  },
+  {
+    title: 'Tab D',
+    value: 'd'
+  }
+]
+
+const side = [
+  {
     key: 'a',
-    title: 'tab a'
+    title: 'tab a',
+    children: [
+      {
+        key: 'a-1',
+        title: 'tab a-1'
+      },
+      {
+        key: 'a-2',
+        title: 'tab a-2',
+        children: [
+          {
+            key: 'a-2-1',
+            title: 'tab a-2-1'
+          },
+          {
+            key: 'a-2-2',
+            title: 'tab a-2-2'
+          }
+        ]
+      },
+    ]
   },
   {
     key: 'b',
-    title: 'tab b'
+    title: 'tab b',
+    children: [
+      {
+        key: 'b-1',
+        title: 'tab b-1'
+      },
+      {
+        key: 'b-2',
+        title: 'tab b-2'
+      },
+    ]
   }
 ]
 

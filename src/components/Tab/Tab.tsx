@@ -1,13 +1,13 @@
 import { defineComponent } from 'vue'
-import { TabProps } from './props'
+import { TabsProps } from './props'
 import Button from '../UI/Button/Button'
 
 export default defineComponent({
   name: 'TabComp',
-  props: TabProps,
+  props: TabsProps,
   emits: ['setTabValue'],
   setup (props, { slots, attrs, emit }) {
-    function setTabValue (e: PointerEvent) {
+    function setTabValue () {
       emit('setTabValue', props.value)
     }
     return () => (
