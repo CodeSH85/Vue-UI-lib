@@ -1,43 +1,50 @@
 import { ref, defineComponent, defineAsyncComponent, DefineComponent } from 'vue'
 import { NavBarProps, NavItemType } from './props'
 import classes from './navbar.module.scss'
+import Icon from '../Icon/Icon'
 
 export default defineComponent({
   name: 'NavbarComp',
   props: NavBarProps,
   emits: ['update:modelValue'],
   setup(props, { emit, slots }) {
-    const Navbar = defineAsyncComponent<DefineComponent<typeof NavBarProps>>(() => import('./Navbar.tsx') as any)
+    const Navbar = defineAsyncComponent<DefineComponent<typeof NavBarProps>>(() => import('./Navbar') as any)
     const displayStates = Object.fromEntries(
       props.items.map(item => [item.key, ref(false)])
     )
+    const _currentItem = ref()
+
     const NavbarItem = (item: NavItemType) => {
       const display = displayStates[item.key];
       function toggleDisplay() {
         display.value = !display.value
       }
-      function itemOnClick (val: string | number) {
-        emit('update:modelValue', val)
+      function itemOnClick (item: NavItemType) {
+        console.log('Nav item selected:', item)
+        _currentItem.value = item
+        emit('update:modelValue', item)
       }
       return (
-        <div
-          onClick={() => itemOnClick(item.key)}
-        >
-        { item.children ? (
-          <div
-            class={classes['--navbar-item-wrapper']}
-          >
-            <span>
-              { item.title }
-            </span>
-            <button
+        <div>
+        { item.children 
+          ? (
+          <div>
+            <div
+              class={ classes['--navbar-item-wrapper'] }
               onClick={ toggleDisplay }
             >
-              { display.value ? 'close' : 'open' }
-            </button>
+              { item.icon ? <Icon class={classes['--navbar-item-icon']}>{item.icon}</Icon> : null }
+              <span>{ item.title }</span>
+              { 
+                display.value 
+                ? <Icon>mdi-chevron-down</Icon>
+                : <Icon>mdi-chevron-right</Icon>
+              }
+            </div>
             <Navbar
               style={{
-                'display': display.value ? 'block' : 'none'
+                'display': display.value ? 'block' : 'none',
+                'margin-left': '.5em'
               }}
               items={ item.children }
             >
@@ -45,38 +52,31 @@ export default defineComponent({
           </div>
         ) : (
           <div
-            class={classes['--navbar-item-wrapper']}
+            class={ classes['--navbar-item-wrapper'] }
+            onClick={ () => itemOnClick(item) }
           >
-            { item.icon ?? <span>{ item.icon }</span> }
+            { item.icon ? <Icon class={classes['--navbar-item-icon']}>{item.icon}</Icon> : null }
             <span>{ item.title ?? ''}</span>
           </div>
         )}
-      </div>
-    )
+        </div>
+      )
     }
     return () => (
-      <nav
-        class={[
-          classes['--navbar-root-wrapper']
-        ]}
-      >
-        <ul
-          class={
-            classes['--navbar-root-container']
-          }
-        >
+      <nav class={ classes['--navbar-root-wrapper'] }>
+        <ul class={ classes['--navbar-root-container'] }>
           {
-            (props.items && props.items.length) &&
+            (props.items && props.items.length) ?
             props.items.map(item => (
-              <li key={item.key}>
+              <li key={ item.key }>
                 {
                   slots.default
-                  ? slots.default(item)
+                  ? slots.default({item})
                   : NavbarItem(item)
-                  // : <Navbar items={item}></Navbar>
                 }
               </li>
             ))
+            : null
           }
         </ul>
       </nav>

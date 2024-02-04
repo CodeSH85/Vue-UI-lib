@@ -1,0 +1,30 @@
+.--tabs-container {
+  width: 100%;
+}
+
+.--tabs-root {
+  display: flex;
+  min-height: 2em;
+  background-color: $gray-100;
+}
+
+.--tabs-tab-item {
+  display: flex;
+  color: $black;
+  padding: $sm;
+  border-radius: 0%;
+  background-color: $gray-200;
+  box-shadow: none;
+  &:hover {
+    background-color: $gray-400;
+  }
+}
+
+.--tabs-current {
+  color: $black;
+  background-color: $on-primary-color;
+}
+
+.--tab-item-button {
+  cursor: pointer;
+}

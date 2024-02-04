@@ -10,9 +10,12 @@
 .--navbar-item-wrapper {
   padding: $md;
   color: 'black';
+  cursor: pointer;
   background-color: $white;
   &:hover {
-    background-color: $primary-color;
-    color: $white;
+    background-color: $gray-200;
   }
+}
+.--navbar-item-icon {
+  margin-right: $sm;
 }

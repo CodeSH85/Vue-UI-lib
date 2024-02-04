@@ -1,33 +1,14 @@
 <template>
-  <div class="wrapper">
+  <div class="main-view-wrapper">
     <TopBar class="top-bar"></TopBar>
     <main class="container">
-      <SidebarMenu />
+      <Navbar v-model="currentModule" :items="transformedData"></Navbar>
       <section class="main-section">
-        <template v-if="tabs.length">
-          <TabGroup
-            @close-tab="closeTab"
-            v-model="tab"
-            :items="storeTabs"
-          >
-          </TabGroup>
-          <TabContent
-            v-model="tab"
-            :tab-Items="storeTabs"
-          >
-            <template #default="{ item }">
-              <!-- :data="data" -->
-              <Middleware
-                :component-name="item.componentName"
-              />
-            </template>
-          </TabContent>
+        <template v-if="globalTabs.length">
+          {{ currentModule }}
         </template>
         <template v-else>
-          default view
-          <ul>
-            <li>link</li>
-          </ul>
+          <ComponentView></ComponentView>
         </template>
       </section>
     </main>
@@ -35,34 +16,45 @@
 </template>
 
 <script setup lang="ts">
+import Apps_module from '../../public/App_module.json'
 import TopBar from '../components/TopBar.vue'
-import SidebarMenu from '../components/Sidebar/SidebarMenu.vue'
-import TabGroup from '../components/Tab/TabGroup.vue'
-import TabContent from '../components/Tab/TabContent.vue'
-import { Middleware } from '../components/Middleware'
-import { useTabStore } from '../store/useTabStore'
-import { storeToRefs } from 'pinia'
-// import { ref, shallowRef, computed } from 'vue'
-import { ref, computed } from 'vue'
-import { Tab } from '../components/Tab/Tab'
-// import BookingData from '../../public/BookingData.json'
-// console.log(BookingData)
-const tab = ref('')
-const tabStore = useTabStore()
-// const data = shallowRef(BookingData)
-const storeTabs = computed(() => {
-  return tabStore.tabs
+import Navbar from '../components/UI/Navbar/Navbar'
+import { NavItemType } from '../components/UI/Navbar/props'
+// import DashBoardView from './DashBoardView.vue'
+import ComponentView from './ComponentView.vue'
+import { useGlobalTabStore } from '../store/useGlobalTabStore'
+import { ref, computed, watch } from 'vue'
+
+const tabStore = useGlobalTabStore()
+const globalTabs = computed(() => tabStore.tabs)
+const currentModule = ref()
+
+watch(currentModule, (val) => {
+  if (val) {
+    const obj = {
+      title: val.title,
+      value: val.key
+    }
+    tabStore.addTab(obj)
+  }
 })
 
-const { tabs } = storeToRefs(tabStore)
-
-function closeTab (tabId: Tab['id']) {
-  tabStore.closeTab(tabId)
+function parseModule(modules: any[]): NavItemType[] {
+  return modules.map(module => {
+    const { subModule, ...rest } = module
+    const children = subModule ? parseModule(subModule) : undefined
+    return {
+      ...rest,
+      children
+    }
+  })
 }
+const transformedData = parseModule(Apps_module.main_module)
+
 
 </script>
 <style lang="scss" scoped>
-.wrapper {
+.main-view-wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;

@@ -1,53 +1,37 @@
 <template>
   <div class="root">
-    <ul class="top-bar-wrapper">
-      <li>
-        <img src="https://img.logoipsum.com/254.svg" alt="">
-      </li>
-      <li>
-        <text-input
-          class="search-input"
-          density="compact"
-          variant="outlined"
-        >
-        </text-input>
-      </li>
-      <li>
-        <div class="">
-          <img src="" alt="avatar">
-        </div>
-      </li>
-      <li>
-        <button>
-          User Info
-        </button>
-      </li>
-    </ul>
+    <Button @click="toggle">
+      <Icon>{{ iconType }}</Icon>
+    </Button>
+    <Tabs v-model="selectedTabVal" :tabs="globalTabs">
+      <template #append>
+        <div>x</div>
+      </template>
+    </Tabs>
   </div>
 </template>
 <script setup lang="ts">
-import TextInput from './UI/TextInput/TextInput.vue'
+import { ref,computed } from 'vue'
+import { useGlobalTabStore } from '../store/useGlobalTabStore'
+import Button from './UI/Button/Button'
+import Tabs from './UI/Tab/Tabs'
+import Icon from './UI/Icon/Icon'
+
+const tabStore = useGlobalTabStore()
+const globalTabs = computed(() => tabStore.tabs)
+const selectedTabVal = ref()
+
+const iconType = ref('mdi-account')
+function toggle() {
+  console.log('click')
+  iconType.value = 'mdi-clock' 
+}
 
 </script>
 <style lang="scss" scoped>
 .root {
-  background-color: $white;
-}
-.top-bar-wrapper {
-  padding: $sm $md;
   display: flex;
   align-items: center;
-  li {
-    margin: 0px $sm;
-  }
-}
-.search-input {
-  font-size: .6rem;
-}
-img {
-  height: 24px;
-}
-.img-wrapper {
-  height: 36px;
+  background-color: $white;
 }
 </style>

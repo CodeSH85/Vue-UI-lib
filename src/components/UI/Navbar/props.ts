@@ -1,18 +1,20 @@
-import { PropType } from 'vue';
+import { PropType } from 'vue'
 
 export interface NavItemType {
   key: string | number
   title?: string
   icon?: string
-  children?: NavItemType[]
+  children?: NavItemType[],
+  [key: string]: any
 }
 
 export const NavBarProps = {
   items: {
-    type: Array as PropType<NavItemType[]>
+    type: Array as PropType<NavItemType[]>,
+    required: true
   },
   modelValue: {
-    type: String
+    type: Object as PropType<NavItemType>
   },
   group: {
     type: String

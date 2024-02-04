@@ -3,17 +3,17 @@
     {
       "key": "home",
       "title": "Home",
-      "icon": "home",
+      "icon": "mdi-home",
       "componentName": "HomeView"
     },
     {
       "title": "Component",
       "key": "component",
-      "icon": "home",
+      "icon": "mdi-cube-outline",
       "componentName": "ComponentView"
     },
     {
-      "icon": "",
+      "icon": "mdi-currency-usd",
       "title": "Accounting",
       "key": "accounting",
       "subModule": [

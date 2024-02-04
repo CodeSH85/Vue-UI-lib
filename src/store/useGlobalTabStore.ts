@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { nextTick, ref } from 'vue'
-import { Tab } from '../components/Tab/props'
+import { Tab } from '../components/UI/Tab/props'
 
 export const useGlobalTabStore = defineStore('globalTab', () => {
   const tabs = ref<Tab[]>([])
@@ -8,8 +8,9 @@ export const useGlobalTabStore = defineStore('globalTab', () => {
   const Max_tab_count = 12
 
   function addTab (tab: Tab, redirect=true) {
+    console.log(tab)
     if (tabs.value.find(item => item.value === tab.value)) return
-    if (tabs.value.length < Max_tab_count) return
+    if (tabs.value.length > Max_tab_count) return
     tabs.value.push(tab)
     if (redirect) {
       nextTick(() => {
