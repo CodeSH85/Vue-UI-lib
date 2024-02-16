@@ -11,6 +11,7 @@
     "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.0.6",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
