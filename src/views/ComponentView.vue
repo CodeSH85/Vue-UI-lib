@@ -12,7 +12,7 @@
     </div>
     <Button 
       ref="btnRef"
-      @click="test">
+    >
       Button
     </Button>
     <menu-comp></menu-comp>
@@ -40,6 +40,12 @@
     {{ checkboxVal }}
     <Tabs v-model="currentTab" :tabs="tabs"></Tabs>
     <DatePicker></DatePicker>
+    {{ autoCompleteResult }}
+    <AutoComplete
+      v-model="autoCompleteResult"
+      :items="mockItems"
+    >
+    </AutoComplete>
   </div>
 </template>
 <script setup lang="ts">
@@ -54,13 +60,11 @@ import Select from '../components/UI/Select/Select'
 import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
 import Navbar from '../components/UI/Navbar/Navbar'
 import Checkbox from '../components/UI/Checkbox/Checkbox'
+import AutoComplete from '../components/UI/AutoComplete/AutoComplete'
 
 const inputValue = ref('')
 
 const btnRef = ref(null)
-const test = () => {
-  console.log(btnRef.value)
-}
 
 const checkboxVal = ref(false)
 
@@ -93,8 +97,29 @@ const mockItems = [
   {
     title: 'Cherry',
     value: 'cherry'
+  },
+  {
+    title: 'Melon',
+    value: 'melon'
+  },
+  {
+    title: 'Peach',
+    value: 'peach'
+  },
+  {
+    title: 'Papaya',
+    value: 'papaya'
+  },
+  {
+    title: 'Grape',
+    value: 'grape'
+  },
+  {
+    title: 'Pineapple',
+    value: 'pineapple'
   }
 ]
+const autoCompleteResult = ref('')
 
 const currentTab = ref('b')
 watch(currentTab, (val) => {

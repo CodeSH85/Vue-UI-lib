@@ -1,4 +1,13 @@
-.auto-complete-content-container {
+.--auto-complete-content-container {
   background-color: #fff;
   padding: $md;
+  position: absolute;
+  max-height: 120px;
+  overflow: auto;
+}
+.--auto-complete-content-item-default {
+  background-color: white;
+}
+.--auto-complete-content-item-current {
+  background-color: beige;
 }
