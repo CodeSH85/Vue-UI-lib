@@ -1,4 +1,4 @@
-import { PropType, defineComponent, reactive, ref, Ref, computed } from 'vue'
+import { PropType, defineComponent, watchEffect, ref, Ref, computed, nextTick } from 'vue'
 import { shift, useFloating } from '@floating-ui/vue'
 import { onKeyStroke, onClickOutside } from '@vueuse/core'
 import classes from './autocomplete.module.scss'
@@ -26,7 +26,7 @@ export default defineComponent({
     const queryText = ref('')
     const currentDataIdx = ref(-1)
     const inputRef = ref(null)
-    const contentRef = ref(null)
+    const contentRef = ref<HTMLElement | null>(null)
 
     useFloating(inputRef, contentRef, {
       strategy: 'absolute',
@@ -34,38 +34,39 @@ export default defineComponent({
     })
     function handleFocus() {
       _display.value = true
-      // nextTick(() => {})
     }
     const filteredItems = computed(() => {
       return props.items.filter(item => {
         return item.title.toString().toLowerCase().includes(queryText.value)
       })
     })
-    const itemRefs: Ref<HTMLElement> = ref(new Set())
+    const itemRefs= ref<HTMLElement[]>([])
     function getItemRefs(el: HTMLElement) {
-      if (el) itemRefs.value.add(el)
+      contentRef.value = el
+      itemRefs.value = Array.from(contentRef.value.children)
     }
     const targetEle = computed(() => {
-      return Array.from(itemRefs.value)[currentDataIdx.value]
+      return itemRefs.value[currentDataIdx.value]
     })
     onKeyStroke('ArrowUp', (e) => {
       e.preventDefault()
       currentDataIdx.value <= 0
         ? currentDataIdx.value = filteredItems.value.length - 1
         : currentDataIdx.value -= 1
-      targetEle.value.scrollIntoView(false)
+      if (targetEle.value) targetEle.value.scrollIntoView(false)
     })
     onKeyStroke('ArrowDown', (e) => {
       e.preventDefault()
       currentDataIdx.value === filteredItems.value.length - 1
         ? currentDataIdx.value = 0
         : currentDataIdx.value += 1
-      targetEle.value.scrollIntoView(false)
+      if (targetEle.value) targetEle.value.scrollIntoView(false)
     })
     onKeyStroke('Enter', () => {
       queryText.value = filteredItems.value[currentDataIdx.value].value.toString()
       emit('update:modelValue', queryText.value)
       currentDataIdx.value = 0
+      if (targetEle.value) targetEle.value.scrollIntoView(false)
     })
     onKeyStroke('Tab', () => {
       console.log('Tab')
@@ -83,18 +84,16 @@ export default defineComponent({
     function listContent() {
       return (
         <div 
-          ref={ contentRef }
           class={[
             classes['--auto-complete-content-container']
           ]}
         >
-          <ul>
+          <ul ref={ el => getItemRefs(el) }>
             {
               filteredItems.value.length
                 ? filteredItems.value.map((item, idx) => (
                     <li
                       key={ idx }
-                      ref={ el => getItemRefs(el) }
                       class={classes[
                         currentDataIdx.value === idx 
                           ? '--auto-complete-content-item-current'
