@@ -1,31 +1,45 @@
 import { defineComponent, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
+import { shift, useFloating } from '@floating-ui/vue'
+
 export default defineComponent({
   name: 'PulldownComp',
   setup(props, { slots }) {
     const display = ref(false)
-
-    function showContent() {
-      display.value = true
+    const activatorRef = ref<HTMLElement | null>(null)
+    function getActivatorRef(ele: HTMLElement) {
+      activatorRef.value = ele
     }
     const contentRef = ref<HTMLElement | null>(null)
     function getContentRef(ele: HTMLElement) {
       contentRef.value = ele
     }
     onClickOutside(contentRef, () => {
-      console.log('click outside')
       display.value = false
     })
+    useFloating(activatorRef, contentRef, {
+      strategy: 'absolute',
+      placement: "bottom",
+      middleware: [ shift() ]
+    })
+    function showContent() {
+      display.value = true
+    }
+    function closeContent() {
+      display.value = false
+    }
     const events = {
-      click: showContent
+      showContent,
+      closeContent
     }
     return () => (
       <>
         {
           slots.activator 
-            ? slots.activator({ on: events })
+            ? slots.activator({ ...events })
               .map(activator => (
                 <activator
+                  ref={ el => getActivatorRef(el) }
                   // onClick={ showContent }
                 >
                 </activator>

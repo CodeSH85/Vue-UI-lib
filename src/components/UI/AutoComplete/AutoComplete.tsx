@@ -1,7 +1,8 @@
 import { PropType, defineComponent, watchEffect, ref, Ref, computed, nextTick } from 'vue'
 import { shift, useFloating } from '@floating-ui/vue'
-import { onKeyStroke, onClickOutside } from '@vueuse/core'
+import { onKeyStroke } from '@vueuse/core'
 import classes from './autocomplete.module.scss'
+import Pulldown from '../Pulldown/Pulldown'
 
 type Auto_Complete_item = {
   title: string | number
@@ -22,7 +23,6 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const _display = ref(false)
     const queryText = ref('')
     const currentDataIdx = ref(-1)
     const inputRef = ref(null)
@@ -32,9 +32,6 @@ export default defineComponent({
       strategy: 'absolute',
       middleware: [ shift() ]
     })
-    function handleFocus() {
-      _display.value = true
-    }
     const filteredItems = computed(() => {
       return props.items.filter(item => {
         return item.title.toString().toLowerCase().includes(queryText.value)
@@ -43,7 +40,7 @@ export default defineComponent({
     const itemRefs= ref<HTMLElement[]>([])
     function getItemRefs(el: HTMLElement) {
       contentRef.value = el
-      itemRefs.value = Array.from(contentRef.value.children)
+      if (contentRef.value) itemRefs.value = Array.from(contentRef.value.children)
     }
     const targetEle = computed(() => {
       return itemRefs.value[currentDataIdx.value]
@@ -68,14 +65,6 @@ export default defineComponent({
       currentDataIdx.value = 0
       if (targetEle.value) targetEle.value.scrollIntoView(false)
     })
-    onKeyStroke('Tab', () => {
-      console.log('Tab')
-      _display.value = false
-    })
-    onClickOutside(inputRef, () => {
-      _display.value = false
-    })
-
     function handleInput(e: Event) {
       const element = e.target as HTMLInputElement
       queryText.value = element.value.toLowerCase()
@@ -88,7 +77,9 @@ export default defineComponent({
             classes['--auto-complete-content-container']
           ]}
         >
-          <ul ref={ el => getItemRefs(el) }>
+          <ul 
+            ref={ el => getItemRefs(el) }
+          >
             {
               filteredItems.value.length
                 ? filteredItems.value.map((item, idx) => (
@@ -109,20 +100,28 @@ export default defineComponent({
         </div>
       )
     }
+    function handleKeyDown(e, fn) {
+      if (e.code === 'Tab' || e.code === 'Escape') fn()
+    }
     return () => (
-      <div>
-        <input
-          value={ props.modelValue }
-          ref={ inputRef }
-          onFocus={ handleFocus }
-          onInput={ handleInput }
-        />
+      <Pulldown>
         {
-          _display.value
-            ? listContent()
-            : null
+          {
+            activator: ({ showContent, closeContent }) => (
+              <input
+                onKeydown={ e => handleKeyDown(e, closeContent) }
+                value={ props.modelValue }
+                ref={ inputRef }
+                onFocus={ showContent }
+                onInput={ handleInput }
+              />
+            ),
+            default: () => (
+              listContent()
+            )
+          }
         }
-      </div>
+      </Pulldown>
     )
   }
 })
