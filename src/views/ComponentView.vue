@@ -46,6 +46,15 @@
       :items="mockItems"
     >
     </AutoComplete>
+    <Pulldown>
+      <template #activator="{ on }">
+        <input type="text" v-on="on">
+      </template>
+      <ul style="width: 200px; background-color: grey;">
+        <li>test</li>
+        <li>test</li>
+      </ul>
+    </Pulldown>
   </div>
 </template>
 <script setup lang="ts">
@@ -61,6 +70,7 @@ import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
 import Navbar from '../components/UI/Navbar/Navbar'
 import Checkbox from '../components/UI/Checkbox/Checkbox'
 import AutoComplete from '../components/UI/AutoComplete/AutoComplete'
+import Pulldown from '../components/UI/Pulldown/Pulldown'
 
 const inputValue = ref('')
 
