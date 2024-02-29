@@ -16,9 +16,9 @@ export default defineComponent({
     }
     onClickOutside(contentRef, () => {
       display.value = false
-    })
+    }, { ignore: [activatorRef] })
     useFloating(activatorRef, contentRef, {
-      strategy: 'absolute',
+      // strategy: 'absolute',
       placement: "bottom",
       middleware: [ shift() ]
     })
@@ -28,9 +28,14 @@ export default defineComponent({
     function closeContent() {
       display.value = false
     }
+    function toggleContent() {
+      display.value = !display.value
+      console.log(display.value)
+    }
     const events = {
       showContent,
-      closeContent
+      closeContent,
+      toggleContent
     }
     return () => (
       <>
