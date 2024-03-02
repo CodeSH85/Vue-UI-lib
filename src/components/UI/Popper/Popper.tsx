@@ -1,11 +1,11 @@
 import { defineComponent, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import { shift, useFloating } from '@floating-ui/vue'
-import { PulldownProps } from './props'
+import { shift, useFloating, offset, flip } from '@floating-ui/vue'
+import { PopperProps } from './props'
 
 export default defineComponent({
-  name: 'PulldownComp',
-  props: PulldownProps,
+  name: 'PopperComp',
+  props: PopperProps,
   setup(props, { slots }) {
     const display = ref(false)
     const activatorRef = ref<HTMLElement | null>(null)
@@ -20,21 +20,25 @@ export default defineComponent({
       if (!props.closeOnClickOutside) return
       display.value = false
     }, { ignore: [activatorRef] })
+
     useFloating(activatorRef, contentRef, {
       // strategy: 'absolute',
-      placement: "bottom",
-      middleware: [ shift() ]
+      // placement: "bottom",
+      // middleware: [ shift() ]
+      placement: 'right',
+      middleware: [ offset(10), flip(), shift() ],
     })
-    function showContent() {
+
+    function showContent(): void {
       display.value = true
     }
-    function closeContent() {
+    function closeContent(): void {
       display.value = false
     }
-    function toggleContent() {
+    function toggleContent(): void {
       display.value = !display.value
     }
-    function contentClick() {
+    function contentClick(): void {
       if (props.closeOnContentClick) closeContent()
     }
     const events = {
@@ -42,6 +46,7 @@ export default defineComponent({
       closeContent,
       toggleContent
     }
+
     return () => (
       <>
         {

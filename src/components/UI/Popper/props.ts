@@ -1,5 +1,5 @@
 
-export const PulldownProps = {
+export const PopperProps = {
   closeOnContentClick: {
     type: Boolean,
     default: true

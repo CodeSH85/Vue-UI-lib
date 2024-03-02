@@ -2,8 +2,7 @@ import { PropType, defineComponent, watchEffect, ref, Ref, computed, nextTick } 
 import { shift, useFloating } from '@floating-ui/vue'
 import { onKeyStroke } from '@vueuse/core'
 import classes from './autocomplete.module.scss'
-import Pulldown from '../Pulldown/Pulldown'
-import { FunctionBody, FunctionExpression } from 'typescript'
+import Pulldown from '../Popper/Popper'
 
 type AutoCompleteItem = {
   title: string | number
@@ -38,6 +37,7 @@ export default defineComponent({
         return item.title.toString().toLowerCase().includes(queryText.value)
       })
     })
+
     const itemRefs= ref<HTMLElement[]>([])
     function getItemRefs(el: HTMLElement) {
       contentRef.value = el
@@ -46,6 +46,7 @@ export default defineComponent({
     const targetEle = computed(() => {
       return itemRefs.value[currentDataIdx.value]
     })
+
     onKeyStroke('ArrowUp', (e) => {
       e.preventDefault()
       currentDataIdx.value <= 0
@@ -71,10 +72,14 @@ export default defineComponent({
       queryText.value = element.value.toLowerCase()
       emit('update:modelValue', element.value)
     }
-    function handleClick<T>(item: T) {
+    function handleClick(item) {
       queryText.value = item.value.toLowerCase()
       emit('update:modelValue', item.value)
     }
+    function handleKeyDown(e: KeyboardEvent, fn) {
+      if (e.code === 'Tab' || e.code === 'Escape') fn()
+    }
+
     function listContent() {
       return (
         <div 
@@ -105,9 +110,6 @@ export default defineComponent({
           </ul>
         </div>
       )
-    }
-    function handleKeyDown(e: KeyboardEvent, fn) {
-      if (e.code === 'Tab' || e.code === 'Escape') fn()
     }
     return () => (
       <Pulldown>

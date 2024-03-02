@@ -1,64 +1,58 @@
 <template>
   <div class="root">
-    <div class="" style="display: flex; gap: 1em; margin-bottom: 1em;">
-      <popper-comp offset="right">
-      </popper-comp>
-      <popper-comp offset="left">
-      </popper-comp>
-      <popper-comp offset="top">
-      </popper-comp>
-      <popper-comp offset="bottom">
-      </popper-comp>
+    <div class="flex">
+      <Button
+        ref="btnRef"
+      >
+        Button
+      </Button>
+      <Button
+        variant="outlined"
+        @click="toggleDialog">
+        Dialog
+      </Button>
     </div>
-    <Button 
-      ref="btnRef"
-    >
-      Button
-    </Button>
-    <menu-comp></menu-comp>
-    <Button 
-      variant="outlined"
-      @click="toggleDialog">
-      Dialog
-    </Button>
+    <Menu :items="mockItems"></Menu>
     <Dialog 
       v-model:show="showDialog">
     </Dialog>
-    <Select
-      v-model="selectedValue"
-      :items="mockItems">
-    </Select>
     <Navbar :items="side"></Navbar>
-    <text-input
-      v-model="inputValue"
-      label="name" placeholder="input text">
-    </text-input>
-    <Checkbox
-      v-model="checkboxVal"
-      label="check box">
-    </Checkbox>
-    {{ checkboxVal }}
+
+    <section>
+      <h2 class="">Form</h2>
+      <Select
+        v-model="selectedValue"
+        :items="mockItems">
+      </Select>
+      <text-input
+        v-model="inputValue"
+        label="name" placeholder="input text">
+      </text-input>
+      <Checkbox
+        v-model="checkboxVal"
+        label="check box">
+      </Checkbox>
+    </section>
+    <!-- <DatePicker></DatePicker> -->
+    <div class="">
+      <div>{{ autoCompleteResult }}</div>
+      <AutoComplete
+        v-model="autoCompleteResult"
+        :items="mockItems"
+      >
+      </AutoComplete>
+    </div>
     <Tabs v-model="currentTab" :tabs="tabs"></Tabs>
-    <DatePicker></DatePicker>
-    {{ autoCompleteResult }}
-    <AutoComplete
-      v-model="autoCompleteResult"
-      :items="mockItems"
-    >
-    </AutoComplete>
-    <Menu :items="mockItems"></Menu>
+
   </div>
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import TextInput from '../components/UI/TextInput/TextInput'
-import PopperComp from '../components/UI/Popper/PopperComp.vue'
 import Button from '../components/UI/Button/Button'
 import Dialog from '../components/UI/Dialog/Dialog'
 import Tabs from '../components/UI/Tab/Tabs'
-import MenuComp from '../components/UI/Menu/Menu'
 import Select from '../components/UI/Select/Select'
-import DatePicker from '../components/UI/DatePicker/DatePicker.vue'
 import Navbar from '../components/UI/Navbar/Navbar'
 import Checkbox from '../components/UI/Checkbox/Checkbox'
 import AutoComplete from '../components/UI/AutoComplete/AutoComplete'
@@ -75,8 +69,6 @@ function toggleDialog () {
   showDialog.value = !showDialog.value
   console.log(showDialog.value)
 }
-
-
 
 const selectedValue = ref('')
 watch(selectedValue, (val) => {

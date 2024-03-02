@@ -1,7 +1,7 @@
 import { defineComponent, ref } from 'vue'
 import classes from './menu.module.scss'
 import { MenuProps } from './props'
-import Pulldown from '../Pulldown/Pulldown'
+import Pulldown from '../Popper/Popper'
 import Button from '../Button/Button'
 
 export default defineComponent({
@@ -41,15 +41,13 @@ export default defineComponent({
               slots.activator
               ? slots.activator({ click: toggleContent })
               : 
-                <div class={classes}>
-                  <Button 
-                    onClick={ 
-                      toggleContent
-                    }
-                  >
-                    Menu
-                  </Button>
-                </div>
+                <Button
+                  onClick={ 
+                    toggleContent
+                  }
+                >
+                  Menu
+                </Button>
             ),
             default: () => (
               slots.default
