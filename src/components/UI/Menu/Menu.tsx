@@ -2,16 +2,37 @@ import { defineComponent, ref } from 'vue'
 import classes from './menu.module.scss'
 import { MenuProps } from './props'
 import Pulldown from '../Pulldown/Pulldown'
+import Button from '../Button/Button'
 
 export default defineComponent({
   name: 'MenuComp',
   props: MenuProps,
-  emits: [],
-  setup (props, { slots }) {
-    // const show = ref(true)
-    // function showMenu () {
-    //   show.value = true
-    // }
+  emits: ['update:modelValue'],
+  setup (props, { slots, emit }) {
+    function clickItem<T>(item: T) {
+      console.log(item)
+      emit('update:modelValue', item)
+    }
+    const defaultContent = () => {
+      return (
+        <div>
+          {
+            props.items.length && props.items.map(item => (
+              <div
+                style="background-color: grey;"
+                onClick={() => clickItem(item)}
+              >
+                { 
+                  typeof item === 'string' 
+                    ? item
+                    : item.title
+                }
+              </div>
+            ))
+          }
+        </div>
+      )
+    }
     return () => (
       <Pulldown>
         {
@@ -21,14 +42,19 @@ export default defineComponent({
               ? slots.activator({ click: toggleContent })
               : 
                 <div class={classes}>
-                  <button onClick={ toggleContent }>
+                  <Button 
+                    onClick={ 
+                      toggleContent
+                    }
+                  >
                     Menu
-                  </button>
+                  </Button>
                 </div>
             ),
             default: () => (
-              <div>test</div>
-              // slots.default?.()
+              slots.default
+                ? slots.default()
+                : defaultContent()
             )
           }
         }

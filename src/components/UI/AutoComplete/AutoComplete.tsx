@@ -3,8 +3,9 @@ import { shift, useFloating } from '@floating-ui/vue'
 import { onKeyStroke } from '@vueuse/core'
 import classes from './autocomplete.module.scss'
 import Pulldown from '../Pulldown/Pulldown'
+import { FunctionBody, FunctionExpression } from 'typescript'
 
-type Auto_Complete_item = {
+type AutoCompleteItem = {
   title: string | number
   value: string | number | boolean
 }
@@ -17,7 +18,7 @@ export default defineComponent({
       default: ''
     },
     items: {
-      type: Array as PropType<Auto_Complete_item[]>,
+      type: Array as PropType<AutoCompleteItem[]>,
       default: () => []
     }
   },
@@ -32,7 +33,7 @@ export default defineComponent({
       strategy: 'absolute',
       middleware: [ shift() ]
     })
-    const filteredItems = computed(() => {
+    const filteredItems = computed<AutoCompleteItem[]>(() => {
       return props.items.filter(item => {
         return item.title.toString().toLowerCase().includes(queryText.value)
       })
@@ -70,6 +71,10 @@ export default defineComponent({
       queryText.value = element.value.toLowerCase()
       emit('update:modelValue', element.value)
     }
+    function handleClick<T>(item: T) {
+      queryText.value = item.value.toLowerCase()
+      emit('update:modelValue', item.value)
+    }
     function listContent() {
       return (
         <div 
@@ -84,6 +89,7 @@ export default defineComponent({
               filteredItems.value.length
                 ? filteredItems.value.map((item, idx) => (
                     <li
+                      onClick={ () => handleClick(item) }
                       key={ idx }
                       class={classes[
                         currentDataIdx.value === idx 
@@ -100,7 +106,7 @@ export default defineComponent({
         </div>
       )
     }
-    function handleKeyDown(e, fn) {
+    function handleKeyDown(e: KeyboardEvent, fn) {
       if (e.code === 'Tab' || e.code === 'Escape') fn()
     }
     return () => (
