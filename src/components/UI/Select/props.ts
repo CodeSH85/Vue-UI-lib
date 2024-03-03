@@ -1,7 +1,6 @@
 import { type PropType } from 'vue'
 
-export type SelectVariant =
-  'default' | 'outlined' | 'flat' | 'text' | 'plain'
+export type SelectVariant = 'default' | 'outlined' | 'flat' | 'text' | 'plain'
 
 export type SelectItem = {
   title?: string | number,
@@ -10,9 +9,9 @@ export type SelectItem = {
 
 export type ItemType =  undefined | null | SelectItem[]
 
-export const selectProps = {
+export const SelectProps = {
   items: {
-    type: Array as PropType<ItemType>,
+    type: Array as PropType<ItemType[]>,
     default: () => []
   },
   modelValue: {
@@ -31,6 +30,10 @@ export const selectProps = {
   multiple: {
     type: Boolean,
     default: true
+  },
+  native: {
+    type: Boolean,
+    default: false
   },
   closeOnClickOutside: {
     type: Boolean,

@@ -1,4 +1,13 @@
-.select {
-  padding: .2em;
-  min-width: 10em;
+.--select-content-container {
+  background-color: #fff;
+  padding: $md;
+  position: absolute;
+  max-height: 120px;
+  overflow: auto;
+}
+.--select-content-item-default {
+  background-color: white;
+}
+.--select-content-item-current {
+  background-color: beige;
 }

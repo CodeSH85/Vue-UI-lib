@@ -2,11 +2,11 @@ import { PropType, defineComponent, watchEffect, ref, Ref, computed, nextTick } 
 import { shift, useFloating } from '@floating-ui/vue'
 import { onKeyStroke } from '@vueuse/core'
 import classes from './autocomplete.module.scss'
-import Pulldown from '../Popper/Popper'
+import Popper from '../Popper/Popper'
 
 type AutoCompleteItem = {
   title: string | number
-  value: string | number | boolean
+  value: string | number
 }
 
 export default defineComponent({
@@ -27,7 +27,9 @@ export default defineComponent({
     const currentDataIdx = ref(-1)
     const inputRef = ref(null)
     const contentRef = ref<HTMLElement | null>(null)
-
+    if (props.modelValue) {
+      queryText.value = props.modelValue
+    }
     useFloating(inputRef, contentRef, {
       strategy: 'absolute',
       middleware: [ shift() ]
@@ -72,11 +74,11 @@ export default defineComponent({
       queryText.value = element.value.toLowerCase()
       emit('update:modelValue', element.value)
     }
-    function handleClick(item) {
-      queryText.value = item.value.toLowerCase()
+    function handleClick(item: AutoCompleteItem) {
+      queryText.value = item.value.toString().toLowerCase()
       emit('update:modelValue', item.value)
     }
-    function handleKeyDown(e: KeyboardEvent, fn) {
+    function handleKeyDown(e: KeyboardEvent, fn: () => void) {
       if (e.code === 'Tab' || e.code === 'Escape') fn()
     }
 
@@ -112,10 +114,10 @@ export default defineComponent({
       )
     }
     return () => (
-      <Pulldown>
+      <Popper>
         {
           {
-            activator: ({ showContent, closeContent }) => (
+            trigger: ({ showContent, closeContent }) => (
               <input
                 onKeydown={ e => handleKeyDown(e, closeContent) }
                 value={ props.modelValue }
@@ -129,7 +131,7 @@ export default defineComponent({
             )
           }
         }
-      </Pulldown>
+      </Popper>
     )
   }
 })
