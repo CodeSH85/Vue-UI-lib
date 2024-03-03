@@ -1,7 +1,9 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import classes from './menu.module.scss'
 import { MenuProps } from './props'
-import Pulldown from '../Popper/Popper'
+import { onKeyStroke } from '@vueuse/core'
+
+import Popper from '../Popper/Popper'
 import Button from '../Button/Button'
 
 export default defineComponent({
@@ -10,36 +12,78 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup (props, { slots, emit }) {
     function clickItem<T>(item: T) {
-      console.log(item)
       emit('update:modelValue', item)
     }
+
+    const contentRef = ref<HTMLElement | null>(null)
+    const itemRefs= ref<HTMLElement[]>([])
+    const targetEle = computed(() => {
+      return itemRefs.value[currentDataIdx.value]
+    })
+    function getItemRefs(el: HTMLElement) {
+      contentRef.value = el
+      if (contentRef.value) itemRefs.value = Array.from(contentRef.value.children)
+    }
+    const currentDataIdx = ref(-1)
+    onKeyStroke('ArrowUp', (e) => {
+      e.preventDefault()
+      currentDataIdx.value <= 0
+        ? currentDataIdx.value = props.items.length - 1
+        : currentDataIdx.value -= 1
+      if (targetEle.value) targetEle.value.scrollIntoView(false)
+    })
+    onKeyStroke('ArrowDown', (e) => {
+      e.preventDefault()
+      currentDataIdx.value === props.items.length - 1
+        ? currentDataIdx.value = 0
+        : currentDataIdx.value += 1
+      if (targetEle.value) targetEle.value.scrollIntoView(false)
+    })
+    onKeyStroke('Enter', () => {
+      emit('update:modelValue', props.items[currentDataIdx.value])
+      currentDataIdx.value = 0
+      if (targetEle.value) targetEle.value.scrollIntoView(false)
+    })
     const defaultContent = () => {
       return (
-        <div>
+        <div
+          ref={ el => getItemRefs(el) }
+          class={classes['--menu-content-container']}
+        >
           {
-            props.items.length && props.items.map(item => (
-              <div
-                style="background-color: grey;"
-                onClick={() => clickItem(item)}
-              >
-                { 
-                  typeof item === 'string' 
-                    ? item
-                    : item.title
-                }
-              </div>
+            props.items.length && props.items.map((item, idx) => (
+              slots.item
+              ? slots.item({ item })
+              : <div
+                  class={[
+                    classes['--menu-content-item'],
+                    classes[
+                      currentDataIdx.value === idx
+                        ? '--menu-content-item-current'
+                        : '--menu-content-item-default'
+                    ]
+                  ]}
+                  onClick={() => clickItem(item)}
+                  
+                >
+                  { 
+                    typeof item === 'string' 
+                      ? item
+                      : item.title
+                  }
+                </div>
             ))
           }
         </div>
       )
     }
     return () => (
-      <Pulldown>
+      <Popper>
         {
           {
-            activator: ({ toggleContent }) => (
-              slots.activator
-              ? slots.activator({ click: toggleContent })
+            trigger: ({ toggleContent }) => (
+              slots.trigger
+              ? slots.trigger({ click: toggleContent })
               : 
                 <Button
                   onClick={ 
@@ -56,7 +100,7 @@ export default defineComponent({
             )
           }
         }
-      </Pulldown>
+      </Popper>
     )
   }
 })

@@ -8,9 +8,9 @@ export default defineComponent({
   props: PopperProps,
   setup(props, { slots }) {
     const display = ref(false)
-    const activatorRef = ref<HTMLElement | null>(null)
-    function getActivatorRef(ele: HTMLElement) {
-      activatorRef.value = ele
+    const triggerRef = ref<HTMLElement | null>(null)
+    function getTriggerRef(ele: HTMLElement) {
+      triggerRef.value = ele
     }
     const contentRef = ref<HTMLElement | null>(null)
     function getContentRef(ele: HTMLElement) {
@@ -19,9 +19,9 @@ export default defineComponent({
     onClickOutside(contentRef, () => {
       if (!props.closeOnClickOutside) return
       display.value = false
-    }, { ignore: [activatorRef] })
+    }, { ignore: [triggerRef] })
 
-    useFloating(activatorRef, contentRef, {
+    useFloating(triggerRef, contentRef, {
       // strategy: 'absolute',
       // placement: "bottom",
       // middleware: [ shift() ]
@@ -50,13 +50,13 @@ export default defineComponent({
     return () => (
       <>
         {
-          slots.activator 
-            ? slots.activator({ ...events })
-              .map(activator => (
-                <activator
-                  ref={ el => getActivatorRef(el) }
+          slots.trigger 
+            ? slots.trigger({ ...events })
+              .map(trigger => (
+                <trigger
+                  ref={ el => getTriggerRef(el) }
                 >
-                </activator>
+                </trigger>
               ))
             : null
         }
@@ -64,6 +64,7 @@ export default defineComponent({
           slots.default && display.value
             ? slots.default().map(content => (
               <content
+                style="position: absolute; background-color: white; z-index: 10;"
                 onClick={ contentClick }
                 ref={ el => getContentRef(el) }
               >

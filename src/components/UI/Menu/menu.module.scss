@@ -2,3 +2,20 @@
   padding: .5em;
   background-color: #df3a3a;
 }
+.--menu-content-container {
+  background-color: $surface-primary;
+}
+.--menu-content-item {
+  padding: $sm;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(244, 244, 231);
+  }
+}
+.--menu-content-item-default {
+  background-color: white;
+}
+.--menu-content-item-current {
+  background-color: beige;
+}
+
