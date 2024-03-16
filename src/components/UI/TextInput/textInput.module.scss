@@ -2,12 +2,15 @@
 .--text-input-wrapper {
   margin: $sm;
   display: flex;
-  flex-direction: column;
   border-radius: $border-radius-sm;
   position: relative;
 }
 .--text-input-default {
+  min-width: 5em;
   border: none;
+  &:active {
+    border: none;
+  }
 }
 .--text-input-outlined {
   border: 1.5px solid $primary-color;

@@ -2,26 +2,30 @@ import { PropType } from 'vue'
 
 type TextInputTypes = 'text' | 'number' | 'email' | 'password'
 type VariantList = 'outlined' | 'filled' | 'plain' | 'text' | 'default'
-
+type ValueList = string | number | boolean | null | undefined
 export const TextInputProps = {
   modelValue: {
-    type: [String, Number, Boolean],
-    default: false
+    type: String as PropType<ValueList>,
+    default: ''
+  },
+  value: {
+    type: String as PropType<ValueList>,
+    default: ''
   },
   type: {
     type: String as PropType<TextInputTypes>,
     default: 'text',
-    validators: (value: TextInputTypes) => 
+    validator: (value: TextInputTypes) => 
       ['text', 'number', 'email', 'password'].includes(value)
   },
   label: {
-    type: [String, Boolean],
-    default: false
+    type: String as PropType<ValueList>,
+    default: ''
   },
   variant: {
     type: String as PropType<VariantList>,
     default: 'default',
-    validators: (value: VariantList) => 
+    validator: (value: VariantList) => 
       ['outlined', 'filled', 'plain', 'text', 'default'].includes(value)
   },
   colors: {
@@ -38,6 +42,6 @@ export const TextInputProps = {
   },
   clearable: {
     type: Boolean,
-    default: false
+    default: true
   }
-}
+} as const
