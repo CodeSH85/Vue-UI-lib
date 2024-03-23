@@ -1,4 +1,6 @@
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
+import classes from './checkbox.module.scss'
+import Input from '../Input/Input'
 
 export default defineComponent({
   name: 'TextInput',
@@ -18,25 +20,29 @@ export default defineComponent({
     }
   },
   emits: ['update:modelValue'],
-  setup (props, { emit }) {
+  setup (props, { emit, attrs }) {
     function handleInput (e: Event) {
       const element = e.target as HTMLInputElement
       emit('update:modelValue', element.checked)
     }
+    const _label = computed(() => props.label ? props.label.toString() : undefined)
     return () => (
-      <div>
-        { props.label ??
-          <label>
-            { props.label }
-          </label>
-        }
-        <input
-          type="checkbox"
-          checked={!!props.modelValue ?? props.value}
-          onInput={handleInput}
-        >
-        </input>
-      </div>
+      <Input
+        {...attrs}
+        label={ _label.value }
+        class={classes['--checkbox-wrapper']}
+      >
+        {{
+          default: ({ id }) => (
+            <input
+              id={ id }
+              type="checkbox"
+              checked={ !!props.modelValue ?? props.value }
+              onInput={ handleInput }
+            />
+          )
+        }}
+      </Input>
     )
   }
 })

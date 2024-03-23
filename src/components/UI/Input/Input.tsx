@@ -27,7 +27,7 @@ export default defineComponent({
     }
     return () => (
       <>
-        <div>
+        <div class={ attrs.class }>
           { props.label && label() }
           {
             slots.default?.({ id: id.value })
