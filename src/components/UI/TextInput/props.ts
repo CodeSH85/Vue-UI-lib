@@ -43,5 +43,9 @@ export const TextInputProps = {
   clearable: {
     type: Boolean,
     default: true
+  },
+  clearIcon: {
+    type: String,
+    default: ''
   }
 } as const

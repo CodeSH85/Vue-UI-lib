@@ -26,6 +26,7 @@
       </Select>
       <text-input
         v-model="inputValue"
+        style="border: 1px solid red;"
         label="name" placeholder="input text">
       </text-input>
       <Checkbox
@@ -113,7 +114,7 @@ const mockItems = [
     value: 'pineapple'
   }
 ]
-const autoCompleteResult = ref('')
+const autoCompleteResult = ref('a')
 
 const currentTab = ref('b')
 watch(currentTab, (val) => {

@@ -2,14 +2,22 @@
 .--text-input-wrapper {
   margin: $sm;
   display: flex;
+  align-items: center;
   border-radius: $border-radius-sm;
   position: relative;
+}
+.--text-input-element {
+  min-width: 5em;
+  border: none;
+  &:focus, &:active {
+    outline: none;
+  }
 }
 .--text-input-default {
   min-width: 5em;
   border: none;
-  &:active {
-    border: none;
+  &:focus, &:active {
+    outline: none;
   }
 }
 .--text-input-outlined {
@@ -35,4 +43,9 @@
 .--text-input-density-compact {
   padding: $sm;
   margin: $sm;
+}
+.--text-input-clear-icon {
+  &:hover {
+    background-color: aqua;
+  }
 }
