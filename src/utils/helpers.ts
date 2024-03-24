@@ -10,13 +10,12 @@ export function buildEmpty() {
 export function pickAttrs(keys: string[], attrs: object): object[] {
   const targetAttrs = {}
   const restAttrs = {}
-  keys.forEach(key => {
-    if (Object.hasOwnProperty.call(attrs, key) && attrs[key] !== undefined) {
-      targetAttrs[key] = attrs[key]
-    } else if (attrs[key] !== undefined) {
-      restAttrs[key] = attrs[key]
-    }
-  })
-
+  for (const attr in attrs) {
+    keys.includes(attr) 
+      ? targetAttrs[attr] = attrs[attr]
+      : restAttrs[attr] = attrs[attr]
+  }
+  console.log(targetAttrs)
+  console.log(restAttrs)
   return [ targetAttrs, restAttrs ]
 }
