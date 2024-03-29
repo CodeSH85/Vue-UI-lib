@@ -28,6 +28,9 @@ export const TextInputProps = {
     validator: (value: VariantList) => 
       ['outlined', 'filled', 'plain', 'text', 'default'].includes(value)
   },
+  class: {
+    type: String
+  },
   colors: {
     type: String
   },
@@ -39,6 +42,10 @@ export const TextInputProps = {
   },
   appendIcon: {
     type: String
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   },
   clearable: {
     type: Boolean,

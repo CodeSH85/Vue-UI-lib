@@ -1,5 +1,6 @@
 
 .--text-input-wrapper {
+  width: 100%;
   margin: $sm;
   display: flex;
   align-items: center;
@@ -7,11 +8,15 @@
   position: relative;
 }
 .--text-input-element {
-  min-width: 5em;
+  min-width: 8em;
   border: none;
   &:focus, &:active {
     outline: none;
   }
+}
+.--text-input-container {
+  padding: .2em .1em;
+  background-color: #fff;
 }
 .--text-input-default {
   min-width: 5em;

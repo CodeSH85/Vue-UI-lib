@@ -17,7 +17,6 @@
       v-model:show="showDialog">
     </Dialog>
     <Navbar :items="side"></Navbar>
-
     <section>
       <h2 class="">Form</h2>
       <Select
@@ -26,10 +25,11 @@
       </Select>
       <text-input
         v-model="inputValue"
-        style="border: 1px solid red;"
-        label="name" placeholder="input text">
+        class="test"
+        label="name" placeholder="input text"
+      >
       </text-input>
-      <Checkbox
+      <Checkbox      
         v-model="checkboxVal"
         label="check box">
       </Checkbox>
@@ -182,7 +182,7 @@ const side = [
 
 </script>
 <style lang="scss" scoped>
-.text-input {
-  border: 2px solid red;
+.test {
+  border: 1px solid red;
 }
 </style>
