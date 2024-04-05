@@ -21,7 +21,8 @@
       <h2 class="">Form</h2>
       <Select
         v-model="selectedValue"
-        :items="mockItems">
+        :items="mockItems"
+      >
       </Select>
       <text-input
         v-model="inputValue"
@@ -44,7 +45,7 @@
       </AutoComplete>
     </div>
     <Tabs v-model="currentTab" :tabs="tabs"></Tabs>
-
+    <DatePicker></DatePicker>
   </div>
 </template>
 <script setup lang="ts">
@@ -58,6 +59,7 @@ import Navbar from '../components/UI/Navbar/Navbar'
 import Checkbox from '../components/UI/Checkbox/Checkbox'
 import AutoComplete from '../components/UI/AutoComplete/AutoComplete'
 import Menu from '../components/UI/Menu/Menu'
+import DatePicker from '../components/UI/DatePicker/DatePicker'
 
 const inputValue = ref('')
 
