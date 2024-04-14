@@ -8,7 +8,8 @@
       </Button>
       <Button
         variant="outlined"
-        @click="toggleDialog">
+        @click="toggleDialog"
+      >
         Dialog
       </Button>
     </div>
@@ -24,6 +25,7 @@
         :items="mockItems"
       >
       </Select>
+      {{ inputValue }}
       <text-input
         v-model="inputValue"
         class="test"

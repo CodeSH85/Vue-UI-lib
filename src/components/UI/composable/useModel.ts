@@ -1,9 +1,9 @@
 // Learned from Vuetify
 
 import { ref, computed, toRaw } from 'vue'
-import { getCurrentInstance } from '../utils/getCurrentInstance'
+import { getCurrentInstance } from '../../../utils/getCurrentInstance'
 
-export default function useModel(
+export function useModel(
   props,
   prop,
   defaultValue?,

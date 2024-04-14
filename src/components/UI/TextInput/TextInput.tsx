@@ -1,44 +1,45 @@
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, nextTick } from 'vue'
 import { TextInputProps } from './props'
-// import classes from './textInput.scss'
 import './textInput.scss'
 import Input from '../Input/Input'
 import Icon from '../Icon/Icon'
-import Button from '../Button/Button'
 import { pickAttrs } from '../../../utils/helpers'
+import { useModel } from '../composable/useModel'
 
 export default defineComponent({
   name: 'TextInput',
   inheritAttrs: false,
   props: TextInputProps,
-  emits: ['update:modelValue', 'onInput', 'onFocus', 'onBlur', 'onClear'],
+  emits: {
+    'update:modelValue': (val: string) => true,
+    'onClear': () => true
+  },
   setup (props, { attrs, emit, slots }) {
+    const inputRef = ref<HTMLInputElement>()
     const isFocus = ref(false)
     const isHover = ref(false)
-    // const value = useProxyModel(props, 'modelValue', props.modelValue)
-    function handleInput (e: Event) {
+
+    const { model } = useModel(props, 'modelValue')
+
+    function onInput (e: Event) {
       const element = e.target as HTMLInputElement
-      emit('update:modelValue', element.value)
-      emit('onInput', e)
+      model.value = element.value
     }
-    function handleFocus() {
-      isFocus.value = true
-      emit('onFocus')
+    function onFocus() {
+      if (!isFocus.value) isFocus.value = true
     }
-    function handleBlur() {
+    function onBlur() {
       isFocus.value = false
-      emit('onBlur')
     }
-    function handleClear() {
-      props.modelValue
-        ? emit('update:modelValue', '')
-        : emit('onInput', '')
+    function onClear() {
+      model.value = ''
+      inputRef.value?.focus()
       emit('onClear')
     }
-    function handleMouseover() {
+    function mouseover() {
       isHover.value = true
     }
-    function handleMouseleave() {
+    function mouseleave() {
       isHover.value = false
     }
     const isClearable = computed<boolean>(() => {
@@ -60,25 +61,26 @@ export default defineComponent({
               :
                 <div
                   class="--text-input-container"
-                  onMouseover={ handleMouseover }
-                  onMouseleave={ handleMouseleave }
+                  onMouseover={ mouseover }
+                  onMouseleave={ mouseleave }
                 >
                   <input
+                    ref={ inputRef }
                     id={ id }
-                    onInput={ handleInput }
+                    onInput={ onInput }
                     type={ props.type }
                     size={ 1 }
-                    value={ props.modelValue || props.value }
+                    value={ model.value }
                     class={[
                       '--text-input-element',
                     ]}
-                    onFocus={ handleFocus }
-                    onBlur={ handleBlur }
+                    onFocus={ onFocus }
+                    onBlur={ onBlur }
                     { ...inputAttrs }
                   />
                   {
                     isClearable.value &&
-                    <span onClick={ handleClear } class="--text-input-clear-icon">
+                    <span onClick={ onClear } class="--text-input-clear-icon">
                       <Icon>{ props.clearIcon || 'mdi-close' }</Icon>
                     </span>
                   }
