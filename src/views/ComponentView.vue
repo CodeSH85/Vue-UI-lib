@@ -52,16 +52,16 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import TextInput from '../components/UI/TextInput/TextInput'
-import Button from '../components/UI/Button/Button'
-import Dialog from '../components/UI/Dialog/Dialog'
-import Tabs from '../components/UI/Tab/Tabs'
-import Select from '../components/UI/Select/Select'
-import Navbar from '../components/UI/Navbar/Navbar'
-import Checkbox from '../components/UI/Checkbox/Checkbox'
-import AutoComplete from '../components/UI/AutoComplete/AutoComplete'
-import Menu from '../components/UI/Menu/Menu'
-import DatePicker from '../components/UI/DatePicker/DatePicker'
+import TextInput from '../components/TextInput/TextInput'
+import Button from '../components/Button/Button'
+import Dialog from '../components/Dialog/Dialog'
+import Tabs from '../components/Tab/Tabs'
+import Select from '../components/Select/Select'
+import Navbar from '../components/Navbar/Navbar'
+import Checkbox from '../components/Checkbox/Checkbox'
+import AutoComplete from '../components/AutoComplete/AutoComplete'
+import Menu from '../components/Menu/Menu'
+import DatePicker from '../components/DatePicker/DatePicker'
 
 const inputValue = ref('')
 
@@ -190,3 +190,4 @@ const side = [
   border: 1px solid red;
 }
 </style>
+../components/AutoComplete/AutoComplete../components/Button/Button../components/TextInput/TextInput../components/Checkbox/Checkbox../components/DatePicker/DatePicker../components/Dialog/Dialog../components/Tab/Tabs../components/Select/Select../components/Navbar/Navbar../components/Menu/Menu

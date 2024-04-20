@@ -1,11 +1,4 @@
 <template>
-  <!-- <main class="container">
-    <SideBar />
-    <section class="main-section">
-      <router-view />
-    </section>
-    <SidePanel />
-  </main> -->
   <router-view />
 </template>
 <script setup lang="ts">

@@ -6,13 +6,10 @@ module.exports = {
     es2021: true
   },
   extends: [
+    'plugin:vue/vue3-recommended',
     'eslint:recommended',
-    'plugin:vue/vue3-essential',
-    'plugin:vue/vue3-strongly-recommended"',
-    '@vue/standard',
     '@vue/typescript/recommended',
-    'prettier',
-    'plugin:prettier/recommended'
+    'prettier'
   ],
   parser: 'vue-eslint-parser',
   parserOptions: {
