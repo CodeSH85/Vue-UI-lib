@@ -16,7 +16,7 @@ export default defineComponent({
   },
   setup(props, { slots, emit, attrs }) {
     const uid = getUid()
-    const id = computed(() => props.id || `input-${uid}`)
+    const id = computed(() => props.id || `--input-${uid}`)
 
     const label = () => {
       return (

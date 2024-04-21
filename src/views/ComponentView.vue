@@ -190,4 +190,3 @@ const side = [
   border: 1px solid red;
 }
 </style>
-../components/AutoComplete/AutoComplete../components/Button/Button../components/TextInput/TextInput../components/Checkbox/Checkbox../components/DatePicker/DatePicker../components/Dialog/Dialog../components/Tab/Tabs../components/Select/Select../components/Navbar/Navbar../components/Menu/Menu

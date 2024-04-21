@@ -1,0 +1,9 @@
+@mixin variant() {
+  &--variant-outlined,
+  &--variant-flat,
+  &--variant-default {
+    color: inherit
+  }
+
+  
+}

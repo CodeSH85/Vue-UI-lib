@@ -1,6 +1,4 @@
-@import url(./grid.scss);
-@import url(./reset.scss);
-@import url(./utils.scss);
+@import url(./generic/_reset.scss);
 
 * {
   font-family: 
@@ -16,12 +14,4 @@
     'Helvetica Neue',
     Arial,
     sans-serif;
-}
-
-.elevated {
-  box-shadow: $shadow-main;
-}
-
-.rounded {
-  border-radius: 1em;
 }
