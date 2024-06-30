@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'url'
+import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import eslintPlugin from 'vite-plugin-eslint'
@@ -31,6 +32,23 @@ export default defineConfig({
       scss: {
         additionalData: '@import "@/styles/settings/_variables.scss";'
         // additionalData: '@import "@/assets/style.scss";'
+      }
+    }
+  },
+  build: {
+    lib: {
+      entry: resolve(__dirname, 'lib/index.ts'),
+      name: 'ToyUI',
+      fileName: (format) => `toyUI.${format}.js`
+    },
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
+        globals: {
+          vue: 'Vue'
+        }
       }
     }
   }
