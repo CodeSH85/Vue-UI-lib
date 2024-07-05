@@ -1,13 +1,13 @@
-import Button from './components/Button/Button'
-import Icon from './components/Icon/Icon'
-import Alert from './components/Alert/AlertComp'
-import TextInput from './components/TextInput/TextInput'
-import Menu from './components/Menu/Menu'
+import { App } from 'vue'
+import * as components from './components'
 
-export {
-  Button,
-  Icon,
-  Alert,
-  TextInput,
-  Menu
+function install(app: App) {
+  for (const key in components) {
+    // @ts-expect-error: expect valid components
+    app.component(key, components[key])
+  }
 }
+
+export default { install }
+
+export * from './components'
