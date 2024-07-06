@@ -7,6 +7,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // root: './index.html',
+  root: __dirname,
   plugins: [
     vue(
       {
@@ -18,9 +20,7 @@ export default defineConfig({
         cache: false
       }
     ),
-    vueJsx({
-      // options are passed on to @vue/babel-plugin-jsx
-    })
+    vueJsx()
   ],
   resolve: {
     alias: [
