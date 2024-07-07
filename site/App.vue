@@ -1,8 +1,9 @@
 <template>
   <div>
-    Test
+    <h1>Toy UI Library</h1>
+    <Button>Test</Button>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 
 </script>
