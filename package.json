@@ -5,7 +5,10 @@
   "types": "./dist/index.d.ts",
   "main": "dist/toyUI.es.js",
   "module": "dist/toyUI.umd.js",
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "src/styles"
+  ],
   "scripts": {
     "serve": "nodemon server.js",
     "build": "vite build",
@@ -36,11 +39,11 @@
     "@vue/cli-plugin-vuex": "~5.0.8",
     "@vue/eslint-config-standard": "^8.0.1",
     "@vue/eslint-config-typescript": "^11.0.3",
-    "cypress": "^13.6.2",
     "eslint": "^8.52.0",
     "eslint-plugin-vue": "^9.18.1",
     "sass": "^1.69.5",
     "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^2.0.2",
     "vue-tsc": "^1.8.22"
   }
 }
