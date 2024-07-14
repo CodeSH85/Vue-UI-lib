@@ -23,7 +23,12 @@ export default defineConfig({
   ],
   test: {
     globals: true,
-    environment: 'happy-dom'
+    environment: 'happy-dom',
+    css: {
+      modules: {
+        classNameStrategy: 'non-scoped'
+      }
+    }
   },
   resolve: {
     alias: [
