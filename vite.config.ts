@@ -1,11 +1,10 @@
+import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'url'
 import { resolve } from 'path'
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import eslintPlugin from 'vite-plugin-eslint'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   // root: './index.html',
   root: __dirname,
@@ -22,6 +21,10 @@ export default defineConfig({
     ),
     vueJsx()
   ],
+  test: {
+    globals: true,
+    environment: 'happy-dom'
+  },
   resolve: {
     alias: [
       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) }

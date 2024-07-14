@@ -15,6 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtensions": true,
     "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "types": ["vitest/globals"]
   }
 }
