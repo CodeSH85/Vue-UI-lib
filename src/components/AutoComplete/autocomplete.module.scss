@@ -1,3 +1,6 @@
+@use '../../styles/utils';
+@use '../../styles/settings';
+
 .--auto-complete-content-container {
   background-color: #fff;
   padding: $md;

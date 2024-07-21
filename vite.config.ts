@@ -9,17 +9,13 @@ export default defineConfig({
   // root: './index.html',
   root: __dirname,
   plugins: [
-    vue(
-      {
-        reactivityTransform: true
-      }
-    ),
+    vue(),
+    vueJsx(),
     eslintPlugin(
       {
         cache: false
       }
-    ),
-    vueJsx()
+    )
   ],
   test: {
     globals: true,
@@ -34,14 +30,6 @@ export default defineConfig({
     alias: [
       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) }
     ]
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: '@import "@/styles/settings/_variables.scss";'
-        // additionalData: '@import "@/assets/style.scss";'
-      }
-    }
   },
   build: {
     lib: {

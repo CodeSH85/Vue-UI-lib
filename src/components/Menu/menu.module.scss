@@ -1,12 +1,15 @@
+@use '../../styles/utils';
+@use '../../styles/settings';
+
 .menu {
   padding: .5em;
   background-color: #df3a3a;
 }
 .--menu-content-container {
-  background-color: $surface-primary;
+  background-color: settings.$surface-primary;
 }
 .--menu-content-item {
-  padding: $sm;
+  padding: settings.$sm;
   cursor: pointer;
   &:hover {
     background-color: rgb(244, 244, 231);
@@ -18,4 +21,3 @@
 .--menu-content-item-current {
   background-color: beige;
 }
-

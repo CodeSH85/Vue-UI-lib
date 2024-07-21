@@ -1,4 +1,6 @@
-@import url(./generic/_reset.scss);
+@use './generic';
+@use './settings';
+@use './utils';
 
 * {
   font-family: 

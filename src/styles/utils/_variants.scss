@@ -1,9 +1,16 @@
 @mixin variant() {
-  &--variant-outlined,
-  &--variant-flat,
+  &--variant-plain {    
+    background-color: green;
+  }
+  &--variant-outlined {
+    border: 1px solid black;
+  }
+  &--variant-flat {
+    background-color: azure;
+  }
   &--variant-default {
     color: inherit
   }
-
+  
   
 }

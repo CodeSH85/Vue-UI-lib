@@ -1,10 +1,12 @@
+@use '../../styles/utils';
+@use '../../styles/settings';
 
 .--text-input-wrapper {
   width: 140px;
-  margin: $sm;
+  margin: settings.$sm;
   display: flex;
   align-items: center;
-  border-radius: $border-radius-sm;
+  border-radius: settings.$border-radius-sm;
   position: relative;
 }
 .--text-input-element {
@@ -26,15 +28,15 @@
   }
 }
 .--text-input-outlined {
-  border: 1.5px solid $primary-color;
+  border: 1.5px solid settings.$primary-color;
 }
 .--text-input-filled {
   border: none;
-  background-color: $gray-100;
-  box-shadow: $shadow-main;
+  background-color: settings.$gray-100;
+  box-shadow: settings.$shadow-main;
 }
 .--text-input-disabled {
-  border: 1.5px solid $primary-color;
+  border: 1.5px solid settings.$primary-color;
 }
 .--text-input-text {
   margin: inherit;
@@ -43,11 +45,11 @@
   transform: translateY(50%);
 }
 .--text-input-density-default {
-  padding: $md;
+  padding: settings.$md;
 }
 .--text-input-density-compact {
-  padding: $sm;
-  margin: $sm;
+  padding: settings.$sm;
+  margin: settings.$sm;
 }
 .--text-input-clear-icon {
   &:hover {
