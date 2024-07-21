@@ -5,7 +5,7 @@ export type ButtonType = 'default' | 'primary' | 'secondary' | 'success' | 'info
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export type ButtonVariant =
-  'default' | 'outlined' | 'flat' | 'text' | 'plain'
+  'default' | 'outlined' | 'flat' | 'text' | 'plain' | 'primary'
 
 export const ButtonProps = {
   type: {

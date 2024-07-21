@@ -4,17 +4,26 @@
 $button-primary-color: red;
 
 .Button {
-  align-items: center;
-  padding: settings.$md;
-  letter-spacing: .065em;
+  display: inline;
   text-transform: uppercase;
-  border-radius: settings.$border-radius-md;
+  padding: settings.$md;
+  margin: settings.$md;
   color: settings.$white;
-  background-color: settings.$primary-color;
+  &:hover {
+    background-color: settings.$gray-200;
+  }
   .-disabled {
     border: 1.5px solid settings.$primary-color;
   }
 }
+
 .Button-variant-plain {
   background-color: settings.$primary-color;
+}
+.Button-variant-flat {
+  background-color: red;
+  opacity: .3;
+}
+.Button-rounded {
+  border-radius: 3em;
 }
