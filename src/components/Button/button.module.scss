@@ -2,27 +2,26 @@
 @use '../../styles/settings';
 
 $button-primary-color: red;
+$button-variants: (
+  'Button'
+);
 
 .Button {
   display: inline;
   text-transform: uppercase;
   padding: settings.$md;
   margin: settings.$md;
-  color: settings.$white;
+  color: settings.$black;
+  @include utils.variant($button-variants...);
   &:hover {
     background-color: settings.$gray-200;
   }
-  .-disabled {
-    border: 1.5px solid settings.$primary-color;
+  &-disabled {
+    color: yellow;
   }
 }
-
-.Button-variant-plain {
-  background-color: settings.$primary-color;
-}
 .Button-variant-flat {
-  background-color: red;
-  opacity: .3;
+  background-color: aquamarine;
 }
 .Button-rounded {
   border-radius: 3em;

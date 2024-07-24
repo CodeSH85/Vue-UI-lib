@@ -13,34 +13,41 @@ export default defineComponent({
     ...buildRoundedProp({ rounded: false })
   },
   emits: ['click', 'focus'],
-  setup (props, { slots, attrs, emit }: SetupContext) {
+  setup (props, { slots, attrs, emit, expose }: SetupContext) {
     const { variantClasses } = useVariant(props, 'Button')
     const { roundedClasses } = useRounded(props, 'Button')
     const classList = ref([props.variant, props.size])
+
+    const btnClass = computed(() => {
+      return [
+        styles['Button'],
+        styles[variantClasses.value],
+        styles[roundedClasses.value],
+        isDisabled.value && styles['Button-disabled']
+      ].join(' ')
+    })
     const btnAttrs = ref({
       disable: true,
       style: {
         color: props.color
       }
     })
-    const btnClass = computed(() => {
-      return styles['Button'] 
-        + ' ' 
-        + styles[variantClasses.value]
-        + ' ' 
-        + styles[roundedClasses.value]
-    })
+    const isDisabled = computed(() => props.disabled)
     function onClick (e: MouseEvent) {
       if (props.disabled) return
       emit('click', e)
     }
+    expose({
+      isDisabled
+    })
     return {
+      isDisabled,
       slots,
       attrs,
       classList,
       btnAttrs,
       onClick,
-      btnClass
+      btnClass,
     }
   },
   render: (ctx: RenderContext) => {
@@ -48,9 +55,9 @@ export default defineComponent({
       <button
         disabled={ ctx.attrs.disabled }
         onClick={ ctx.onClick }
-        class={
+        class={[
           ctx.btnClass
-        }
+        ]}
         { ...ctx.btnAttrs }
         { ...ctx.attrs }
       >
