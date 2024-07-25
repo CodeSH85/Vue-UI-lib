@@ -1,27 +1,18 @@
-import { type PropType } from 'vue'
-
-export type ButtonType = 'default' | 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger'
+import type { PropType } from 'vue'
 
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
-export type ButtonVariant =
-  'default' | 'outlined' | 'flat' | 'text' | 'plain' | 'primary'
-
 export const ButtonProps = {
   type: {
-    type: String as PropType<ButtonType>,
+    type: String,
     default: 'default'
   },
-  variant: {
-    type: String as PropType<ButtonVariant>,
-    default: 'default'
+  size: {
+    type: String as PropType<ButtonSize>,
+    default: 'md'
   },
-  size: String,
   block: Boolean,
   disabled: Boolean,
-  rounded: {
-    type: String as PropType<ButtonSize>
-  },
   textColor: String,
   color: String,
 

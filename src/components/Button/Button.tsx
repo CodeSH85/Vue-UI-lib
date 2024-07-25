@@ -1,6 +1,7 @@
 import { defineComponent, ref, SetupContext, RenderContext, computed } from 'vue'
 import { ButtonProps } from './props'
 import styles from './Button.module.scss'
+import { useRender } from '../../composables/useRender'
 import { buildVariantProps, useVariant } from '../../composables/useVariant'
 import { buildRoundedProp, useRounded } from '../../composables/useRounded'
 
@@ -17,7 +18,6 @@ export default defineComponent({
     const { variantClasses } = useVariant(props, 'Button')
     const { roundedClasses } = useRounded(props, 'Button')
     const classList = ref([props.variant, props.size])
-
     const btnClass = computed(() => {
       return [
         styles['Button'],
@@ -40,33 +40,24 @@ export default defineComponent({
     expose({
       isDisabled
     })
-    return {
-      isDisabled,
-      slots,
-      attrs,
-      classList,
-      btnAttrs,
-      onClick,
-      btnClass,
-    }
-  },
-  render: (ctx: RenderContext) => {
-    return (
-      <button
-        disabled={ ctx.attrs.disabled }
-        onClick={ ctx.onClick }
-        class={[
-          ctx.btnClass
-        ]}
-        { ...ctx.btnAttrs }
-        { ...ctx.attrs }
-      >
-        {
-          (ctx.slots.prepend && ctx.props.icon)
-            && ctx.slots.prepend?.()
-        }
-        { ctx.slots.default?.() }
-      </button>
-    )
+    useRender(() => {
+      return (
+        <button
+          disabled={ props.disabled }
+          onClick={ onClick }
+          class={[
+            btnClass.value
+          ]}
+          { ...btnAttrs.value }
+          { ...attrs }
+        >
+          {
+            ( slots.prepend && props.icon)
+              && slots.prepend?.()
+          }
+          { slots.default?.() }
+        </button>
+      )
+    })
   }
 })
